@@ -13,6 +13,7 @@ import { metricsCollector } from '../core/MetricsCollector';
 import { auditLogger } from '../core/AuditLogger';
 import { securityValidator } from '../core/SecurityValidator';
 import { getEndpointGroup } from '../core/rateLimitConfig';
+import { SigV4Signer } from './SigV4Signer';
 
 interface SpApiRequestOptions {
 	method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
@@ -132,8 +133,20 @@ export class SpApiRequest {
 				...options.headers,
 			};
 
-			// AWS SigV4 signing disabled: enforce LWA-only authentication
-			const finalHeaders = headers;
+			const bodyString =
+				options.body === undefined
+					? undefined
+					: typeof options.body === 'string'
+					? options.body
+					: JSON.stringify(options.body);
+
+			const finalHeaders = await SigV4Signer.signRequest(
+				options.method,
+				url.toString(),
+				headers,
+				bodyString,
+				credentials,
+			);
 
 			// Log request details for debugging
 			console.log('SP-API Request:', {
@@ -151,7 +164,7 @@ export class SpApiRequest {
 				method: options.method,
 				url: url.toString(),
 				headers: finalHeaders,
-				data: options.body,
+				data: bodyString ?? options.body,
 				timeout: 60000, // 60 seconds
 				validateStatus: (status: number) => status < 500, // Don't throw on 4xx errors
 			};
@@ -253,6 +266,12 @@ export class SpApiRequest {
 		}
 		if (!credentials.lwaRefreshToken) {
 			errors.push('LWA Refresh Token is required');
+		}
+		if (!credentials.awsAccessKeyId) {
+			errors.push('AWS Access Key ID is required');
+		}
+		if (!credentials.awsSecretAccessKey) {
+			errors.push('AWS Secret Access Key is required');
 		}
 
 		return {

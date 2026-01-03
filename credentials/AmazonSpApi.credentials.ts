@@ -1,7 +1,9 @@
 import type {
 	Icon,
 	IAuthenticateGeneric,
+	ICredentialTestRequest,
 	ICredentialType,
+	IHttpRequestMethods,
 	INodeProperties,
 } from 'n8n-workflow';
 
@@ -118,7 +120,7 @@ export class AmazonSpApi implements ICredentialType {
 					value: 'A19VAU5U5O7RUS',
 				},
 			],
-			default: 'A21TJRUUN4KGV',
+			default: 'A1PA6795UKMFR9',
 			required: true,
 			description: 'Select the primary marketplace where your SP-API app is authorized. This MUST match the marketplace you selected during app authorization in Seller Central. Selecting the wrong marketplace will cause 403 Unauthorized errors.',
 		},
@@ -156,7 +158,15 @@ export class AmazonSpApi implements ICredentialType {
 			name: 'authNotice',
 			type: 'notice',
 			default: '',
-			description: 'LWA-only authentication is the default and recommended approach. AWS credentials are optional and only needed if you explicitly enable AWS SigV4 signing in Advanced Options.',
+			description: 'SP-API requests require LWA and AWS SigV4 signing. Provide both LWA and AWS credentials below.',
+		},
+		{
+			displayName: 'Application ID',
+			name: 'applicationId',
+			type: 'string',
+			default: '',
+			required: true,
+			description: 'Amazon SP-API application ID shown in Seller Central (needed for self-authorization)',
 		},
 		{
 			displayName: 'LWA Client ID',
@@ -189,6 +199,32 @@ export class AmazonSpApi implements ICredentialType {
 			description: 'Login with Amazon (LWA) Refresh Token obtained during authorization',
 		},
 		{
+			displayName: 'Seller ID',
+			name: 'sellerId',
+			type: 'string',
+			default: '',
+			description: 'Optional: Seller ID to avoid auto-extraction via marketplace participations',
+		},
+		{
+			displayName: 'AWS Access Key ID',
+			name: 'awsAccessKeyId',
+			type: 'string',
+			default: '',
+			required: true,
+			description: 'IAM user access key for SigV4 signing',
+		},
+		{
+			displayName: 'AWS Secret Access Key',
+			name: 'awsSecretAccessKey',
+			type: 'string',
+			typeOptions: {
+				password: true,
+			},
+			default: '',
+			required: true,
+			description: 'IAM user secret key for SigV4 signing',
+		},
+		{
 			displayName: 'Advanced Options',
 			name: 'advancedOptions',
 			type: 'collection',
@@ -211,7 +247,26 @@ export class AmazonSpApi implements ICredentialType {
 		properties: {},
 	};
 
-	// Note: Credential testing is handled by the node itself during actual API calls
-	// because SP-API requires LWA token authentication which isn't suitable for
-	// simple credential test requests
-} 
+	test: ICredentialTestRequest = {
+		request: {
+			method: 'POST' as IHttpRequestMethods,
+			url: 'https://api.amazon.com/auth/o2/token',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+				'Accept': 'application/json',
+			},
+			body:
+				'={{"grant_type=refresh_token&refresh_token=" + encodeURIComponent($credentials.lwaRefreshToken) + "&client_id=" + encodeURIComponent($credentials.lwaClientId) + "&client_secret=" + encodeURIComponent($credentials.lwaClientSecret)}}',
+			json: false,
+		},
+		rules: [
+			{
+				type: 'responseCode',
+				properties: {
+					value: 200,
+					message: 'Invalid LWA credentials or refresh token',
+				},
+			},
+		],
+	};
+}

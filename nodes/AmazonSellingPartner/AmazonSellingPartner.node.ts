@@ -7,22 +7,14 @@ import {
 	NodeOperationError,
 } from 'n8n-workflow';
 
-import { ordersOperations, ordersFields } from './descriptions/Orders.description';
-import { executeOrdersOperation } from './operations/Orders.operations';
-import { invoicesOperations, invoicesFields } from './descriptions/Invoices.description';
-import { getGstReport, getVatInvoiceReport, getVatInvoicePdfLinks } from './operations/Invoices.operations';
-import { shipmentsOperations, shipmentsFields } from './descriptions/Shipments.description';
-import { executeShipmentsOperation } from './operations/Shipments.operations';
-import { listingsOperations, listingsFields } from './descriptions/Listings.description';
-import { executeListingsOperation } from './operations/Listings.operations';
-import { financeOperations, financeFields } from './descriptions/Finance.description';
-import { executeFinanceOperation } from './operations/Finance.operations';
-import { analyticsOperations, analyticsFields } from './descriptions/Analytics.description';
-import { executeAnalyticsOperation } from './operations/Analytics.operations';
-import { dataKioskOperations, dataKioskFields } from './descriptions/DataKiosk.description';
-import { executeDataKioskOperation } from './operations/DataKiosk.operations';
-import { reportsOperations, reportsFields } from './descriptions/Reports.description';
-import { executeReportsOperation } from './operations/Reports.operations';
+import {
+	generatedResourceOptions,
+	generatedOperations,
+	generatedFields,
+} from './generated/Generated.description';
+import { executeGeneratedOperation } from './operations/Generated.operations';
+import { customOperations, customFields } from './descriptions/Custom.description';
+import { executeCustomOperation } from './operations/Custom.operations';
 
 export class AmazonSellingPartner implements INodeType {
 	description: INodeTypeDescription = {
@@ -60,59 +52,18 @@ export class AmazonSellingPartner implements INodeType {
 				noDataExpression: true,
 				options: [
 					{
-						name: 'Order',
-						value: 'orders',
-						description: 'Manage and retrieve order information',
+						name: 'Custom',
+						value: 'custom',
+						description: 'Make a custom SP-API request',
 					},
-					{
-						name: 'Invoice',
-						value: 'invoices',
-						description: 'Download GST and VAT invoice reports',
-					},
-					{
-						name: 'Shipment',
-						value: 'shipments',
-						description: 'Confirm or update shipment information',
-					},
-					{
-						name: 'Listing',
-						value: 'listings',
-						description: 'List and manage product listings (ASINs/SKUs)',
-					},
-					{
-						name: 'Finance',
-						value: 'finance',
-						description: 'Retrieve financial events, wallet transactions, and payment data',
-					},
-					{
-						name: 'Data Kiosk',
-						value: 'dataKiosk',
-						description: 'Submit GraphQL queries and download results via Data Kiosk',
-					},
-					{
-						name: 'Report',
-						value: 'reports',
-						description: 'Generate and download SP-API business and returns reports',
-					},
+					...generatedResourceOptions,
 				],
-				default: 'orders',
+				default: 'custom',
 			},
-			...ordersOperations,
-			...ordersFields,
-			...invoicesOperations,
-			...invoicesFields,
-			...shipmentsOperations,
-			...shipmentsFields,
-			...listingsOperations,
-			...listingsFields,
-			...financeOperations,
-			...financeFields,
-			...analyticsOperations,
-			...analyticsFields,
-			...dataKioskOperations,
-			...dataKioskFields,
-			...reportsOperations,
-			...reportsFields,
+			...generatedOperations,
+			...generatedFields,
+			...customOperations,
+			...customFields,
 		],
 	};
 
@@ -126,55 +77,21 @@ export class AmazonSellingPartner implements INodeType {
 		try {
 			for (let i = 0; i < items.length; i++) {
 				switch (resource) {
-					case 'orders': {
-						const orderResults = await executeOrdersOperation.call(this, operation, i);
-						returnData.push(...orderResults);
+					case 'custom': {
+						const customResults = await executeCustomOperation.call(this, operation, i);
+						returnData.push(...customResults);
 						break;
 					}
-					case 'invoices':
-						let invoiceResults: INodeExecutionData[] = [];
-						switch (operation) {
-							case 'getGstReport':
-								invoiceResults = await getGstReport.call(this, i);
-								break;
-							case 'getVatInvoiceReport':
-								invoiceResults = await getVatInvoiceReport.call(this, i);
-								break;
-							case 'getVatInvoicePdfLinks':
-								invoiceResults = await getVatInvoicePdfLinks.call(this, i);
-								break;
-							default:
-								throw new NodeOperationError(this.getNode(), `Unknown invoices operation: ${operation}`);
-						}
-						returnData.push(...invoiceResults);
+					default: {
+						const generatedResults = await executeGeneratedOperation.call(
+							this,
+							resource,
+							operation,
+							i,
+						);
+						returnData.push(...generatedResults);
 						break;
-					case 'shipments':
-						const shipmentResults = await executeShipmentsOperation.call(this, operation, i);
-						returnData.push(...shipmentResults);
-						break;
-					case 'listings':
-						const listingResults = await executeListingsOperation.call(this, operation, i);
-						returnData.push(...listingResults);
-						break;
-					case 'finance':
-						const financeResults = await executeFinanceOperation.call(this, operation, i);
-						returnData.push(...financeResults);
-						break;
-					case 'analytics':
-						// Analytics now only supports validateAccess operation
-						const analyticsResults = await executeAnalyticsOperation.call(this, operation, i);
-						returnData.push(...analyticsResults);
-						break;
-					case 'dataKiosk':
-						const dataKioskResults = await executeDataKioskOperation.call(this, operation, i);
-						returnData.push(...dataKioskResults);
-						break;
-					case 'reports':
-						const reportsResults = await executeReportsOperation.call(this, operation, i);
-						returnData.push(...reportsResults);
-						break;
-					default:
-						throw new NodeOperationError(this.getNode(), `Unknown resource: ${resource}`);
+					}
 				}
 			}
 
