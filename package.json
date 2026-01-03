@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-amazon-selling-partner-dnangelx",
-	"version": "0.0.3",
+	"version": "0.0.5",
 	"description": "n8n community node for the Amazon Selling Partner API",
 	"license": "MIT",
 	"homepage": "",
@@ -32,14 +32,22 @@
 		"n8nNodesApiVersion": 1,
 		"strict": true,
 		"credentials": [
-			"dist/credentials/AmazonSellingPartnerApi.credentials.js"
+			"dist/credentials/AmazonSpApi.credentials.js"
 		],
 		"nodes": [
 			"dist/nodes/AmazonSellingPartner/AmazonSellingPartner.node.js"
 		]
 	},
+	"dependencies": {
+		"aws4": "^1.12.0",
+		"axios": "^1.6.8",
+		"csv-parse": "^6.1.0"
+	},
 	"devDependencies": {
 		"@n8n/node-cli": "*",
+		"@types/aws4": "^1.11.6",
+		"@types/csv-parse": "^1.1.12",
+		"@types/node": "^20.11.30",
 		"eslint": "9.32.0",
 		"prettier": "3.6.2",
 		"release-it": "^19.0.4",
