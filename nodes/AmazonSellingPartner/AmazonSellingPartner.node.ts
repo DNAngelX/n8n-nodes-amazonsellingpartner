@@ -23,7 +23,7 @@ export class AmazonSellingPartner implements INodeType {
 		outputs: [NodeConnectionTypes.Main],
 		credentials: [
 			{
-				name: 'amazonSellingPartnerOAuth2Api',
+				name: 'amazonSellingPartnerApi',
 				required: true,
 			},
 		],
