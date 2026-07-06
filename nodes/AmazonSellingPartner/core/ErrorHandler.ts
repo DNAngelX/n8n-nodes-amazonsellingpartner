@@ -30,11 +30,17 @@ export class ErrorHandler {
 		// Extract detailed error information
 		let errorDetails = '';
 		let errorCode = '';
+		const errorType = headers['x-amzn-errortype'] || headers['x-amzn-ErrorType'];
 		
 		if (data && data.errors && Array.isArray(data.errors)) {
 			const errors = data.errors as SpApiError[];
 			errorCode = errors[0]?.code || 'Unauthorized';
-			errorDetails = errors.map(err => `${err.code}: ${err.message}`).join('\n');
+			errorDetails = errors
+				.map((err) => {
+					const detailsSuffix = err.details ? ` — ${err.details}` : '';
+					return `${err.code}: ${err.message}${detailsSuffix}`;
+				})
+				.join('\n');
 		}
 		
 		// Log full error for debugging
@@ -44,7 +50,7 @@ export class ErrorHandler {
 			errors: data?.errors,
 			headers: {
 				'x-amzn-requestid': headers['x-amzn-requestid'],
-				'x-amzn-errortype': headers['x-amzn-errortype'],
+				'x-amzn-errortype': errorType,
 			}
 		}, null, 2));
 		
@@ -53,6 +59,7 @@ export class ErrorHandler {
 			`Authentication failed (${status}): ${errorCode}`,
 			{
 				description: `${errorDetails || 'Access to requested resource is denied.'}\n\n` +
+					`${errorType ? `Error Type: ${errorType}\n` : ''}` +
 					`Troubleshooting:\n` +
 					`• Verify your Primary Marketplace matches your app authorization (e.g., India = eu-west-1)\n` +
 					`• Check AWS Region matches your marketplace\n` +

@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-amazon-selling-partner-marketplace",
-	"version": "0.0.14",
+	"version": "0.0.23",
 	"description": "n8n community node for the Amazon Selling Partner API",
 	"license": "MIT",
 	"homepage": "",

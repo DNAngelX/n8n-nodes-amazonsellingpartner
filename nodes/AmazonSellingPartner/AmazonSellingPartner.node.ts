@@ -25,6 +25,17 @@ export class AmazonSellingPartner implements INodeType {
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Interact with Amazon Selling Partner API',
+		usableAsTool: {
+			replacements: {
+				description:
+					'Call Amazon SP-API resources and operations.',
+				codex: {
+					subcategories: {
+						Tools: ['Recommended Tools'],
+					},
+				},
+			},
+		},
 		defaults: {
 			name: 'Amazon Selling Partner',
 		},

@@ -103,6 +103,31 @@ const normalizeResourceName = (folderName) => {
 
 const sanitizeOperationValue = (value) => value.replace(/[^a-zA-Z0-9]+/g, '_');
 
+const escapeHtml = (input) => input
+	.replace(/&/g, '&amp;')
+	.replace(/</g, '&lt;')
+	.replace(/>/g, '&gt;')
+	.replace(/\"/g, '&quot;');
+
+const markdownToHtml = (input) => {
+	if (!input) return '';
+	const hasHtmlTag = /<[^>]+>/.test(input);
+	let text = hasHtmlTag ? input : escapeHtml(input);
+	text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
+	text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+	text = text.replace(/\*(?!\*)([^*]+)\*(?!\*)/g, '<em>$1</em>');
+	text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+	text = text.replace(/\n/g, '<br>');
+	return text;
+};
+
+const sanitizeText = (input) => {
+	if (!input || typeof input !== 'string') return '';
+	const normalized = input.replace(/\r\n/g, '\n');
+	const [firstParagraph] = normalized.split(/\n\s*\n/);
+	return markdownToHtml((firstParagraph || '').trim());
+};
+
 const extractVersionTag = (doc, filePath) => {
 	if (doc && doc.info && typeof doc.info.version === 'string') {
 		return doc.info.version;
@@ -138,6 +163,45 @@ const deriveParamType = (param) => {
 		return { type: itemType, isArray: true };
 	}
 	return { type: param.type || 'string', isArray: false };
+};
+
+const getRefName = (ref) => {
+	if (!ref || typeof ref !== 'string') return '';
+	const match = ref.match(/#\/definitions\/(.+)$/);
+	return match ? match[1] : ref;
+};
+
+const describeSchema = (schema, definitions, depth = 0) => {
+	if (!schema || depth > 4) {
+		return schema && schema.type ? schema.type : 'object';
+	}
+	if (schema.$ref) {
+		const refName = getRefName(schema.$ref);
+		const resolved = definitions && definitions[refName] ? definitions[refName] : null;
+		if (!resolved) return refName || 'object';
+		const resolvedDesc = describeSchema(resolved, definitions, depth + 1);
+		return resolvedDesc === 'object' ? refName : `${refName} ${resolvedDesc}`;
+	}
+	if (schema.type === 'array') {
+		const itemDesc = describeSchema(schema.items || {}, definitions, depth + 1);
+		return `${itemDesc}[]`;
+	}
+	if (schema.type === 'object' || schema.properties) {
+		const properties = schema.properties || {};
+		const required = Array.isArray(schema.required) ? schema.required : [];
+		const entries = Object.keys(properties).map((prop) => {
+			const propSchema = properties[prop];
+			const propType = describeSchema(propSchema, definitions, depth + 1);
+			const isRequired = required.includes(prop);
+			return `${prop}${isRequired ? '' : '?'}: ${propType}`;
+		});
+		if (!entries.length) return 'object';
+		return `{ ${entries.join(', ')} }`;
+	}
+	if (schema.enum && Array.isArray(schema.enum) && schema.enum.length > 0) {
+		return schema.enum.map((value) => JSON.stringify(value)).join(' | ');
+	}
+	return schema.type || 'object';
 };
 
 const main = async () => {
@@ -192,6 +256,7 @@ const main = async () => {
 
 		const resourceEntry = resources.get(resourceKey);
 		const versionTag = extractVersionTag(doc, filePath);
+		const definitions = doc.definitions || {};
 
 		Object.entries(doc.paths).forEach(([endpoint, pathItem]) => {
 			if (!pathItem || typeof pathItem !== 'object') return;
@@ -207,14 +272,25 @@ const main = async () => {
 					.map((param) => {
 						const enumValues = extractEnum(param);
 						const derivedType = deriveParamType(param);
+						const format =
+							param.format ||
+							(param.items && param.items.format) ||
+							(param.schema && (param.schema.format || (param.schema.items && param.schema.items.format))) ||
+							undefined;
+						const schemaSummary =
+							param.in === 'body' && param.schema
+								? describeSchema(param.schema, definitions)
+								: undefined;
 						return {
 							name: param.name,
 							in: param.in,
-							description: param.description || '',
-							required: !!param.required,
+							description: sanitizeText(param.description || ''),
+							required: param.name === 'sellerId' ? false : !!param.required,
 							type: derivedType.type,
 							isArray: derivedType.isArray,
 							enumValues,
+							format,
+							schemaSummary,
 						};
 					});
 
@@ -263,7 +339,7 @@ const main = async () => {
 				const displayName = needsVersion
 					? `${toTitleCase(operationId)} (${versionTag})`
 					: toTitleCase(operationId);
-				const description = op.summary || op.description || '';
+				const description = sanitizeText(op.summary || op.description || '');
 				operationOptions.push({
 					name: displayName,
 					value: operationValue,
@@ -317,11 +393,10 @@ const main = async () => {
 			if (!opMeta) return;
 
 			const params = opMeta.params || [];
-			params.forEach((param) => {
-				if (param.in === 'body') {
-					return;
-				}
+			const requiredParams = params.filter((param) => param.in !== 'body' && param.required);
+			const optionalParams = params.filter((param) => param.in !== 'body' && !param.required);
 
+			const buildField = (param, includeDisplayOptions, forceOptional) => {
 				const isMarketplaceParam = param.name === 'marketplaceId' || param.name === 'marketplaceIds';
 				const enumValues = param.enumValues;
 				const hasEnum = Array.isArray(enumValues) && enumValues.length > 0;
@@ -330,6 +405,12 @@ const main = async () => {
 				let options = undefined;
 				let defaultValue = '';
 				let description = param.description || '';
+
+				if (param.name === 'sellerId') {
+					description = description
+						? `${description} Auto-filled from credentials when empty.`
+						: 'Auto-filled from credentials when empty.';
+				}
 
 				if (isMarketplaceParam) {
 					if (param.isArray) {
@@ -355,6 +436,12 @@ const main = async () => {
 					if (!description) {
 						description = 'Comma-separated values.';
 					}
+				} else if (param.format === 'date-time' || param.format === 'date') {
+					type = 'dateTime';
+					defaultValue = '';
+					if (!description) {
+						description = 'ISO 8601 date/time.';
+					}
 				} else if (!description && (param.type === 'integer' || param.type === 'number')) {
 					description = 'Numeric value.';
 				} else if (!description && param.type === 'boolean') {
@@ -365,25 +452,37 @@ const main = async () => {
 					displayName: toTitleCase(param.name),
 					name: param.name,
 					type,
-					required: !!param.required,
-					displayOptions: {
+					required: forceOptional ? false : !!param.required,
+					default: defaultValue,
+					description,
+				};
+
+				if (includeDisplayOptions) {
+					field.displayOptions = {
 						show: {
 							resource: [resourceEntry.value],
 							operation: [operationOption.value],
 						},
-					},
-					default: defaultValue,
-					description,
-				};
+					};
+				}
 
 				if (options) {
 					field.options = options;
 				}
 
-				fieldProperties.push(field);
+				return field;
+			};
+
+			requiredParams.forEach((param) => {
+				fieldProperties.push(buildField(param, true, false));
 			});
 
 			if (opMeta.hasBody) {
+				const bodyParam = params.find((param) => param.in === 'body');
+				const schemaSummary = bodyParam && bodyParam.schemaSummary ? sanitizeText(bodyParam.schemaSummary) : '';
+				const bodyDescription = schemaSummary
+					? `JSON body for this request. Schema: ${schemaSummary}`
+					: 'JSON body for this request.';
 				fieldProperties.push({
 					displayName: 'Body (JSON)',
 					name: 'bodyJson',
@@ -395,7 +494,54 @@ const main = async () => {
 						},
 					},
 					default: '{}',
-					description: 'JSON body for this request.',
+					description: bodyDescription,
+				});
+			}
+
+			if (optionalParams.length) {
+				const optionalFields = optionalParams.map((param) => buildField(param, false, true));
+				const paginationParamNames = new Set([
+					'nextToken',
+					'nextPageToken',
+					'pageToken',
+					'paginationToken',
+				]);
+				const hasPagination = params.some(
+					(param) => param.in === 'query' && paginationParamNames.has(param.name),
+				);
+
+				if (hasPagination) {
+					optionalFields.unshift(
+						{
+							displayName: 'Return All',
+							name: 'returnAll',
+							type: 'boolean',
+							default: false,
+							description: 'Automatically fetch all pages when a pagination token is returned.',
+						},
+						{
+							displayName: 'Max Results',
+							name: 'maxResults',
+							type: 'number',
+							default: 0,
+							description: 'Maximum number of items to return. 0 means no limit.',
+						},
+					);
+				}
+				fieldProperties.push({
+					displayName: 'Options',
+					name: 'additionalOptions',
+					type: 'collection',
+					placeholder: 'Add Optional Field',
+					default: {},
+					displayOptions: {
+						show: {
+							resource: [resourceEntry.value],
+							operation: [operationOption.value],
+						},
+					},
+					options: optionalFields,
+					description: 'Optional parameters.',
 				});
 			}
 		});

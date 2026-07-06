@@ -114,6 +114,24 @@ const mergeQueryObjects = (
 	return result;
 };
 
+const normalizeQueryValues = (query?: IDataObject): IDataObject | undefined => {
+	if (!query || !Object.keys(query).length) {
+		return undefined;
+	}
+	const normalized: IDataObject = {};
+	for (const [key, value] of Object.entries(query)) {
+		if (value === undefined || value === null || value === '') {
+			continue;
+		}
+		if (Array.isArray(value)) {
+			normalized[key] = value.map((item) => String(item)).join(',');
+		} else {
+			normalized[key] = value;
+		}
+	}
+	return normalized;
+};
+
 const bodyToQueryParams = (input: IDataObject | IDataObject[]): IDataObject => {
 	if (Array.isArray(input)) {
 		throw new NodeOperationError(
@@ -227,7 +245,7 @@ export async function executeCustomOperation(
 		const result = await SpApiRequest.makeRequest(this, {
 			method: method as any,
 			endpoint: normalizeEndpoint(endpoint),
-			query: finalQuery as Record<string, any> | undefined,
+			query: normalizeQueryValues(finalQuery as IDataObject | undefined) as Record<string, any> | undefined,
 			body: finalBody,
 			headers,
 			responseType,
