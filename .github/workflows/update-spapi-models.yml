@@ -1,0 +1,49 @@
+name: Update SP-API models
+
+on:
+  schedule:
+    # Every Monday at 06:15 UTC.
+    - cron: '15 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: update-spapi-models
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Regenerate SP-API resources
+        run: npm run generate:spapi
+
+      - name: Build generated node
+        run: npm run build
+
+      - name: Create update pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: automation/update-spapi-models
+          delete-branch: true
+          commit-message: 'chore: update SP-API models'
+          title: 'chore: update SP-API models'
+          body: |
+            Automated weekly refresh from the official Amazon Selling Partner API model repository.
+          labels: automated
