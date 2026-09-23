@@ -46,4 +46,3 @@ jobs:
           title: 'chore: update SP-API models'
           body: |
             Automated weekly refresh from the official Amazon Selling Partner API model repository.
-          labels: automated
