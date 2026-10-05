@@ -67,9 +67,14 @@ export const generatedResourceOptions = [
     "description": "Selling Partner API for Feeds"
   },
   {
+    "name": "Finance Remittance",
+    "value": "financeRemittance",
+    "description": "The Selling Partner API for Finance Remittance"
+  },
+  {
     "name": "Finances",
     "value": "finances",
-    "description": "Selling Partner API for Finances"
+    "description": "The Selling Partner API for Invoices"
   },
   {
     "name": "Fulfillment Inbound",
@@ -132,6 +137,11 @@ export const generatedResourceOptions = [
     "description": "Selling Partner API for Product Type Definitions"
   },
   {
+    "name": "Promotions",
+    "value": "promotions",
+    "description": "The Selling Partner API for Promotions"
+  },
+  {
     "name": "Replenishment",
     "value": "replenishment",
     "description": "Selling Partner API for Replenishment"
@@ -149,7 +159,7 @@ export const generatedResourceOptions = [
   {
     "name": "Seller Wallet",
     "value": "sellerWallet",
-    "description": "The Selling Partner API for Amazon Seller Wallet Open Banking API Spec.\n\nFor more information, refer to the [Seller Wallet Open Banking API Use Case Guide](doc:seller-wallet-open-banking-api-v2024-03-01-use-case-guide)."
+    "description": "The Selling Partner API for Amazon Seller Wallet Open Banking API"
   },
   {
     "name": "Sellers",
@@ -182,9 +192,19 @@ export const generatedResourceOptions = [
     "description": "Selling Partner API for Supply Sources"
   },
   {
+    "name": "Support",
+    "value": "support",
+    "description": "The Selling Partner API for Support"
+  },
+  {
     "name": "Tokens",
     "value": "tokens",
     "description": "Selling Partner API for Tokens "
+  },
+  {
+    "name": "Tracking",
+    "value": "tracking",
+    "description": "The Selling Partner API for tracking services provided by Amazon."
   },
   {
     "name": "Uploads",
@@ -278,9 +298,29 @@ export const generatedOperations: INodeProperties[] = [
         "description": "Confirms an AWD inbound order in <code>DRAFT</code> status."
       },
       {
+        "name": "Confirm Outbound",
+        "value": "confirmOutbound",
+        "description": "Confirms an AWD outbound order for a set of shipments that contain items that must be outbound to a destination node. You can confirm the order only if it's in an<code>ELIGIBLE</code> state."
+      },
+      {
+        "name": "Confirm Replenishment Order",
+        "value": "confirmReplenishmentOrder",
+        "description": "Confirms an AWD replenishment order in ELIGIBLE state with a set of shipments containing items that are needed to be replenished to an FBA node.<br>Order can only be confirmed in ELIGIBLE state."
+      },
+      {
         "name": "Create Inbound",
         "value": "createInbound",
         "description": "Creates a draft AWD inbound order with a list of packages for inbound shipment. The operation creates one shipment per order."
+      },
+      {
+        "name": "Create Outbound",
+        "value": "createOutbound",
+        "description": "Creates a draft AWD outbound order with the specified products. The API returns the order ID for the newly created order and starts an async validation check on the outbound products. After the validation check, the order status transitions from <code>VALIDATING</code> to <code>ELIGIBLE/INELIGIBLE</code>."
+      },
+      {
+        "name": "Create Replenishment Order",
+        "value": "createReplenishmentOrder",
+        "description": "Creates an AWD replenishment order with given products to replenish.<br>The API will return the order ID of the newly created order and also start an async validation check on the products to e.<br>The order status will transition to ELIGIBLE/INELIGIBLE status from VALIDATING post validation check"
       },
       {
         "name": "Get Inbound",
@@ -298,6 +338,21 @@ export const generatedOperations: INodeProperties[] = [
         "description": "Retrieves the box labels for a shipment ID that you specify. This is an asynchronous operation. If the label status is <code>GENERATED</code>, then the label URL is available."
       },
       {
+        "name": "Get Label Page Types",
+        "value": "getLabelPageTypes",
+        "description": "Retrieves the available label page types for a shipment ID that you specify. This is an asynchronous operation. If the label status is <code>GENERATED</code>, then the pageTypes are available."
+      },
+      {
+        "name": "Get Outbound",
+        "value": "getOutbound",
+        "description": "Retrieves an AWD outbound order with a set of shipments that contain items that are outbound into a destination channel. If the order is not eligible, the validation errors field is included in the order response. The API returns the order ID for the newly created order and starts an async validation check on the outbound products. After the validation check, the order status transitions from <code>VALIDATING</code> to <code>ELIGIBLE/INELIGIBLE</code>."
+      },
+      {
+        "name": "Get Replenishment Order",
+        "value": "getReplenishmentOrder",
+        "description": "Retrieves an AWD Replenishment order with a set of shipments containing items that is/was planned to be replenished into an FBA node."
+      },
+      {
         "name": "List Inbound Shipments",
         "value": "listInboundShipments",
         "description": "Retrieves a summary of all the inbound AWD shipments associated with a merchant, with the ability to apply optional filters."
@@ -308,6 +363,16 @@ export const generatedOperations: INodeProperties[] = [
         "description": "Lists AWD inventory associated with a merchant with the ability to apply optional filters."
       },
       {
+        "name": "List Outbounds",
+        "value": "listOutbounds",
+        "description": "Retrieves all outbound AWD orders (with optional filters) that pertain to a merchant. By default, orders are sorted by the <code>updatedAt</code> attribute in descending order."
+      },
+      {
+        "name": "List Replenishment Orders",
+        "value": "listReplenishmentOrders",
+        "description": "Retrieves all the AWD replenishment orders pertaining to a merchant with optional filters.<br>API by default will sort orders by updatedAt attribute in descending order."
+      },
+      {
         "name": "Update Inbound",
         "value": "updateInbound",
         "description": "Updates an AWD inbound order that is in <code>DRAFT</code> status and not yet confirmed. Use this operation to update the <code>packagesToInbound</code>, <code>originAddress</code> and <code>preferences</code> attributes."
@@ -316,6 +381,11 @@ export const generatedOperations: INodeProperties[] = [
         "name": "Update Inbound Shipment Transport Details",
         "value": "updateInboundShipmentTransportDetails",
         "description": "Updates transport details for an AWD shipment."
+      },
+      {
+        "name": "Update Outbound",
+        "value": "updateOutbound",
+        "description": "Updates an AWD outbound order that is in <code>DRAFT</code>, <code>ELIGIBLE</code>, or <code>INELIGIBLE</code> status. This API allows updates on <code>productsToOutbound</code> and <code>orderPreferences</code> attributes only. Any updates will restart the outbound order validation."
       }
     ],
     "default": "cancelInbound"
@@ -336,17 +406,27 @@ export const generatedOperations: INodeProperties[] = [
       {
         "name": "Create Content Document",
         "value": "createContentDocument",
-        "description": "Creates a new A+ Content document."
+        "description": "Create a new A+ Content document."
+      },
+      {
+        "name": "Create Media",
+        "value": "createMedia",
+        "description": "Create a media asset record. The <code>mediaType</code> field determines the type of asset to create."
       },
       {
         "name": "Get Content Document",
         "value": "getContentDocument",
-        "description": "Returns an A+ Content document, if available."
+        "description": "Retrieve an A+ Content document, if available."
+      },
+      {
+        "name": "Get Media",
+        "value": "getMedia",
+        "description": "Retrieve media metadata and related media for a given media ID. The response uses the unified Media shape. Related media associations are also included in the response."
       },
       {
         "name": "List Content Document Asin Relations",
         "value": "listContentDocumentAsinRelations",
-        "description": "Returns a list of ASINs that are related to the specified A+ Content document, if available. If you don't include the <code>asinSet</code> parameter, this operation returns all ASINs related to the content document."
+        "description": "Retrieve a list of ASINs related to the specified A+ Content document, if available. If you do not include the <code>asinSet</code> parameter, the operation returns all ASINs related to the content document."
       },
       {
         "name": "Post Content Document Approval Submission",
@@ -356,17 +436,17 @@ export const generatedOperations: INodeProperties[] = [
       {
         "name": "Post Content Document Asin Relations",
         "value": "postContentDocumentAsinRelations",
-        "description": "Replaces all ASINs related to the specified A+ Content document, if available. This operation can add or remove ASINs, depending on the current set of related ASINs. Removing an ASIN will suspend the content document from that ASIN."
+        "description": "Replaces all ASINs related to the specified A+ Content document, if available. This may add or remove ASINs, depending on the current set of related ASINs. Removing an ASIN has the side effect of suspending the content document from that ASIN."
       },
       {
         "name": "Post Content Document Suspend Submission",
         "value": "postContentDocumentSuspendSubmission",
-        "description": "Submits a request to suspend visible A+ Content. This doesn't delete the content document or the ASIN relations."
+        "description": "Submits a request to suspend visible A+ Content. This neither deletes the content document nor the ASIN relations."
       },
       {
         "name": "Search Content Documents",
         "value": "searchContentDocuments",
-        "description": "Returns a list of all A+ Content documents, including metadata, that are assigned to a selling partner. To get the actual contents of the A+ Content documents, call the <code>getContentDocument</code> operation."
+        "description": "Retrieve a list of all A+ Content documents assigned to a selling partner. This operation returns only the metadata of the A+ Content documents. Call the <code>getContentDocument</code> operation to get the actual contents of the A+ Content documents."
       },
       {
         "name": "Search Content Publish Records",
@@ -376,7 +456,12 @@ export const generatedOperations: INodeProperties[] = [
       {
         "name": "Update Content Document",
         "value": "updateContentDocument",
-        "description": "Updates an existing A+ Content document."
+        "description": "Update an existing A+ Content document."
+      },
+      {
+        "name": "Update Media",
+        "value": "updateMedia",
+        "description": "Update metadata on an existing media asset. The <code>mediaId</code> path parameter identifies the target asset. For video-image pairing title updates, provide <code>associatedMediaId</code> as a query parameter. For video-level description updates or standalone image title updates, omit <code>associatedMediaId</code>."
       },
       {
         "name": "Validate Content Document Asin Relations",
@@ -433,7 +518,7 @@ export const generatedOperations: INodeProperties[] = [
       {
         "name": "Rotate Application Client Secret",
         "value": "rotateApplicationClientSecret",
-        "description": "Rotates application client secrets for a developer application. Developers must register a destination queue in the developer console before calling this operation. When this operation is called a new client secret is generated and sent to the developer-registered queue. For more information, refer to <a href=\"https://developer-docs.amazon.com/sp-api/v0/docs/application-management-api-v2023-11-30-use-case-guide#tutorial-rotate-your-applications-client-secret\" target=\"_blank\" rel=\"noopener noreferrer\">Rotate your application client secret</a>."
+        "description": "Rotates application client secrets for a developer application. Developers must register a destination queue in the developer console before calling this operation. When this operation is called a new client secret is generated and sent to the developer-registered queue. For more information, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/rotate-your-application-client-secret\" target=\"_blank\" rel=\"noopener noreferrer\">Rotate your application's client secret</a>."
       }
     ],
     "default": "rotateApplicationClientSecret"
@@ -587,7 +672,7 @@ export const generatedOperations: INodeProperties[] = [
       {
         "name": "Get Invoice Status",
         "value": "getInvoiceStatus",
-        "description": "Returns the invoice status for the order or shipment you specify. You must specify either an <code>orderId</code> or <code>shipmentId</code> as query parameter. If both parameters are supplied, <code>orderId</code> takes precedence over <code>shipmentId</code>."
+        "description": "Returns the invoice status for the order or shipment you specify. You must specify either an <code>orderId</code>, <code>shipmentId</code>, or <code>invoiceId</code> as a query parameter. If multiple parameters are supplied, <code>orderId</code> takes precedence over <code>shipmentId</code>, which takes precedence over <code>invoiceId</code>."
       },
       {
         "name": "Submit Invoice",
@@ -662,6 +747,16 @@ export const generatedOperations: INodeProperties[] = [
         "description": "Provide details about the packages in the specified shipment."
       },
       {
+        "name": "Create Sandbox Location",
+        "value": "createSandboxLocation",
+        "description": "Creates a sandbox location and merchant in the test environment. This operation is available only in the sandbox environment and is used for onboarding test locations. Idempotency is ensured on locationName."
+      },
+      {
+        "name": "Create Sandbox Shipment",
+        "value": "createSandboxShipment",
+        "description": "Creates a sandbox shipment to simulate order creation in the test environment. This operation is available only in the sandbox environment. The shipment is created with the specified configuration including shipping type and order type."
+      },
+      {
         "name": "Generate Invoice",
         "value": "generateInvoice",
         "description": "Get invoices for the shipment you specify."
@@ -715,6 +810,11 @@ export const generatedOperations: INodeProperties[] = [
         "name": "Update Package Status",
         "value": "updatePackageStatus",
         "description": "Updates the status of the packages."
+      },
+      {
+        "name": "Update Sandbox Shipment",
+        "value": "updateSandboxShipment",
+        "description": "Updates a sandbox shipment on marketplace behalf. Supports status changes, invoice availability, and transport capacity updates."
       }
     ],
     "default": "batchInventory"
@@ -807,7 +907,7 @@ export const generatedOperations: INodeProperties[] = [
       {
         "name": "Get Feed",
         "value": "getFeed",
-        "description": "Returns feed details (including the <code>resultDocumentId</code>, if available) for the feed that you specify."
+        "description": "Returns feed details (including the <code>feedDocumentId</code>, if available) for the feed that you specify."
       },
       {
         "name": "Get Feed Document",
@@ -830,11 +930,47 @@ export const generatedOperations: INodeProperties[] = [
     "displayOptions": {
       "show": {
         "resource": [
+          "financeRemittance"
+        ]
+      }
+    },
+    "options": [
+      {
+        "name": "Get Remittance",
+        "value": "getRemittance",
+        "description": "Returns detailed line items for a specific remittance. Results are paginated."
+      },
+      {
+        "name": "Get Remittance Headers",
+        "value": "getRemittanceHeaders",
+        "description": "Returns a list of remittance summaries for the specified Amazon store, filtered by date range. Results are paginated."
+      }
+    ],
+    "default": "getRemittance"
+  },
+  {
+    "displayName": "Operation",
+    "name": "operation",
+    "type": "options",
+    "noDataExpression": true,
+    "displayOptions": {
+      "show": {
+        "resource": [
           "finances"
         ]
       }
     },
     "options": [
+      {
+        "name": "Get Invoice",
+        "value": "getInvoice",
+        "description": "Returns invoice details, including header and line items, for the specified invoice."
+      },
+      {
+        "name": "Get Invoice Headers",
+        "value": "getInvoiceHeaders",
+        "description": "Returns invoice headers for all invoices matching filters that you specify."
+      },
       {
         "name": "Get Payment Methods",
         "value": "getPaymentMethods",
@@ -844,6 +980,16 @@ export const generatedOperations: INodeProperties[] = [
         "name": "Initiate Payout",
         "value": "initiatePayout",
         "description": "Initiates an on-demand payout to the seller's default deposit method in Seller Central for the given <code>marketplaceId</code> and <code>accountType</code>, if eligible. You can only initiate one on-demand payout for each marketplace and account type within a 24-hour period."
+      },
+      {
+        "name": "List Balances",
+        "value": "listBalances",
+        "description": "Retrieve a balance. This balance can be a past balances at a specified date, or a current balance. Sub-balances are listed by account type and marketplace."
+      },
+      {
+        "name": "List Expected Payouts",
+        "value": "listExpectedPayouts",
+        "description": "Returns the upcoming expected payouts from Amazon associated with a partner's account for the specified parameters."
       },
       {
         "name": "List Financial Event Groups",
@@ -866,17 +1012,22 @@ export const generatedOperations: INodeProperties[] = [
         "description": "Returns all financial events for the specified order. Orders from the last 48 hours might not be included in financial events."
       },
       {
-        "name": "List Transactions (2024-06-19)",
-        "value": "listTransactions_2024_06_19",
-        "description": "Returns transactions for the given parameters. Financial events might not include orders from the last 48 hours."
+        "name": "List Payouts",
+        "value": "listPayouts",
+        "description": "Retrieve a list of payouts for the selling partner's account. You can filter results by <code>marketplaceIds</code>, <code>accountType</code>, date range (<code>createdAfter</code> and <code>createdBefore</code>), or a specific <code>payoutId</code>. By default, the response includes payouts for all available marketplaces and account types. Results are grouped by the seller's account groups. Within each account group results are sorted by their creation date, with the most recent appearing first."
       },
       {
-        "name": "List Transactions (v0)",
-        "value": "listTransactions_v0",
-        "description": "Returns transactions for the given parameters. Orders from the last 48 hours might not be included in financial events."
+        "name": "List Summary",
+        "value": "listSummary",
+        "description": "Retrieve the financial summary for the specified time period or settlement period."
+      },
+      {
+        "name": "List Transactions",
+        "value": "listTransactions",
+        "description": "Returns transactions for the given parameters. Financial events might not include orders from the last 48 hours. <strong>Note:</strong> If you want to retrieve MFN orders in the US store, do not supply the <code>marketplaceId</code> parameter."
       }
     ],
-    "default": "getPaymentMethods"
+    "default": "getInvoice"
   },
   {
     "displayName": "Operation",
@@ -1079,7 +1230,7 @@ export const generatedOperations: INodeProperties[] = [
       {
         "name": "List Prep Details",
         "value": "listPrepDetails",
-        "description": "Get preparation details for a list of MSKUs in a specified marketplace.\\n\\n<strong>Note:</strong> MSKUs that contain certain characters must be encoded. For more information, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/url-encoding\" target=\"_blank\" rel=\"noopener noreferrer\">URL Encoding</a>.\\n\\nThe following characters must be double percent encoded:\\n\\n- <code>%</code>\\n- <code>+</code>\\n- <code>,</code>\\n\\n<strong>Examples:</strong> An MSKU value of <code>test%msku</code> is encoded as <code>test%2525msku</code>. An MSKU value of <code>test,msku</code> is encoded as <code>test%252Cmsku</code>."
+        "description": "Get preparation details for a list of MSKUs in a specified marketplace."
       },
       {
         "name": "List Shipment Boxes",
@@ -1168,6 +1319,11 @@ export const generatedOperations: INodeProperties[] = [
         "description": "Requests that Amazon stop attempting to fulfill the fulfillment order indicated by the specified order identifier."
       },
       {
+        "name": "Cancel Order",
+        "value": "cancelOrder",
+        "description": "Request that Amazon stop attempting to fulfill a fulfillment order."
+      },
+      {
         "name": "Create Fulfillment Order",
         "value": "createFulfillmentOrder",
         "description": "Requests that Amazon ship items from the seller's inventory in Amazon's fulfillment network to a destination address."
@@ -1176,6 +1332,11 @@ export const generatedOperations: INodeProperties[] = [
         "name": "Create Fulfillment Return",
         "value": "createFulfillmentReturn",
         "description": "Creates a fulfillment return."
+      },
+      {
+        "name": "Create Order",
+        "value": "createOrder",
+        "description": "Request that Amazon ship items from the seller's inventory in Amazon's fulfillment network to a destination address."
       },
       {
         "name": "Delivery Offers",
@@ -1208,6 +1369,21 @@ export const generatedOperations: INodeProperties[] = [
         "description": "Returns a list of fulfillment order previews based on shipping criteria that you specify."
       },
       {
+        "name": "Get Offers",
+        "value": "getOffers",
+        "description": "Retrieve delivery options that include an estimated delivery date and offer expiration, based on criteria that you specify."
+      },
+      {
+        "name": "Get Order",
+        "value": "getOrder",
+        "description": "Retrieve a fulfillment order."
+      },
+      {
+        "name": "Get Order Preview",
+        "value": "getOrderPreview",
+        "description": "Retrieve a list of fulfillment order previews based on shipping criteria that you specify."
+      },
+      {
         "name": "Get Package Tracking Details",
         "value": "getPackageTrackingDetails",
         "description": "Returns delivery tracking information for a package in an outbound shipment for a Multi-Channel Fulfillment order."
@@ -1216,6 +1392,11 @@ export const generatedOperations: INodeProperties[] = [
         "name": "List All Fulfillment Orders",
         "value": "listAllFulfillmentOrders",
         "description": "Returns a list of fulfillment orders fulfilled after (or at) a specified date-time, or indicated by the <code>nextToken</code> parameter."
+      },
+      {
+        "name": "List Orders",
+        "value": "listOrders",
+        "description": "Retrieve a list of fulfillment orders that match the criteria you specify."
       },
       {
         "name": "List Return Reason Codes",
@@ -1231,6 +1412,21 @@ export const generatedOperations: INodeProperties[] = [
         "name": "Update Fulfillment Order",
         "value": "updateFulfillmentOrder",
         "description": "Updates and/or requests shipment for a fulfillment order with an order hold on it."
+      },
+      {
+        "name": "Update Order",
+        "value": "updateOrder",
+        "description": "Update and/or request shipment for a fulfillment order with an order hold on it."
+      },
+      {
+        "name": "Update Order Status",
+        "value": "updateOrderStatus",
+        "description": "Request that Amazon update the status of an order in the sandbox testing environment. This is a sandbox-only operation and must be directed to a sandbox endpoint. Refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/fulfillment-outbound-dynamic-sandbox-guide\" target=\"_blank\" rel=\"noopener noreferrer\">Fulfillment Outbound Dynamic Sandbox Guide</a> and <a href=\"https://developer-docs.amazon.com/sp-api/docs/the-selling-partner-api-sandbox\" target=\"_blank\" rel=\"noopener noreferrer\">Selling Partner API sandbox</a> for more information."
+      },
+      {
+        "name": "Update Package",
+        "value": "updatePackage",
+        "description": "Update package information for a specific package in a fulfillment order. This is a sandbox-only operation and must be directed to a sandbox endpoint. Refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/fulfillment-outbound-dynamic-sandbox-guide\" target=\"_blank\" rel=\"noopener noreferrer\">Fulfillment Outbound Dynamic Sandbox Guide</a> and <a href=\"https://developer-docs.amazon.com/sp-api/docs/the-selling-partner-api-sandbox\" target=\"_blank\" rel=\"noopener noreferrer\">Selling Partner API sandbox</a> for more information."
       }
     ],
     "default": "cancelFulfillmentOrder"
@@ -1249,9 +1445,24 @@ export const generatedOperations: INodeProperties[] = [
     },
     "options": [
       {
+        "name": "Create Government Invoice",
+        "value": "createGovernmentInvoice",
+        "description": "Submit an asynchronous request to create a government invoice."
+      },
+      {
         "name": "Create Invoices Export",
         "value": "createInvoicesExport",
         "description": "Creates an invoice export request."
+      },
+      {
+        "name": "Get Government Invoice Document",
+        "value": "getGovernmentInvoiceDocument",
+        "description": "Retrieve the URL of an invoice document."
+      },
+      {
+        "name": "Get Government Invoice Status",
+        "value": "getGovernmentInvoiceStatus",
+        "description": "Retrieve the status of an invoice generation request."
       },
       {
         "name": "Get Invoice",
@@ -1284,7 +1495,7 @@ export const generatedOperations: INodeProperties[] = [
         "description": "Returns invoice exports details for exports that match the filters that you specify."
       }
     ],
-    "default": "createInvoicesExport"
+    "default": "createGovernmentInvoice"
   },
   {
     "displayName": "Operation",
@@ -1423,11 +1634,6 @@ export const generatedOperations: INodeProperties[] = [
         "description": "Sends a message asking a buyer to provide or verify customization details such as name spelling, images, initials, etc."
       },
       {
-        "name": "Create Amazon Motors",
-        "value": "CreateAmazonMotors",
-        "description": "Sends a message to a buyer to provide details about an Amazon Motors order. This message can only be sent by Amazon Motors sellers."
-      },
-      {
         "name": "Create Confirm Delivery Details",
         "value": "createConfirmDeliveryDetails",
         "description": "Sends a message to a buyer to arrange a delivery or to confirm contact information for making a delivery."
@@ -1496,42 +1702,52 @@ export const generatedOperations: INodeProperties[] = [
       {
         "name": "Create Destination",
         "value": "createDestination",
-        "description": "Creates a destination resource to receive notifications. The <code>createDestination</code> operation is grantless. For more information, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/grantless-operations\" target=\"_blank\" rel=\"noopener noreferrer\">Grantless operations</a>."
+        "description": "Creates a destination resource to receive notifications. The <code>createDestination</code> operation is grantless. For more information, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/grantless-operations\" target=\"_blank\" rel=\"noopener noreferrer\">Grantless Operations</a> in the Selling Partner API Developer Guide."
       },
       {
         "name": "Create Subscription",
         "value": "createSubscription",
-        "description": "Creates a subscription for the specified notification type to be delivered to the specified destination. Before you can subscribe, you must first create the destination by calling the <code>createDestination</code> operation. In cases where the specified notification type supports multiple payload versions, you can utilize this API to subscribe to a different payload version if you already have an existing subscription for a different payload version."
+        "description": "Creates a subscription for the specified notification type to be delivered to the specified destination. Before you can subscribe, you must first create the destination by calling the <code>createDestination</code> operation. If the notification type that you specify supports multiple payload versions, you can use this operation to subscribe to a different payload version if you already have an existing subscription for a different payload version."
       },
       {
         "name": "Delete Destination",
         "value": "deleteDestination",
-        "description": "Deletes the destination that you specify. The <code>deleteDestination</code> operation is grantless. For more information, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/grantless-operations\" target=\"_blank\" rel=\"noopener noreferrer\">Grantless operations</a>."
+        "description": "Deletes the destination that you specify. The <code>deleteDestination</code> operation is grantless. For more information, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/grantless-operations\" target=\"_blank\" rel=\"noopener noreferrer\">Grantless Operations</a> in the Selling Partner API Developer Guide."
       },
       {
         "name": "Delete Subscription By Id",
         "value": "deleteSubscriptionById",
-        "description": "Deletes the subscription indicated by the subscription identifier and notification type that you specify. The subscription identifier can be for any subscription associated with your application. After you successfully call this operation, notifications will stop being sent for the associated subscription. The <code>deleteSubscriptionById</code> operation is grantless. For more information, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/grantless-operations\" target=\"_blank\" rel=\"noopener noreferrer\">Grantless operations</a>."
+        "description": "Deletes the subscription indicated by the subscription identifier and notification type that you specify. The subscription identifier can be for any subscription associated with your application. After you successfully call this operation, notifications will stop being sent for the associated subscription. The <code>deleteSubscriptionById</code> operation is grantless. For more information, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/grantless-operations\" target=\"_blank\" rel=\"noopener noreferrer\">Grantless Operations</a> in the Selling Partner API Developer Guide."
       },
       {
         "name": "Get Destination",
         "value": "getDestination",
-        "description": "Returns information about the destination that you specify. The <code>getDestination</code> operation is grantless. For more information, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/grantless-operations\" target=\"_blank\" rel=\"noopener noreferrer\">Grantless operations</a>."
+        "description": "Returns information about the destination that you specify. The <code>getDestination</code> operation is grantless. For more information, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/grantless-operations\" target=\"_blank\" rel=\"noopener noreferrer\">Grantless Operations</a> in the Selling Partner API Developer Guide."
       },
       {
         "name": "Get Destinations",
         "value": "getDestinations",
-        "description": "Returns information about all destinations. The <code>getDestinations</code> operation is grantless. For more information, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/grantless-operations\" target=\"_blank\" rel=\"noopener noreferrer\">Grantless operations</a>."
+        "description": "Returns information about all destinations. The <code>getDestinations</code> operation is grantless. For more information, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/grantless-operations\" target=\"_blank\" rel=\"noopener noreferrer\">Grantless Operations</a> in the Selling Partner API Developer Guide."
       },
       {
         "name": "Get Subscription",
         "value": "getSubscription",
-        "description": "Returns information about subscription of the specified notification type and payload version. <code>payloadVersion</code> is an optional parameter. When <code>payloadVersion</code> is not provided, it will return latest payload version subscription's information. You can use this API to get subscription information when you do not have a subscription identifier."
+        "description": "Returns information about subscription of the specified notification type and payload version. <code>payloadVersion</code> is an optional parameter. When you do not provide <code>payloadVersion</code>, the operation returns the latest payload version subscription's information. You can use this API to get subscription information when you do not have a subscription identifier."
       },
       {
         "name": "Get Subscription By Id",
         "value": "getSubscriptionById",
-        "description": "Returns information about a subscription for the specified notification type. The <code>getSubscriptionById</code> operation is grantless. For more information, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/grantless-operations\" target=\"_blank\" rel=\"noopener noreferrer\">Grantless operations</a>."
+        "description": "Returns information about a subscription for the specified notification type. The <code>getSubscriptionById</code> operation is grantless. For more information, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/grantless-operations\" target=\"_blank\" rel=\"noopener noreferrer\">Grantless Operations</a> in the Selling Partner API Developer Guide."
+      },
+      {
+        "name": "Get Subscriptions",
+        "value": "getSubscriptions",
+        "description": "Returns information about subscriptions of the specified notification type. You can use this API to retrieve all subscriptions when multiple subscriptions exist for a notification type (for example, when using filter expressions)."
+      },
+      {
+        "name": "Send Test Notification",
+        "value": "sendTestNotification",
+        "description": "Sends a mock notification of the specified type to your SQS. The <code>sendTestNotification</code> API is grantless. For more information, see &quot;Grantless operations&quot; in the Selling Partner API Developer Guide."
       }
     ],
     "default": "createDestination"
@@ -1555,8 +1771,13 @@ export const generatedOperations: INodeProperties[] = [
         "description": "Updates the shipment confirmation status for a specified order."
       },
       {
-        "name": "Get Order",
-        "value": "getOrder",
+        "name": "Get Order (2026-01-01)",
+        "value": "getOrder_2026_01_01",
+        "description": "Returns the order that you specify."
+      },
+      {
+        "name": "Get Order (v0)",
+        "value": "getOrder_v0",
         "description": "Returns the order that you specify."
       },
       {
@@ -1588,6 +1809,11 @@ export const generatedOperations: INodeProperties[] = [
         "name": "Get Orders",
         "value": "getOrders",
         "description": "Returns orders that are created or updated during the specified time period. If you want to return specific types of orders, you can apply filters to your request. <code>NextToken</code> doesn't affect any filters that you include in your request; it only impacts the pagination for the filtered orders response."
+      },
+      {
+        "name": "Search Orders",
+        "value": "searchOrders",
+        "description": "Returns orders created or updated during the time period that you specify. You can filter the response for specific types of orders."
       },
       {
         "name": "Update Shipment Status",
@@ -1723,6 +1949,37 @@ export const generatedOperations: INodeProperties[] = [
     "displayOptions": {
       "show": {
         "resource": [
+          "promotions"
+        ]
+      }
+    },
+    "options": [
+      {
+        "name": "Get Promotion",
+        "value": "getPromotion",
+        "description": "Retrieve details of a specified promotion."
+      },
+      {
+        "name": "Get Selection",
+        "value": "getSelection",
+        "description": "Retrieve up to 100 product items that are associated with a specified promotion. This operation only supports items found in <code>SelectionType.ITEMS</code>. Items found in <code>SelectionType.CATALOG</code> are not supported. Selection objects always include <code>selectionDetails</code> with item information."
+      },
+      {
+        "name": "Search Promotions",
+        "value": "searchPromotions",
+        "description": "Search and filter promotions based on various criteria. Returns a paginated list of promotion summaries."
+      }
+    ],
+    "default": "getPromotion"
+  },
+  {
+    "displayName": "Operation",
+    "name": "operation",
+    "type": "options",
+    "noDataExpression": true,
+    "displayOptions": {
+      "show": {
+        "resource": [
           "replenishment"
         ]
       }
@@ -1844,12 +2101,12 @@ export const generatedOperations: INodeProperties[] = [
       {
         "name": "Create Transaction",
         "value": "createTransaction",
-        "description": "Create a transaction request from Amazon SW account to another customer provided account"
+        "description": "Create a transaction request from Amazon Seller Wallet account to another customer-provided account"
       },
       {
         "name": "Create Transfer Schedule",
         "value": "createTransferSchedule",
-        "description": "Create a transfer schedule request from Amazon SW account to another customer provided account"
+        "description": "Create a transfer schedule request from Amazon Seller Wallet account to another customer-provided account"
       },
       {
         "name": "Delete Schedule Transaction",
@@ -1859,12 +2116,12 @@ export const generatedOperations: INodeProperties[] = [
       {
         "name": "Get Account",
         "value": "getAccount",
-        "description": "Find particular Amazon SW account by Amazon account identifier"
+        "description": "Find particular Amazon Seller Wallet account by Amazon account identifier"
       },
       {
         "name": "Get Transaction",
         "value": "getTransaction",
-        "description": "Find particular Amazon SW account transaction by Amazon transaction identifier"
+        "description": "Find particular Amazon Seller Wallet account transaction by Amazon transaction identifier"
       },
       {
         "name": "Get Transfer Preview",
@@ -1879,22 +2136,22 @@ export const generatedOperations: INodeProperties[] = [
       {
         "name": "List Account Balances",
         "value": "listAccountBalances",
-        "description": "Find balance in particular Amazon SW account by Amazon account identifier"
+        "description": "Find balance in particular Amazon Seller Wallet account by Amazon account identifier"
       },
       {
         "name": "List Account Transactions",
         "value": "listAccountTransactions",
-        "description": "The API will return all the transactions for a given Amazon SW account sorted by the transaction request date"
+        "description": "The API will return all the transactions for a given Amazon Seller Wallet account sorted by the transaction request date"
       },
       {
         "name": "List Accounts",
         "value": "listAccounts",
-        "description": "Get all Amazon SW accounts for the seller"
+        "description": "Get all Amazon Seller Wallet accounts for the seller"
       },
       {
         "name": "List Transfer Schedules",
         "value": "listTransferSchedules",
-        "description": "The API will return all the transfer schedules for a given Amazon SW account"
+        "description": "The API will return all the transfer schedules for a given Amazon Seller Wallet account"
       },
       {
         "name": "Update Transfer Schedule",
@@ -2303,6 +2560,37 @@ export const generatedOperations: INodeProperties[] = [
     "displayOptions": {
       "show": {
         "resource": [
+          "support"
+        ]
+      }
+    },
+    "options": [
+      {
+        "name": "Get Case",
+        "value": "getCase",
+        "description": "Retrieve a specific support case."
+      },
+      {
+        "name": "List Cases",
+        "value": "listCases",
+        "description": "Retrieve support cases for a selling partner."
+      },
+      {
+        "name": "List Contacts",
+        "value": "listContacts",
+        "description": "Retrieve contacts for a specific support case."
+      }
+    ],
+    "default": "getCase"
+  },
+  {
+    "displayName": "Operation",
+    "name": "operation",
+    "type": "options",
+    "noDataExpression": true,
+    "displayOptions": {
+      "show": {
+        "resource": [
           "tokens"
         ]
       }
@@ -2315,6 +2603,27 @@ export const generatedOperations: INodeProperties[] = [
       }
     ],
     "default": "createRestrictedDataToken"
+  },
+  {
+    "displayName": "Operation",
+    "name": "operation",
+    "type": "options",
+    "noDataExpression": true,
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "tracking"
+        ]
+      }
+    },
+    "options": [
+      {
+        "name": "Get Shipment Tracking",
+        "value": "getShipmentTracking",
+        "description": "Get tracking information for the shipment."
+      }
+    ],
+    "default": "getShipmentTracking"
   },
   {
     "displayName": "Operation",
@@ -2656,7 +2965,7 @@ export const generatedOperations: INodeProperties[] = [
       {
         "name": "Get Purchase Orders",
         "value": "getPurchaseOrders",
-        "description": "Returns a list of purchase orders created or changed during the time frame that you specify. You define the time frame using the <code>createdAfter</code>, <code>createdBefore</code>, <code>changedAfter</code> and <code>changedBefore</code> parameters. The date range to search must not be more than 7 days. You can choose to get only the purchase order numbers by setting <code>includeDetails</code> to false. You can then use the <code>getPurchaseOrder</code> operation to receive details for a specific purchase order."
+        "description": "Returns a list of purchase orders created or changed during the time frame that you specify. You define the time frame using the <code>createdAfter</code>, <code>createdBefore</code>, <code>changedAfter</code> and <code>changedBefore</code> parameters. The date range must not exceed 7 days and is available to pull data from the past 6 months. You can choose to get only the purchase order numbers by setting <code>includeDetails</code> to false. You can then use the <code>getPurchaseOrder</code> operation to receive details for a specific purchase order."
       },
       {
         "name": "Get Purchase Orders Status",
@@ -2693,11 +3002,6 @@ export const generatedOperations: INodeProperties[] = [
         "name": "Get Shipment Labels",
         "value": "GetShipmentLabels",
         "description": "Returns small parcel shipment labels based on the filters that you specify."
-      },
-      {
-        "name": "Submit Shipment Confirmation",
-        "value": "SubmitShipmentConfirmation",
-        "description": "SubmitShipmentConfirmation"
       },
       {
         "name": "Submit Shipment Confirmations",
@@ -2818,6 +3122,42 @@ export const generatedFields: INodeProperties[] = [
     }
   },
   {
+    "displayName": "Order Id",
+    "name": "orderId",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "ID for the outbound order you want to confirm.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "amazonWarehousingAndDistribution"
+        ],
+        "operation": [
+          "confirmOutbound"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Order Id",
+    "name": "orderId",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "ID of the replenishment order to be confirmed.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "amazonWarehousingAndDistribution"
+        ],
+        "operation": [
+          "confirmReplenishmentOrder"
+        ]
+      }
+    }
+  },
+  {
     "displayName": "Body (JSON)",
     "name": "bodyJson",
     "type": "json",
@@ -2833,6 +3173,40 @@ export const generatedFields: INodeProperties[] = [
     },
     "default": "{}",
     "description": "JSON body for this request. Schema: InboundOrderCreationData { externalReferenceId?: string, originAddress: Address { addressLine1: string, addressLine2?: string, addressLine3?: string, city?: string, countryCode: string, county?: string, district?: string, name: string, phoneNumber?: string, postalCode?: string, stateOrRegion: string }, packagesToInbound: DistributionPackageQuantity { count: integer, distributionPackage: object }[], preferences?: InboundPreferences { destinationRegion?: string } }"
+  },
+  {
+    "displayName": "Body (JSON)",
+    "name": "bodyJson",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "amazonWarehousingAndDistribution"
+        ],
+        "operation": [
+          "createOutbound"
+        ]
+      }
+    },
+    "default": "{}",
+    "description": "JSON body for this request. Schema: OutboundOrderCreationData { orderPreferences?: OrderAttribute { orderPreference: object, orderPreferenceValue: object }[], packagesToOutbound?: DistributionPackageQuantity { count: integer, distributionPackage: object }[], productsToOutbound?: ProductQuantity { attributes?: array, quantity: integer, sku: string, expiration?: string, prepDetails?: object }[] }"
+  },
+  {
+    "displayName": "Body (JSON)",
+    "name": "bodyJson",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "amazonWarehousingAndDistribution"
+        ],
+        "operation": [
+          "createReplenishmentOrder"
+        ]
+      }
+    },
+    "default": "{}",
+    "description": "JSON body for this request. Schema: ReplenishmentOrderCreationData { preferences?: ReplenishmentPreferences { confirmation?: ConfirmationMode string }, products?: DistributionProduct { attributes?: array, quantity: integer, sku: string }[] }"
   },
   {
     "displayName": "Order Id",
@@ -2952,16 +3326,8 @@ export const generatedFields: INodeProperties[] = [
         "description": "Page type for the generated labels. The default is <code>PLAIN_PAPER</code>.",
         "options": [
           {
-            "name": "THERMAL_NONPCP",
-            "value": "THERMAL_NONPCP"
-          },
-          {
             "name": "PLAIN_PAPER",
             "value": "PLAIN_PAPER"
-          },
-          {
-            "name": "LETTER_6",
-            "value": "LETTER_6"
           }
         ]
       },
@@ -2981,6 +3347,60 @@ export const generatedFields: INodeProperties[] = [
       }
     ],
     "description": "Optional parameters."
+  },
+  {
+    "displayName": "Shipment Id",
+    "name": "shipmentId",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "ID for the shipment.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "amazonWarehousingAndDistribution"
+        ],
+        "operation": [
+          "getLabelPageTypes"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Order Id",
+    "name": "orderId",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "ID for the outbound order to be retrieved.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "amazonWarehousingAndDistribution"
+        ],
+        "operation": [
+          "getOutbound"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Order Id",
+    "name": "orderId",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "ID of the replenishment order to be retrieved.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "amazonWarehousingAndDistribution"
+        ],
+        "operation": [
+          "getReplenishmentOrder"
+        ]
+      }
+    }
   },
   {
     "displayName": "Options",
@@ -3217,6 +3637,174 @@ export const generatedFields: INodeProperties[] = [
     "description": "Optional parameters."
   },
   {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "amazonWarehousingAndDistribution"
+        ],
+        "operation": [
+          "listOutbounds"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Return All",
+        "name": "returnAll",
+        "type": "boolean",
+        "default": false,
+        "description": "Automatically fetch all pages when a pagination token is returned."
+      },
+      {
+        "displayName": "Max Results",
+        "name": "maxResults",
+        "type": "number",
+        "default": 0,
+        "description": "Maximum number of items to return. 0 means no limit."
+      },
+      {
+        "displayName": "Updated After",
+        "name": "updatedAfter",
+        "type": "dateTime",
+        "required": false,
+        "default": "",
+        "description": "Get the outbound orders updated after a certain time (inclusive). The date must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format."
+      },
+      {
+        "displayName": "Updated Before",
+        "name": "updatedBefore",
+        "type": "dateTime",
+        "required": false,
+        "default": "",
+        "description": "Get the outbound orders updated before a certain time (inclusive). The date must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format."
+      },
+      {
+        "displayName": "Sort Order",
+        "name": "sortOrder",
+        "type": "options",
+        "required": false,
+        "default": "",
+        "description": "Sort the response in <code>ASCENDING</code> or <code>DESCENDING</code> order.",
+        "options": [
+          {
+            "name": "ASCENDING",
+            "value": "ASCENDING"
+          },
+          {
+            "name": "DESCENDING",
+            "value": "DESCENDING"
+          }
+        ]
+      },
+      {
+        "displayName": "Max Results",
+        "name": "maxResults",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "Maximum number of results to return."
+      },
+      {
+        "displayName": "Next Token",
+        "name": "nextToken",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "A token that is used to retrieve the next page of results. The response includes <code>nextToken</code> when the number of results exceeds the specified <code>maxResults</code> value. To get the next page of results, call the operation with this token and include the same arguments as the call that produced the token. To get a complete list, call this operation until <code>nextToken</code> is null. Note that this operation can return empty pages."
+      }
+    ],
+    "description": "Optional parameters."
+  },
+  {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "amazonWarehousingAndDistribution"
+        ],
+        "operation": [
+          "listReplenishmentOrders"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Return All",
+        "name": "returnAll",
+        "type": "boolean",
+        "default": false,
+        "description": "Automatically fetch all pages when a pagination token is returned."
+      },
+      {
+        "displayName": "Max Results",
+        "name": "maxResults",
+        "type": "number",
+        "default": 0,
+        "description": "Maximum number of items to return. 0 means no limit."
+      },
+      {
+        "displayName": "Updated After",
+        "name": "updatedAfter",
+        "type": "dateTime",
+        "required": false,
+        "default": "",
+        "description": "Get the replenishment orders updated after certain time (Inclusive)<br>Date should be in ISO 8601 format as defined by date-time in - https://www.rfc-editor.org/rfc/rfc3339."
+      },
+      {
+        "displayName": "Updated Before",
+        "name": "updatedBefore",
+        "type": "dateTime",
+        "required": false,
+        "default": "",
+        "description": "Get the replenishment orders updated before certain time (Inclusive)<br>Date should be in ISO 8601 format as defined by date-time in - https://www.rfc-editor.org/rfc/rfc3339."
+      },
+      {
+        "displayName": "Sort Order",
+        "name": "sortOrder",
+        "type": "options",
+        "required": false,
+        "default": "",
+        "description": "Sort the response in ASCENDING or DESCENDING order. The default sort order is DESCENDING.",
+        "options": [
+          {
+            "name": "ASCENDING",
+            "value": "ASCENDING"
+          },
+          {
+            "name": "DESCENDING",
+            "value": "DESCENDING"
+          }
+        ]
+      },
+      {
+        "displayName": "Max Results",
+        "name": "maxResults",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "Maximum results to be returned in a single response."
+      },
+      {
+        "displayName": "Next Token",
+        "name": "nextToken",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "A token that is used to retrieve the next page of results. The response includes <code>nextToken</code> when the number of results exceeds the specified <code>maxResults</code> value. To get the next page of results, call the operation with this token and include the same arguments as the call that produced the token. To get a complete list, call this operation until <code>nextToken</code> is null. Note that this operation can return empty pages."
+      }
+    ],
+    "description": "Optional parameters."
+  },
+  {
     "displayName": "Order Id",
     "name": "orderId",
     "type": "string",
@@ -3287,6 +3875,41 @@ export const generatedFields: INodeProperties[] = [
     "description": "JSON body for this request. Schema: TransportationDetails { trackingDetails: TrackingDetails { carrierCode?: object, bookingId: string }[] }"
   },
   {
+    "displayName": "Order Id",
+    "name": "orderId",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "ID for the outbound order to be updated.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "amazonWarehousingAndDistribution"
+        ],
+        "operation": [
+          "updateOutbound"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Body (JSON)",
+    "name": "bodyJson",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "amazonWarehousingAndDistribution"
+        ],
+        "operation": [
+          "updateOutbound"
+        ]
+      }
+    },
+    "default": "{}",
+    "description": "JSON body for this request. Schema: OutboundOrder { confirmedOn?: string, createdAt?: string, eligiblePackagesToOutbound?: DistributionPackageQuantity { count: integer, distributionPackage: object }[], eligibleProductsToOutbound?: ProductQuantity { attributes?: array, quantity: integer, sku: string, expiration?: string, prepDetails?: object }[], executionErrors?: OutboundExecutionError { failureCode: string, failureReasons: array, sku?: string }[], orderId: string, orderPreferences?: OrderAttribute { orderPreference: object, orderPreferenceValue: object }[], orderStatus: OutboundStatus &quot;CONFIRMED&quot; | &quot;DRAFT&quot; | &quot;ELIGIBLE&quot; | &quot;EXECUTING&quot; | &quot;FAILURE&quot; | &quot;INELIGIBLE&quot; | &quot;INVENTORY_OUTBOUND&quot; | &quot;SUCCESS&quot; | &quot;VALIDATING&quot;, outboundShipments: OutboundShipment { createdAt?: string, destinationAddress: object, orderId: string, originAddress: object, shipmentPackageQuantities?: array, shipmentId: string, shipmentProductQuantities?: array, shipmentStatus: object, updatedAt?: string }[], packagesToOutbound?: DistributionPackageQuantity { count: integer, distributionPackage: object }[], productsToOutbound?: ProductQuantity { attributes?: array, quantity: integer, sku: string, expiration?: string, prepDetails?: object }[], shippedOutboundPackages?: DistributionPackageQuantity { count: integer, distributionPackage: object }[], shippedOutboundProducts?: ProductQuantity { attributes?: array, quantity: integer, sku: string, expiration?: string, prepDetails?: object }[], updatedAt?: string }"
+  },
+  {
     "displayName": "Response Type",
     "name": "responseType",
     "type": "options",
@@ -3320,7 +3943,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "options",
     "required": true,
     "default": "A1PA6795UKMFR9",
-    "description": "The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+    "description": "The identifier for the Amazon store where the A+ Content is published.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -3436,12 +4059,29 @@ export const generatedFields: INodeProperties[] = [
     "description": "JSON body for this request. Schema: PostContentDocumentRequest { contentDocument: ContentDocument { name: string, contentType: ContentType string, contentSubType?: ContentSubType string, locale: LanguageTag string, contentModuleList: ContentModuleList array } }"
   },
   {
+    "displayName": "Body (JSON)",
+    "name": "bodyJson",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "aplusContent"
+        ],
+        "operation": [
+          "createMedia"
+        ]
+      }
+    },
+    "default": "{}",
+    "description": "JSON body for this request. Schema: CreateMediaRequest { mediaType: MediaType &quot;VIDEO&quot; | &quot;IMAGE&quot;, uploadDestinationId?: string, mediaId?: string, title?: string, descriptions?: DescriptionList Description[], relatedMedia?: RelatedMediaInputList RelatedMediaInput[] }"
+  },
+  {
     "displayName": "Content Reference Key",
     "name": "contentReferenceKey",
     "type": "string",
     "required": true,
     "default": "",
-    "description": "The unique reference key for the A+ Content document. A content reference key cannot form a permalink and might change in the future. A content reference key is not guaranteed to match any A+ Content identifier.",
+    "description": "The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ Content identifier.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -3459,7 +4099,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "options",
     "required": true,
     "default": "A1PA6795UKMFR9",
-    "description": "The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+    "description": "The identifier for the Amazon store where the A+ Content is published.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -3586,12 +4226,58 @@ export const generatedFields: INodeProperties[] = [
     ]
   },
   {
+    "displayName": "Media Id",
+    "name": "mediaId",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "The unique identifier for the media asset.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "aplusContent"
+        ],
+        "operation": [
+          "getMedia"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "aplusContent"
+        ],
+        "operation": [
+          "getMedia"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Associated Media Id",
+        "name": "associatedMediaId",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "When provided, returns only the specific association. When omitted, returns all associated media."
+      }
+    ],
+    "description": "Optional parameters."
+  },
+  {
     "displayName": "Content Reference Key",
     "name": "contentReferenceKey",
     "type": "string",
     "required": true,
     "default": "",
-    "description": "The unique reference key for the A+ Content document. A content reference key cannot form a permalink and might change in the future. A content reference key is not guaranteed to match any A+ Content identifier.",
+    "description": "The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ Content identifier.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -3609,7 +4295,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "options",
     "required": true,
     "default": "A1PA6795UKMFR9",
-    "description": "The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+    "description": "The identifier for the Amazon store where the A+ Content is published.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -3744,7 +4430,7 @@ export const generatedFields: INodeProperties[] = [
         "type": "multiOptions",
         "required": false,
         "default": [],
-        "description": "The set of A+ Content data types to include in the response. If you don't include this parameter, the operation returns the related ASINs without metadata.",
+        "description": "The set of A+ Content data types to include in the response. If you do not include this parameter, the operation returns the related ASINs without metadata.",
         "options": [
           {
             "name": "METADATA",
@@ -3766,7 +4452,7 @@ export const generatedFields: INodeProperties[] = [
         "type": "string",
         "required": false,
         "default": "",
-        "description": "A token that you use to fetch a specific page when there are multiple pages of results."
+        "description": "A page token from the <code>nextPageToken</code> response element returned by your previous call to this operation. <code>nextPageToken</code> is returned when the results of a call exceed the page size. To get the next page of results, call the operation and include <code>pageToken</code> as the only parameter. Specifying <code>pageToken</code> with any other parameter will cause the request to fail. When no <code>nextPageToken</code> value is returned there are no more pages to return. A <code>pageToken</code> value is not usable across different operations."
       }
     ],
     "description": "Optional parameters."
@@ -3777,7 +4463,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "string",
     "required": true,
     "default": "",
-    "description": "The unique reference key for the A+ Content document. A content reference key cannot form a permalink and might change in the future. A content reference key is not guaranteed to match any A+ content identifier.",
+    "description": "The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ Content identifier.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -3795,7 +4481,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "options",
     "required": true,
     "default": "A1PA6795UKMFR9",
-    "description": "The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+    "description": "The identifier for the Amazon store where the A+ Content is published.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -3899,7 +4585,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "string",
     "required": true,
     "default": "",
-    "description": "The unique reference key for the A+ Content document. A content reference key cannot form a permalink and might change in the future. A content reference key is not guaranteed to match any A+ content identifier.",
+    "description": "The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ Content identifier.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -3917,7 +4603,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "options",
     "required": true,
     "default": "A1PA6795UKMFR9",
-    "description": "The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+    "description": "The identifier for the Amazon store where the A+ Content is published.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -4038,7 +4724,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "string",
     "required": true,
     "default": "",
-    "description": "The unique reference key for the A+ Content document. A content reference key cannot form a permalink and might change in the future. A content reference key is not guaranteed to match any A+ content identifier.",
+    "description": "The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ Content identifier.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -4056,7 +4742,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "options",
     "required": true,
     "default": "A1PA6795UKMFR9",
-    "description": "The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+    "description": "The identifier for the Amazon store where the A+ Content is published.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -4160,7 +4846,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "options",
     "required": true,
     "default": "A1PA6795UKMFR9",
-    "description": "The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+    "description": "The identifier for the Amazon store where the A+ Content is published.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -4295,7 +4981,7 @@ export const generatedFields: INodeProperties[] = [
         "type": "string",
         "required": false,
         "default": "",
-        "description": "A token that you use to fetch a specific page when there are multiple pages of results."
+        "description": "A page token from the <code>nextPageToken</code> response element returned by your previous call to this operation. <code>nextPageToken</code> is returned when the results of a call exceed the page size. To get the next page of results, call the operation and include <code>pageToken</code> as the only parameter. Specifying <code>pageToken</code> with any other parameter will cause the request to fail. When no <code>nextPageToken</code> value is returned there are no more pages to return. A <code>pageToken</code> value is not usable across different operations."
       }
     ],
     "description": "Optional parameters."
@@ -4306,7 +4992,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "options",
     "required": true,
     "default": "A1PA6795UKMFR9",
-    "description": "The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+    "description": "The identifier for the Amazon store where the A+ Content is published.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -4410,7 +5096,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "string",
     "required": true,
     "default": "",
-    "description": "The Amazon Standard Identification Number (ASIN) is the unique identifier of a product within a marketplace.",
+    "description": "The Amazon Standard Identification Number (ASIN).",
     "displayOptions": {
       "show": {
         "resource": [
@@ -4459,7 +5145,7 @@ export const generatedFields: INodeProperties[] = [
         "type": "string",
         "required": false,
         "default": "",
-        "description": "A token that you use to fetch a specific page when there are multiple pages of results."
+        "description": "A page token from the <code>nextPageToken</code> response element returned by your previous call to this operation. <code>nextPageToken</code> is returned when the results of a call exceed the page size. To get the next page of results, call the operation and include <code>pageToken</code> as the only parameter. Specifying <code>pageToken</code> with any other parameter will cause the request to fail. When no <code>nextPageToken</code> value is returned there are no more pages to return. A <code>pageToken</code> value is not usable across different operations."
       }
     ],
     "description": "Optional parameters."
@@ -4470,7 +5156,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "string",
     "required": true,
     "default": "",
-    "description": "The unique reference key for the A+ Content document. A content reference key cannot form a permalink and might change in the future. A content reference key is not guaranteed to match any A+ Content identifier.",
+    "description": "The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ Content identifier.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -4488,7 +5174,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "options",
     "required": true,
     "default": "A1PA6795UKMFR9",
-    "description": "The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+    "description": "The identifier for the Amazon store where the A+ Content is published.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -4604,12 +5290,75 @@ export const generatedFields: INodeProperties[] = [
     "description": "JSON body for this request. Schema: PostContentDocumentRequest { contentDocument: ContentDocument { name: string, contentType: ContentType string, contentSubType?: ContentSubType string, locale: LanguageTag string, contentModuleList: ContentModuleList array } }"
   },
   {
+    "displayName": "Media Id",
+    "name": "mediaId",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "The unique identifier for the media asset to update.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "aplusContent"
+        ],
+        "operation": [
+          "updateMedia"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Body (JSON)",
+    "name": "bodyJson",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "aplusContent"
+        ],
+        "operation": [
+          "updateMedia"
+        ]
+      }
+    },
+    "default": "{}",
+    "description": "JSON body for this request. Schema: UpdateMediaRequest { title?: string, descriptions?: DescriptionList Description[] }"
+  },
+  {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "aplusContent"
+        ],
+        "operation": [
+          "updateMedia"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Associated Media Id",
+        "name": "associatedMediaId",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "When provided, identifies the specific video-image pairing for title updates. Required when updating a pairing title."
+      }
+    ],
+    "description": "Optional parameters."
+  },
+  {
     "displayName": "Marketplace Id",
     "name": "marketplaceId",
     "type": "options",
     "required": true,
     "default": "A1PA6795UKMFR9",
-    "description": "The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+    "description": "The identifier for the Amazon store where the A+ Content is published.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -7070,7 +7819,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "options",
     "required": true,
     "default": "A1PA6795UKMFR9",
-    "description": "The marketplace identifier.",
+    "description": "The Amazon store identifier.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -7256,6 +8005,14 @@ export const generatedFields: INodeProperties[] = [
         "required": false,
         "default": "",
         "description": "The shipment identifier."
+      },
+      {
+        "displayName": "Invoice Id",
+        "name": "invoiceId",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The invoice access key (NF-e access key for Brazilian invoices). Use this to retrieve the status of a specific invoice."
       }
     ],
     "description": "Optional parameters."
@@ -7612,6 +8369,40 @@ export const generatedFields: INodeProperties[] = [
     "description": "JSON body for this request. Schema: Packages { packages: Package { id: string, dimensions: object, weight: object, hazmatLabels?: array, packageLineItems: object, status?: string, packageHandlingRequirements?: string }[] }"
   },
   {
+    "displayName": "Body (JSON)",
+    "name": "bodyJson",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "externalFulfillment"
+        ],
+        "operation": [
+          "createSandboxLocation"
+        ]
+      }
+    },
+    "default": "{}",
+    "description": "JSON body for this request. Schema: CreateSandboxLocationRequest { merchantIds: string[], marketplaceId: MarketplaceId string, channels?: &quot;FBA&quot; | &quot;MFN&quot;[], locationName: string }"
+  },
+  {
+    "displayName": "Body (JSON)",
+    "name": "bodyJson",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "externalFulfillment"
+        ],
+        "operation": [
+          "createSandboxShipment"
+        ]
+      }
+    },
+    "default": "{}",
+    "description": "JSON body for this request. Schema: CreateSandboxShipmentRequest { locationId: string, marketplaceId: MarketplaceId string, marketplaceChannel: &quot;FBA&quot; | &quot;MFN&quot;, shippingType: &quot;SELF&quot; | &quot;MARKETPLACE&quot; | &quot;THIRD_PARTY_CARRIER&quot;, orderType?: &quot;HAZMAT&quot; | &quot;GIFT_WRAP&quot; | &quot;GIFT_MESSAGE&quot; | &quot;MPS&quot; | &quot;SERIAL&quot; | &quot;CROSS_BORDER&quot; | &quot;REPLACEMENT&quot; | &quot;EXCHANGE&quot; | &quot;PHARMA_NON_PRESCRIPTION&quot; | &quot;PHARMA_PRESCRIPTION&quot;[], lineItemCount?: &quot;SINGLE&quot; | &quot;MULTIPLE&quot;, quantityCount?: &quot;SINGLE&quot; | &quot;MULTIPLE&quot; }"
+  },
+  {
     "displayName": "Shipment Id",
     "name": "shipmentId",
     "type": "string",
@@ -7762,7 +8553,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "options",
     "required": true,
     "default": "",
-    "description": "The status of shipment you want to include in the response. To retrieve all new shipments, set this value to <code>ACCEPTED</code>.",
+    "description": "The status of shipment you want to include in the response. To retrieve all new shipments, set this value to <code>CREATED</code> or <code>ACCEPTED</code>.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -8352,7 +9143,7 @@ export const generatedFields: INodeProperties[] = [
       }
     },
     "default": "{}",
-    "description": "JSON body for this request. Schema: Package { id: string, dimensions: PackageDimensions { length: Dimension, width: Dimension, height: Dimension }, weight: Weight { value: Decimal string, weightUnit: &quot;G&quot; | &quot;KG&quot; }, hazmatLabels?: string[], packageLineItems: PackageLineItems PackageLineItem[], status?: &quot;CREATED&quot; | &quot;PICKUP_SLOT_RETRIEVED&quot; | &quot;INVOICE_GENERATED&quot; | &quot;SHIPLABEL_GENERATED&quot; | &quot;SHIPPED&quot; | &quot;DELIVERED&quot; | &quot;CANCELLED&quot;, packageHandlingRequirements?: &quot;NORMAL&quot; | &quot;FRAGILE&quot; }"
+    "description": "JSON body for this request. Schema: Package { id: string, dimensions: PackageDimensions { length: Dimension, width: Dimension, height: Dimension }, weight: Weight { value: Decimal string, weightUnit: &quot;G&quot; | &quot;KG&quot; | &quot;LB&quot; | &quot;OZ&quot; }, hazmatLabels?: string[], packageLineItems: PackageLineItems PackageLineItem[], status?: &quot;CREATED&quot; | &quot;PICKUP_SLOT_RETRIEVED&quot; | &quot;INVOICE_GENERATED&quot; | &quot;SHIPLABEL_GENERATED&quot; | &quot;SHIPPED&quot; | &quot;DELIVERED&quot; | &quot;CANCELLED&quot;, packageHandlingRequirements?: &quot;NORMAL&quot; | &quot;FRAGILE&quot; }"
   },
   {
     "displayName": "Shipment Id",
@@ -8430,7 +9221,7 @@ export const generatedFields: INodeProperties[] = [
         "type": "options",
         "required": false,
         "default": "",
-        "description": "<strong>DEPRECATED</strong>. Do not use. Package status is defined in the body parameter.",
+        "description": "<strong>This field is only used for the Seller Flex program</strong>. For the Self Delivery program, package statuses are defined in the body parameter.",
         "options": [
           {
             "name": "SHIPPED",
@@ -8440,6 +9231,41 @@ export const generatedFields: INodeProperties[] = [
       }
     ],
     "description": "Optional parameters."
+  },
+  {
+    "displayName": "Shipment Id",
+    "name": "shipmentId",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "The unique identifier of the shipment to update.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "externalFulfillment"
+        ],
+        "operation": [
+          "updateSandboxShipment"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Body (JSON)",
+    "name": "bodyJson",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "externalFulfillment"
+        ],
+        "operation": [
+          "updateSandboxShipment"
+        ]
+      }
+    },
+    "default": "{}",
+    "description": "JSON body for this request. Schema: UpdateSandboxShipmentRequest { updateType: &quot;SHIPMENT_STATUS_CHANGE&quot; | &quot;INVOICE_AVAILABILITY_CHANGE&quot; | &quot;TRANSPORT_CAPACITY_CHANGE&quot;, updates?: SandboxShipmentUpdates { status?: &quot;SHIPPED&quot; | &quot;DELIVERED&quot; | &quot;CANCELLED&quot;, subStatus?: &quot;OUT_FOR_DELIVERY&quot;, timestamp?: string } }"
   },
   {
     "displayName": "Response Type",
@@ -9165,6 +9991,34 @@ export const generatedFields: INodeProperties[] = [
           "feeds"
         ],
         "operation": [
+          "getFeedDocument"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Enable Content Encoding Url Header",
+        "name": "enableContentEncodingUrlHeader",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "When <code>true</code>, the Content-Encoding header on the returned URL is set to <code>gzip</code> instead of the default <code>identity</code> when <code>compressionAlgorithm</code> is <code>GZIP</code>. This allows automatic decompression by HTTP clients."
+      }
+    ],
+    "description": "Optional parameters."
+  },
+  {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "feeds"
+        ],
+        "operation": [
           "getFeeds"
         ]
       }
@@ -9375,6 +10229,346 @@ export const generatedFields: INodeProperties[] = [
     "displayOptions": {
       "show": {
         "resource": [
+          "financeRemittance"
+        ]
+      }
+    },
+    "description": "Response handling for this request."
+  },
+  {
+    "displayName": "Unique Payment Id",
+    "name": "uniquePaymentId",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "The unique identifier for the payment.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "financeRemittance"
+        ],
+        "operation": [
+          "getRemittance"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Marketplace Id",
+    "name": "marketplaceId",
+    "type": "options",
+    "required": true,
+    "default": "A1PA6795UKMFR9",
+    "description": "The <code>marketplaceId</code> is a globally unique identifier used to specify which Amazon store a request is targeting. For more information, refer to <a href=\"https://developer-docs.amazon/sp-api/docs/store-identifiers\" target=\"_blank\" rel=\"noopener noreferrer\">Store Identifiers</a>.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "financeRemittance"
+        ],
+        "operation": [
+          "getRemittance"
+        ]
+      }
+    },
+    "options": [
+      {
+        "name": "United States (amazon.com)",
+        "value": "ATVPDKIKX0DER"
+      },
+      {
+        "name": "Canada (amazon.ca)",
+        "value": "A2EUQ1WTGCTBG2"
+      },
+      {
+        "name": "Mexico (amazon.com.mx)",
+        "value": "A1AM78C64UM0Y8"
+      },
+      {
+        "name": "Brazil (amazon.com.br)",
+        "value": "A2Q3Y263D00KWC"
+      },
+      {
+        "name": "United Kingdom (amazon.co.uk)",
+        "value": "A1F83G8C2ARO7P"
+      },
+      {
+        "name": "Germany (amazon.de)",
+        "value": "A1PA6795UKMFR9"
+      },
+      {
+        "name": "France (amazon.fr)",
+        "value": "A13V1IB3VIYZZH"
+      },
+      {
+        "name": "Italy (amazon.it)",
+        "value": "APJ6JRA9NG5V4"
+      },
+      {
+        "name": "Spain (amazon.es)",
+        "value": "A1RKKUPIHCS9HS"
+      },
+      {
+        "name": "Netherlands (amazon.nl)",
+        "value": "A1805IZSGTT6HS"
+      },
+      {
+        "name": "Poland (amazon.pl)",
+        "value": "A1C3SOZRARQ6R3"
+      },
+      {
+        "name": "Sweden (amazon.se)",
+        "value": "A2NODRKZP88ZB9"
+      },
+      {
+        "name": "Belgium (amazon.com.be)",
+        "value": "AMEN7PMS3EDWL"
+      },
+      {
+        "name": "India (amazon.in)",
+        "value": "A21TJRUUN4KGV"
+      },
+      {
+        "name": "Turkey (amazon.com.tr)",
+        "value": "A33AVAJ2PDY3EV"
+      },
+      {
+        "name": "United Arab Emirates (amazon.ae)",
+        "value": "A2VIGQ35RCS4UG"
+      },
+      {
+        "name": "Saudi Arabia (amazon.sa)",
+        "value": "A17E79C6D8DWNP"
+      },
+      {
+        "name": "Egypt (amazon.eg)",
+        "value": "ARBP9OOSHTCHU"
+      },
+      {
+        "name": "Japan (amazon.co.jp)",
+        "value": "A1VC38T7YXB528"
+      },
+      {
+        "name": "Australia (amazon.com.au)",
+        "value": "A39IBJ37TRP1C6"
+      },
+      {
+        "name": "Singapore (amazon.sg)",
+        "value": "A19VAU5U5O7RUS"
+      }
+    ]
+  },
+  {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "financeRemittance"
+        ],
+        "operation": [
+          "getRemittance"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Next Token For Line Items",
+        "name": "nextTokenForLineItems",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "A token to fetch the next page of results. Use the value returned in the previous response."
+      }
+    ],
+    "description": "Optional parameters."
+  },
+  {
+    "displayName": "Marketplace Id",
+    "name": "marketplaceId",
+    "type": "options",
+    "required": true,
+    "default": "A1PA6795UKMFR9",
+    "description": "The <code>marketplaceId</code> is a globally unique identifier used to specify which Amazon store a request is targeting. For more information, refer to <a href=\"https://developer-docs.amazon/sp-api/docs/store-identifiers\" target=\"_blank\" rel=\"noopener noreferrer\">Store Identifiers</a>.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "financeRemittance"
+        ],
+        "operation": [
+          "getRemittanceHeaders"
+        ]
+      }
+    },
+    "options": [
+      {
+        "name": "United States (amazon.com)",
+        "value": "ATVPDKIKX0DER"
+      },
+      {
+        "name": "Canada (amazon.ca)",
+        "value": "A2EUQ1WTGCTBG2"
+      },
+      {
+        "name": "Mexico (amazon.com.mx)",
+        "value": "A1AM78C64UM0Y8"
+      },
+      {
+        "name": "Brazil (amazon.com.br)",
+        "value": "A2Q3Y263D00KWC"
+      },
+      {
+        "name": "United Kingdom (amazon.co.uk)",
+        "value": "A1F83G8C2ARO7P"
+      },
+      {
+        "name": "Germany (amazon.de)",
+        "value": "A1PA6795UKMFR9"
+      },
+      {
+        "name": "France (amazon.fr)",
+        "value": "A13V1IB3VIYZZH"
+      },
+      {
+        "name": "Italy (amazon.it)",
+        "value": "APJ6JRA9NG5V4"
+      },
+      {
+        "name": "Spain (amazon.es)",
+        "value": "A1RKKUPIHCS9HS"
+      },
+      {
+        "name": "Netherlands (amazon.nl)",
+        "value": "A1805IZSGTT6HS"
+      },
+      {
+        "name": "Poland (amazon.pl)",
+        "value": "A1C3SOZRARQ6R3"
+      },
+      {
+        "name": "Sweden (amazon.se)",
+        "value": "A2NODRKZP88ZB9"
+      },
+      {
+        "name": "Belgium (amazon.com.be)",
+        "value": "AMEN7PMS3EDWL"
+      },
+      {
+        "name": "India (amazon.in)",
+        "value": "A21TJRUUN4KGV"
+      },
+      {
+        "name": "Turkey (amazon.com.tr)",
+        "value": "A33AVAJ2PDY3EV"
+      },
+      {
+        "name": "United Arab Emirates (amazon.ae)",
+        "value": "A2VIGQ35RCS4UG"
+      },
+      {
+        "name": "Saudi Arabia (amazon.sa)",
+        "value": "A17E79C6D8DWNP"
+      },
+      {
+        "name": "Egypt (amazon.eg)",
+        "value": "ARBP9OOSHTCHU"
+      },
+      {
+        "name": "Japan (amazon.co.jp)",
+        "value": "A1VC38T7YXB528"
+      },
+      {
+        "name": "Australia (amazon.com.au)",
+        "value": "A39IBJ37TRP1C6"
+      },
+      {
+        "name": "Singapore (amazon.sg)",
+        "value": "A19VAU5U5O7RUS"
+      }
+    ]
+  },
+  {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "financeRemittance"
+        ],
+        "operation": [
+          "getRemittanceHeaders"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Return All",
+        "name": "returnAll",
+        "type": "boolean",
+        "default": false,
+        "description": "Automatically fetch all pages when a pagination token is returned."
+      },
+      {
+        "displayName": "Max Results",
+        "name": "maxResults",
+        "type": "number",
+        "default": 0,
+        "description": "Maximum number of items to return. 0 means no limit."
+      },
+      {
+        "displayName": "Start Date",
+        "name": "startDate",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The earliest payment date for remittances to include in the response. Dates are in ISO 8601 date-time format. The default is 30 days prior to the time of the request. The minimum start date is one year ago from the current date."
+      },
+      {
+        "displayName": "End Date",
+        "name": "endDate",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The latest payment date for remittances to include in the response. Dates are in ISO 8601 date-time format. The default is the current date-time. The maximum date range between <code>startDate</code> and <code>endDate</code> is 90 days."
+      },
+      {
+        "displayName": "Next Token",
+        "name": "nextToken",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "A token to fetch the next page of results. Use the value returned in the previous response."
+      }
+    ],
+    "description": "Optional parameters."
+  },
+  {
+    "displayName": "Response Type",
+    "name": "responseType",
+    "type": "options",
+    "options": [
+      {
+        "name": "JSON",
+        "value": "json"
+      },
+      {
+        "name": "Text",
+        "value": "text"
+      },
+      {
+        "name": "Stream",
+        "value": "stream"
+      }
+    ],
+    "default": "json",
+    "displayOptions": {
+      "show": {
+        "resource": [
           "finances"
         ]
       }
@@ -9387,7 +10581,327 @@ export const generatedFields: INodeProperties[] = [
     "type": "options",
     "required": true,
     "default": "A1PA6795UKMFR9",
-    "description": "The identifier of the marketplace from which you want to retrieve payment methods. For the list of possible marketplace identifiers, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+    "description": "The marketplace ID of the marketplace of the invoice. The marketplace ID is a globally unique identifier used to specify an Amazon marketplace. For more information, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "finances"
+        ],
+        "operation": [
+          "getInvoice"
+        ]
+      }
+    },
+    "options": [
+      {
+        "name": "United States (amazon.com)",
+        "value": "ATVPDKIKX0DER"
+      },
+      {
+        "name": "Canada (amazon.ca)",
+        "value": "A2EUQ1WTGCTBG2"
+      },
+      {
+        "name": "Mexico (amazon.com.mx)",
+        "value": "A1AM78C64UM0Y8"
+      },
+      {
+        "name": "Brazil (amazon.com.br)",
+        "value": "A2Q3Y263D00KWC"
+      },
+      {
+        "name": "United Kingdom (amazon.co.uk)",
+        "value": "A1F83G8C2ARO7P"
+      },
+      {
+        "name": "Germany (amazon.de)",
+        "value": "A1PA6795UKMFR9"
+      },
+      {
+        "name": "France (amazon.fr)",
+        "value": "A13V1IB3VIYZZH"
+      },
+      {
+        "name": "Italy (amazon.it)",
+        "value": "APJ6JRA9NG5V4"
+      },
+      {
+        "name": "Spain (amazon.es)",
+        "value": "A1RKKUPIHCS9HS"
+      },
+      {
+        "name": "Netherlands (amazon.nl)",
+        "value": "A1805IZSGTT6HS"
+      },
+      {
+        "name": "Poland (amazon.pl)",
+        "value": "A1C3SOZRARQ6R3"
+      },
+      {
+        "name": "Sweden (amazon.se)",
+        "value": "A2NODRKZP88ZB9"
+      },
+      {
+        "name": "Belgium (amazon.com.be)",
+        "value": "AMEN7PMS3EDWL"
+      },
+      {
+        "name": "India (amazon.in)",
+        "value": "A21TJRUUN4KGV"
+      },
+      {
+        "name": "Turkey (amazon.com.tr)",
+        "value": "A33AVAJ2PDY3EV"
+      },
+      {
+        "name": "United Arab Emirates (amazon.ae)",
+        "value": "A2VIGQ35RCS4UG"
+      },
+      {
+        "name": "Saudi Arabia (amazon.sa)",
+        "value": "A17E79C6D8DWNP"
+      },
+      {
+        "name": "Egypt (amazon.eg)",
+        "value": "ARBP9OOSHTCHU"
+      },
+      {
+        "name": "Japan (amazon.co.jp)",
+        "value": "A1VC38T7YXB528"
+      },
+      {
+        "name": "Australia (amazon.com.au)",
+        "value": "A39IBJ37TRP1C6"
+      },
+      {
+        "name": "Singapore (amazon.sg)",
+        "value": "A19VAU5U5O7RUS"
+      }
+    ]
+  },
+  {
+    "displayName": "Invoice Identifier",
+    "name": "invoiceIdentifier",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "The unique identifier for an invoice. This field is also returned as part of the <code>InvoiceHeader</code> element in the response. For AP-Inventory invoices the identifier is formatted as <code>InvoiceNumber~PayeeCode</code>.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "finances"
+        ],
+        "operation": [
+          "getInvoice"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "finances"
+        ],
+        "operation": [
+          "getInvoice"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Next Token For Line Items",
+        "name": "nextTokenForLineItems",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The response includes <code>nextTokenForLineItems</code> when the number of line items exceeds the default page size (600). To get the next page of line items, call the operation with this token, including the same request parameters as the call that generated the token."
+      }
+    ],
+    "description": "Optional parameters."
+  },
+  {
+    "displayName": "Marketplace Id",
+    "name": "marketplaceId",
+    "type": "options",
+    "required": true,
+    "default": "A1PA6795UKMFR9",
+    "description": "The marketplace ID of the marketplace from which you want to retrieve invoice headers. The marketplace ID is a globally unique identifier used to specify which Amazon marketplace a request is targeting. For more information, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "finances"
+        ],
+        "operation": [
+          "getInvoiceHeaders"
+        ]
+      }
+    },
+    "options": [
+      {
+        "name": "United States (amazon.com)",
+        "value": "ATVPDKIKX0DER"
+      },
+      {
+        "name": "Canada (amazon.ca)",
+        "value": "A2EUQ1WTGCTBG2"
+      },
+      {
+        "name": "Mexico (amazon.com.mx)",
+        "value": "A1AM78C64UM0Y8"
+      },
+      {
+        "name": "Brazil (amazon.com.br)",
+        "value": "A2Q3Y263D00KWC"
+      },
+      {
+        "name": "United Kingdom (amazon.co.uk)",
+        "value": "A1F83G8C2ARO7P"
+      },
+      {
+        "name": "Germany (amazon.de)",
+        "value": "A1PA6795UKMFR9"
+      },
+      {
+        "name": "France (amazon.fr)",
+        "value": "A13V1IB3VIYZZH"
+      },
+      {
+        "name": "Italy (amazon.it)",
+        "value": "APJ6JRA9NG5V4"
+      },
+      {
+        "name": "Spain (amazon.es)",
+        "value": "A1RKKUPIHCS9HS"
+      },
+      {
+        "name": "Netherlands (amazon.nl)",
+        "value": "A1805IZSGTT6HS"
+      },
+      {
+        "name": "Poland (amazon.pl)",
+        "value": "A1C3SOZRARQ6R3"
+      },
+      {
+        "name": "Sweden (amazon.se)",
+        "value": "A2NODRKZP88ZB9"
+      },
+      {
+        "name": "Belgium (amazon.com.be)",
+        "value": "AMEN7PMS3EDWL"
+      },
+      {
+        "name": "India (amazon.in)",
+        "value": "A21TJRUUN4KGV"
+      },
+      {
+        "name": "Turkey (amazon.com.tr)",
+        "value": "A33AVAJ2PDY3EV"
+      },
+      {
+        "name": "United Arab Emirates (amazon.ae)",
+        "value": "A2VIGQ35RCS4UG"
+      },
+      {
+        "name": "Saudi Arabia (amazon.sa)",
+        "value": "A17E79C6D8DWNP"
+      },
+      {
+        "name": "Egypt (amazon.eg)",
+        "value": "ARBP9OOSHTCHU"
+      },
+      {
+        "name": "Japan (amazon.co.jp)",
+        "value": "A1VC38T7YXB528"
+      },
+      {
+        "name": "Australia (amazon.com.au)",
+        "value": "A39IBJ37TRP1C6"
+      },
+      {
+        "name": "Singapore (amazon.sg)",
+        "value": "A19VAU5U5O7RUS"
+      }
+    ]
+  },
+  {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "finances"
+        ],
+        "operation": [
+          "getInvoiceHeaders"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Return All",
+        "name": "returnAll",
+        "type": "boolean",
+        "default": false,
+        "description": "Automatically fetch all pages when a pagination token is returned."
+      },
+      {
+        "displayName": "Max Results",
+        "name": "maxResults",
+        "type": "number",
+        "default": 0,
+        "description": "Maximum number of items to return. 0 means no limit."
+      },
+      {
+        "displayName": "Next Token",
+        "name": "nextToken",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The response includes <code>nextToken</code> when the number of invoices exceeds the default page size value (100). To get the next page of results, call the operation with this token and include the same arguments as the call that produced the token. To get a complete list, call this operation until <code>nextToken</code> is <code>null</code>. Note that this operation can return empty pages."
+      },
+      {
+        "displayName": "From Issue Date",
+        "name": "fromIssueDate",
+        "type": "dateTime",
+        "required": false,
+        "default": "",
+        "description": "Retrieve invoice headers issued after this date. The range between <code>fromIssueDate</code> and <code>toIssueDate</code> must not exceed 90 days. Either provide both dates or leave both empty. If you do not provide these dates, <code>fromIssueDate</code> defaults to 90 days before the date of the request. In <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> date-time format."
+      },
+      {
+        "displayName": "To Issue Date",
+        "name": "toIssueDate",
+        "type": "dateTime",
+        "required": false,
+        "default": "",
+        "description": "Retrieve invoice headers issued before this date. The range between <code>fromIssueDate</code> and <code>toIssueDate</code> must not exceed 90 days. Either provide both dates or leave both empty. If you do not provide these dates, <code>toIssueDate</code> defaults to the date of the request. In <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> date-time format."
+      },
+      {
+        "displayName": "Invoices Modified After",
+        "name": "invoicesModifiedAfter",
+        "type": "dateTime",
+        "required": false,
+        "default": "",
+        "description": "Retrieve invoices that were modified after this date-time. In <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> date-time format."
+      }
+    ],
+    "description": "Optional parameters."
+  },
+  {
+    "displayName": "Marketplace Id",
+    "name": "marketplaceId",
+    "type": "options",
+    "required": true,
+    "default": "A1PA6795UKMFR9",
+    "description": "The identifier of the Amazon store from which you want to retrieve payment methods. For the list of store identifiers, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Store Identifiers</a>.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -9543,6 +11057,314 @@ export const generatedFields: INodeProperties[] = [
     },
     "default": "{}",
     "description": "JSON body for this request. Schema: InitiatePayoutRequest { marketplaceId: MarketplaceId string, accountType: string }"
+  },
+  {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "finances"
+        ],
+        "operation": [
+          "listBalances"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Return All",
+        "name": "returnAll",
+        "type": "boolean",
+        "default": false,
+        "description": "Automatically fetch all pages when a pagination token is returned."
+      },
+      {
+        "displayName": "Max Results",
+        "name": "maxResults",
+        "type": "number",
+        "default": 0,
+        "description": "Maximum number of items to return. 0 means no limit."
+      },
+      {
+        "displayName": "Marketplace Ids",
+        "name": "marketplaceIds",
+        "type": "multiOptions",
+        "required": false,
+        "default": [
+          "A1PA6795UKMFR9"
+        ],
+        "description": "The marketplaces from which to retrieve balances. If omitted, balances from all applicable marketplaces may be returned. To find the marketplace ID for a region, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+        "options": [
+          {
+            "name": "United States (amazon.com)",
+            "value": "ATVPDKIKX0DER"
+          },
+          {
+            "name": "Canada (amazon.ca)",
+            "value": "A2EUQ1WTGCTBG2"
+          },
+          {
+            "name": "Mexico (amazon.com.mx)",
+            "value": "A1AM78C64UM0Y8"
+          },
+          {
+            "name": "Brazil (amazon.com.br)",
+            "value": "A2Q3Y263D00KWC"
+          },
+          {
+            "name": "United Kingdom (amazon.co.uk)",
+            "value": "A1F83G8C2ARO7P"
+          },
+          {
+            "name": "Germany (amazon.de)",
+            "value": "A1PA6795UKMFR9"
+          },
+          {
+            "name": "France (amazon.fr)",
+            "value": "A13V1IB3VIYZZH"
+          },
+          {
+            "name": "Italy (amazon.it)",
+            "value": "APJ6JRA9NG5V4"
+          },
+          {
+            "name": "Spain (amazon.es)",
+            "value": "A1RKKUPIHCS9HS"
+          },
+          {
+            "name": "Netherlands (amazon.nl)",
+            "value": "A1805IZSGTT6HS"
+          },
+          {
+            "name": "Poland (amazon.pl)",
+            "value": "A1C3SOZRARQ6R3"
+          },
+          {
+            "name": "Sweden (amazon.se)",
+            "value": "A2NODRKZP88ZB9"
+          },
+          {
+            "name": "Belgium (amazon.com.be)",
+            "value": "AMEN7PMS3EDWL"
+          },
+          {
+            "name": "India (amazon.in)",
+            "value": "A21TJRUUN4KGV"
+          },
+          {
+            "name": "Turkey (amazon.com.tr)",
+            "value": "A33AVAJ2PDY3EV"
+          },
+          {
+            "name": "United Arab Emirates (amazon.ae)",
+            "value": "A2VIGQ35RCS4UG"
+          },
+          {
+            "name": "Saudi Arabia (amazon.sa)",
+            "value": "A17E79C6D8DWNP"
+          },
+          {
+            "name": "Egypt (amazon.eg)",
+            "value": "ARBP9OOSHTCHU"
+          },
+          {
+            "name": "Japan (amazon.co.jp)",
+            "value": "A1VC38T7YXB528"
+          },
+          {
+            "name": "Australia (amazon.com.au)",
+            "value": "A39IBJ37TRP1C6"
+          },
+          {
+            "name": "Singapore (amazon.sg)",
+            "value": "A19VAU5U5O7RUS"
+          }
+        ]
+      },
+      {
+        "displayName": "Balance Type",
+        "name": "balanceType",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The type of balance to include in the response. If omitted, all balance types may be included in the response."
+      },
+      {
+        "displayName": "Account Type",
+        "name": "accountType",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The type of account to include in the response."
+      },
+      {
+        "displayName": "As Of Date",
+        "name": "asOfDate",
+        "type": "dateTime",
+        "required": false,
+        "default": "",
+        "description": "The date from which you want to retrieve balances. If provided, the response includes historical balances at the specified date. The value must be in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> date format. If omitted, the point in time balance is provided."
+      },
+      {
+        "displayName": "Next Token",
+        "name": "nextToken",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "A token that you use to retrieve subsequent pages of results. When there are more than 500 results available, the response will include a <code>nextToken</code> value. To get the next page of results, call the operation with this token and include the same arguments as the call that produced the token. Repeat this process until the <code>nextToken</code> value is null to retrieve all results."
+      }
+    ],
+    "description": "Optional parameters."
+  },
+  {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "finances"
+        ],
+        "operation": [
+          "listExpectedPayouts"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Return All",
+        "name": "returnAll",
+        "type": "boolean",
+        "default": false,
+        "description": "Automatically fetch all pages when a pagination token is returned."
+      },
+      {
+        "displayName": "Max Results",
+        "name": "maxResults",
+        "type": "number",
+        "default": 0,
+        "description": "Maximum number of items to return. 0 means no limit."
+      },
+      {
+        "displayName": "Marketplace Ids",
+        "name": "marketplaceIds",
+        "type": "multiOptions",
+        "required": false,
+        "default": [
+          "A1PA6795UKMFR9"
+        ],
+        "description": "The Amazon stores from which to retrieve payouts. The Amazon store ID is a globally unique identifier assigned to each Amazon store. If omitted, the response includes payouts from all applicable stores. To find the Amazon store ID for your region, refer to <a href=\"https://developer-docs.amazon/sp-api/docs/store-identifiers\" target=\"_blank\" rel=\"noopener noreferrer\">Store Identifiers</a>.",
+        "options": [
+          {
+            "name": "United States (amazon.com)",
+            "value": "ATVPDKIKX0DER"
+          },
+          {
+            "name": "Canada (amazon.ca)",
+            "value": "A2EUQ1WTGCTBG2"
+          },
+          {
+            "name": "Mexico (amazon.com.mx)",
+            "value": "A1AM78C64UM0Y8"
+          },
+          {
+            "name": "Brazil (amazon.com.br)",
+            "value": "A2Q3Y263D00KWC"
+          },
+          {
+            "name": "United Kingdom (amazon.co.uk)",
+            "value": "A1F83G8C2ARO7P"
+          },
+          {
+            "name": "Germany (amazon.de)",
+            "value": "A1PA6795UKMFR9"
+          },
+          {
+            "name": "France (amazon.fr)",
+            "value": "A13V1IB3VIYZZH"
+          },
+          {
+            "name": "Italy (amazon.it)",
+            "value": "APJ6JRA9NG5V4"
+          },
+          {
+            "name": "Spain (amazon.es)",
+            "value": "A1RKKUPIHCS9HS"
+          },
+          {
+            "name": "Netherlands (amazon.nl)",
+            "value": "A1805IZSGTT6HS"
+          },
+          {
+            "name": "Poland (amazon.pl)",
+            "value": "A1C3SOZRARQ6R3"
+          },
+          {
+            "name": "Sweden (amazon.se)",
+            "value": "A2NODRKZP88ZB9"
+          },
+          {
+            "name": "Belgium (amazon.com.be)",
+            "value": "AMEN7PMS3EDWL"
+          },
+          {
+            "name": "India (amazon.in)",
+            "value": "A21TJRUUN4KGV"
+          },
+          {
+            "name": "Turkey (amazon.com.tr)",
+            "value": "A33AVAJ2PDY3EV"
+          },
+          {
+            "name": "United Arab Emirates (amazon.ae)",
+            "value": "A2VIGQ35RCS4UG"
+          },
+          {
+            "name": "Saudi Arabia (amazon.sa)",
+            "value": "A17E79C6D8DWNP"
+          },
+          {
+            "name": "Egypt (amazon.eg)",
+            "value": "ARBP9OOSHTCHU"
+          },
+          {
+            "name": "Japan (amazon.co.jp)",
+            "value": "A1VC38T7YXB528"
+          },
+          {
+            "name": "Australia (amazon.com.au)",
+            "value": "A39IBJ37TRP1C6"
+          },
+          {
+            "name": "Singapore (amazon.sg)",
+            "value": "A19VAU5U5O7RUS"
+          }
+        ]
+      },
+      {
+        "displayName": "Account Type",
+        "name": "accountType",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The response only includes the accounts of the specified account type."
+      },
+      {
+        "displayName": "Next Token",
+        "name": "nextToken",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The response includes <code>nextToken</code> when the number of results exceeds the specified page size. To get the next page of results, call the operation with this token and include the same arguments as the call that produced the token. To get a complete list, call this operation until <code>nextToken</code> is null. Note that this operation can return empty pages."
+      }
+    ],
+    "description": "Optional parameters."
   },
   {
     "displayName": "Options",
@@ -9784,7 +11606,355 @@ export const generatedFields: INodeProperties[] = [
           "finances"
         ],
         "operation": [
-          "listTransactions_2024_06_19"
+          "listPayouts"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Return All",
+        "name": "returnAll",
+        "type": "boolean",
+        "default": false,
+        "description": "Automatically fetch all pages when a pagination token is returned."
+      },
+      {
+        "displayName": "Max Results",
+        "name": "maxResults",
+        "type": "number",
+        "default": 0,
+        "description": "Maximum number of items to return. 0 means no limit."
+      },
+      {
+        "displayName": "Marketplace Ids",
+        "name": "marketplaceIds",
+        "type": "multiOptions",
+        "required": false,
+        "default": [
+          "A1PA6795UKMFR9"
+        ],
+        "description": "The Amazon stores from which to retrieve payouts. The Amazon store ID is a globally unique identifier assigned to each Amazon store. If omitted, the response includes payouts from all applicable stores. To find the Amazon store ID for your region, refer to <a href=\"https://developer-docs.amazon/sp-api/docs/store-identifiers\" target=\"_blank\" rel=\"noopener noreferrer\">Store Identifiers</a>.",
+        "options": [
+          {
+            "name": "United States (amazon.com)",
+            "value": "ATVPDKIKX0DER"
+          },
+          {
+            "name": "Canada (amazon.ca)",
+            "value": "A2EUQ1WTGCTBG2"
+          },
+          {
+            "name": "Mexico (amazon.com.mx)",
+            "value": "A1AM78C64UM0Y8"
+          },
+          {
+            "name": "Brazil (amazon.com.br)",
+            "value": "A2Q3Y263D00KWC"
+          },
+          {
+            "name": "United Kingdom (amazon.co.uk)",
+            "value": "A1F83G8C2ARO7P"
+          },
+          {
+            "name": "Germany (amazon.de)",
+            "value": "A1PA6795UKMFR9"
+          },
+          {
+            "name": "France (amazon.fr)",
+            "value": "A13V1IB3VIYZZH"
+          },
+          {
+            "name": "Italy (amazon.it)",
+            "value": "APJ6JRA9NG5V4"
+          },
+          {
+            "name": "Spain (amazon.es)",
+            "value": "A1RKKUPIHCS9HS"
+          },
+          {
+            "name": "Netherlands (amazon.nl)",
+            "value": "A1805IZSGTT6HS"
+          },
+          {
+            "name": "Poland (amazon.pl)",
+            "value": "A1C3SOZRARQ6R3"
+          },
+          {
+            "name": "Sweden (amazon.se)",
+            "value": "A2NODRKZP88ZB9"
+          },
+          {
+            "name": "Belgium (amazon.com.be)",
+            "value": "AMEN7PMS3EDWL"
+          },
+          {
+            "name": "India (amazon.in)",
+            "value": "A21TJRUUN4KGV"
+          },
+          {
+            "name": "Turkey (amazon.com.tr)",
+            "value": "A33AVAJ2PDY3EV"
+          },
+          {
+            "name": "United Arab Emirates (amazon.ae)",
+            "value": "A2VIGQ35RCS4UG"
+          },
+          {
+            "name": "Saudi Arabia (amazon.sa)",
+            "value": "A17E79C6D8DWNP"
+          },
+          {
+            "name": "Egypt (amazon.eg)",
+            "value": "ARBP9OOSHTCHU"
+          },
+          {
+            "name": "Japan (amazon.co.jp)",
+            "value": "A1VC38T7YXB528"
+          },
+          {
+            "name": "Australia (amazon.com.au)",
+            "value": "A39IBJ37TRP1C6"
+          },
+          {
+            "name": "Singapore (amazon.sg)",
+            "value": "A19VAU5U5O7RUS"
+          }
+        ]
+      },
+      {
+        "displayName": "Created After",
+        "name": "createdAfter",
+        "type": "dateTime",
+        "required": false,
+        "default": "",
+        "description": "The response only includes payouts created on or after this date-time. The value must be formatted in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> date-time format. If omitted, no start date filter is applied."
+      },
+      {
+        "displayName": "Created Before",
+        "name": "createdBefore",
+        "type": "dateTime",
+        "required": false,
+        "default": "",
+        "description": "The response only includes payouts created before this date-time. The value must be formatted in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> date-time format. If omitted, no end date filter is applied."
+      },
+      {
+        "displayName": "Payout Id",
+        "name": "payoutId",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The response only includes the payout matching the specified identifier."
+      },
+      {
+        "displayName": "Account Type",
+        "name": "accountType",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The response only includes payouts associated with the specified account type."
+      },
+      {
+        "displayName": "Next Token",
+        "name": "nextToken",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The response includes <code>nextToken</code> when the number of results exceeds the page size. To get the next page of results, call the operation with this token and include the same arguments as the call that produced the token. To get a complete list, call this operation until <code>nextToken</code> is null. Note that this operation can return empty pages."
+      }
+    ],
+    "description": "Optional parameters."
+  },
+  {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "finances"
+        ],
+        "operation": [
+          "listSummary"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Return All",
+        "name": "returnAll",
+        "type": "boolean",
+        "default": false,
+        "description": "Automatically fetch all pages when a pagination token is returned."
+      },
+      {
+        "displayName": "Max Results",
+        "name": "maxResults",
+        "type": "number",
+        "default": 0,
+        "description": "Maximum number of items to return. 0 means no limit."
+      },
+      {
+        "displayName": "Marketplace Ids",
+        "name": "marketplaceIds",
+        "type": "multiOptions",
+        "required": false,
+        "default": [
+          "A1PA6795UKMFR9"
+        ],
+        "description": "The marketplaces from which to retrieve summaries. If omitted, summaries from all applicable marketplaces may be returned. To find the marketplace ID for a region, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+        "options": [
+          {
+            "name": "United States (amazon.com)",
+            "value": "ATVPDKIKX0DER"
+          },
+          {
+            "name": "Canada (amazon.ca)",
+            "value": "A2EUQ1WTGCTBG2"
+          },
+          {
+            "name": "Mexico (amazon.com.mx)",
+            "value": "A1AM78C64UM0Y8"
+          },
+          {
+            "name": "Brazil (amazon.com.br)",
+            "value": "A2Q3Y263D00KWC"
+          },
+          {
+            "name": "United Kingdom (amazon.co.uk)",
+            "value": "A1F83G8C2ARO7P"
+          },
+          {
+            "name": "Germany (amazon.de)",
+            "value": "A1PA6795UKMFR9"
+          },
+          {
+            "name": "France (amazon.fr)",
+            "value": "A13V1IB3VIYZZH"
+          },
+          {
+            "name": "Italy (amazon.it)",
+            "value": "APJ6JRA9NG5V4"
+          },
+          {
+            "name": "Spain (amazon.es)",
+            "value": "A1RKKUPIHCS9HS"
+          },
+          {
+            "name": "Netherlands (amazon.nl)",
+            "value": "A1805IZSGTT6HS"
+          },
+          {
+            "name": "Poland (amazon.pl)",
+            "value": "A1C3SOZRARQ6R3"
+          },
+          {
+            "name": "Sweden (amazon.se)",
+            "value": "A2NODRKZP88ZB9"
+          },
+          {
+            "name": "Belgium (amazon.com.be)",
+            "value": "AMEN7PMS3EDWL"
+          },
+          {
+            "name": "India (amazon.in)",
+            "value": "A21TJRUUN4KGV"
+          },
+          {
+            "name": "Turkey (amazon.com.tr)",
+            "value": "A33AVAJ2PDY3EV"
+          },
+          {
+            "name": "United Arab Emirates (amazon.ae)",
+            "value": "A2VIGQ35RCS4UG"
+          },
+          {
+            "name": "Saudi Arabia (amazon.sa)",
+            "value": "A17E79C6D8DWNP"
+          },
+          {
+            "name": "Egypt (amazon.eg)",
+            "value": "ARBP9OOSHTCHU"
+          },
+          {
+            "name": "Japan (amazon.co.jp)",
+            "value": "A1VC38T7YXB528"
+          },
+          {
+            "name": "Australia (amazon.com.au)",
+            "value": "A39IBJ37TRP1C6"
+          },
+          {
+            "name": "Singapore (amazon.sg)",
+            "value": "A19VAU5U5O7RUS"
+          }
+        ]
+      },
+      {
+        "displayName": "Account Type",
+        "name": "accountType",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The type of account to include in the response."
+      },
+      {
+        "displayName": "Related Identifier Name",
+        "name": "relatedIdentifierName",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The name of the <code>relatedIdentifier</code>. The only possible value is <code>SETTLEMENT_ID</code>, the settlement ID associated with the summary."
+      },
+      {
+        "displayName": "Related Identifier Value",
+        "name": "relatedIdentifierValue",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The value of the <code>relatedIdentifier</code>."
+      },
+      {
+        "displayName": "Period Start",
+        "name": "periodStart",
+        "type": "dateTime",
+        "required": false,
+        "default": "",
+        "description": "The start of the period for which to retrieve summaries. When provided, the response will only include summaries with transactions that occurred on or after the specified date. The value must be formatted in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> date format."
+      },
+      {
+        "displayName": "Period End",
+        "name": "periodEnd",
+        "type": "dateTime",
+        "required": false,
+        "default": "",
+        "description": "The end of the period for which to retrieve summaries. When provided, the response will only include summaries with transactions that occurred on or before the specified date. The value must be formatted in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> date format."
+      },
+      {
+        "displayName": "Next Token",
+        "name": "nextToken",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "A token that you use to retrieve subsequent pages of results. When there are more results available, the response will include a <code>nextToken</code> value. To get the next page of results, call the operation with this token and include the same arguments as the call that produced the token. Repeat this process until the <code>nextToken</code> value is null to retrieve all results."
+      }
+    ],
+    "description": "Optional parameters."
+  },
+  {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "finances"
+        ],
+        "operation": [
+          "listTransactions"
         ]
       }
     },
@@ -9825,7 +11995,7 @@ export const generatedFields: INodeProperties[] = [
         "type": "options",
         "required": false,
         "default": "A1PA6795UKMFR9",
-        "description": "The identifier of the marketplace from which you want to retrieve transactions. The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+        "description": "The identifier of the marketplace from which you want to retrieve transactions. The marketplace ID is the globally unique identifier of a marketplace. To find the ID for a marketplace, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
         "options": [
           {
             "name": "United States (amazon.com)",
@@ -9940,78 +12110,6 @@ export const generatedFields: INodeProperties[] = [
       {
         "displayName": "Next Token",
         "name": "nextToken",
-        "type": "string",
-        "required": false,
-        "default": "",
-        "description": "The response includes <code>nextToken</code> when the number of results exceeds the specified <code>pageSize</code> value. To get the next page of results, call the operation with this token and include the same arguments as the call that produced the token. To get a complete list, call this operation until <code>nextToken</code> is null. Note that this operation can return empty pages."
-      }
-    ],
-    "description": "Optional parameters."
-  },
-  {
-    "displayName": "Posted After",
-    "name": "PostedAfter",
-    "type": "dateTime",
-    "required": true,
-    "default": "",
-    "description": "The response includes financial events posted after (or on) this date. This date must be in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> date-time format. The date-time must be more than two minutes before the time of the request.",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "finances"
-        ],
-        "operation": [
-          "listTransactions_v0"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "Marketplace Id",
-    "name": "MarketplaceId",
-    "type": "string",
-    "required": true,
-    "default": "",
-    "description": "The ID of the marketplace from which you want to retrieve transactions.",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "finances"
-        ],
-        "operation": [
-          "listTransactions_v0"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "Options",
-    "name": "additionalOptions",
-    "type": "collection",
-    "placeholder": "Add Optional Field",
-    "default": {},
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "finances"
-        ],
-        "operation": [
-          "listTransactions_v0"
-        ]
-      }
-    },
-    "options": [
-      {
-        "displayName": "Posted Before",
-        "name": "PostedBefore",
-        "type": "dateTime",
-        "required": false,
-        "default": "",
-        "description": "The response includes financial events posted before (but not on) this date. This date must be in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> date-time format."
-      },
-      {
-        "displayName": "Next Token",
-        "name": "NextToken",
         "type": "string",
         "required": false,
         "default": "",
@@ -13251,6 +15349,24 @@ export const generatedFields: INodeProperties[] = [
     }
   },
   {
+    "displayName": "Order Id",
+    "name": "orderId",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "The ID of the order that you want to cancel.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "fulfillmentOutbound"
+        ],
+        "operation": [
+          "cancelOrder"
+        ]
+      }
+    }
+  },
+  {
     "displayName": "Body (JSON)",
     "name": "bodyJson",
     "type": "json",
@@ -13301,6 +15417,23 @@ export const generatedFields: INodeProperties[] = [
     },
     "default": "{}",
     "description": "JSON body for this request. Schema: CreateFulfillmentReturnRequest { items: CreateReturnItemList CreateReturnItem[] }"
+  },
+  {
+    "displayName": "Body (JSON)",
+    "name": "bodyJson",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "fulfillmentOutbound"
+        ],
+        "operation": [
+          "createOrder"
+        ]
+      }
+    },
+    "default": "{}",
+    "description": "JSON body for this request. Schema: CreateOrderRequest { orderId: string, channel?: string, fulfillmentConfiguration?: OrderFulfillmentConfiguration { serviceLevel?: ServiceLevel, action?: OrderFulfillmentAction string, policy?: OrderFulfillmentPolicy string, services?: OrderServices }, origin?: OrderOrigin { countryCode: CountryCode string }, destination: OrderDestination { deliveryAddress: Address, deliveryNotes?: string, dropOffLocation?: OrderDropOffLocation }, lineItems: CreateOrderLineItem { lineItemId: string, product: object, amount: object, fulfillmentConfiguration?: object }[], paymentInformation?: PaymentInformation { payments?: object[] } }"
   },
   {
     "displayName": "Body (JSON)",
@@ -13771,6 +15904,96 @@ export const generatedFields: INodeProperties[] = [
     "description": "JSON body for this request. Schema: GetFulfillmentPreviewRequest { marketplaceId?: string, address: Address { name: string, addressLine1: string, addressLine2?: string, addressLine3?: string, city?: string, districtOrCounty?: string, stateOrRegion?: string, postalCode: string, countryCode: string, phone?: string }, items: GetFulfillmentPreviewItemList GetFulfillmentPreviewItem[], shippingSpeedCategories?: ShippingSpeedCategoryList ShippingSpeedCategory string[], includeCODFulfillmentPreview?: boolean, includeDeliveryWindows?: boolean, featureConstraints?: FeatureSettings { featureName?: string, featureFulfillmentPolicy?: string }[] }"
   },
   {
+    "displayName": "Body (JSON)",
+    "name": "bodyJson",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "fulfillmentOutbound"
+        ],
+        "operation": [
+          "getOffers"
+        ]
+      }
+    },
+    "default": "{}",
+    "description": "JSON body for this request. Schema: GetOffersRequest { fulfillmentConfiguration?: OfferFulfillmentConfiguration { serviceLevel?: PreviewServiceLevel }, origin: OrderOrigin { countryCode: CountryCode string }, destination?: OfferDestination { deliveryAddress?: VariablePrecisionAddress, ipAddress?: IpAddress string }, items: OfferItem { productIdentifier?: object }[] }"
+  },
+  {
+    "displayName": "Order Id",
+    "name": "orderId",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "The ID of the order you want to retrieve.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "fulfillmentOutbound"
+        ],
+        "operation": [
+          "getOrder"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "fulfillmentOutbound"
+        ],
+        "operation": [
+          "getOrder"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Shipments",
+        "name": "shipments",
+        "type": "options",
+        "required": false,
+        "default": "",
+        "description": "Whether to include shipment data in the response. Included by default.",
+        "options": [
+          {
+            "name": "INCLUDE",
+            "value": "INCLUDE"
+          },
+          {
+            "name": "EXCLUDE",
+            "value": "EXCLUDE"
+          }
+        ]
+      }
+    ],
+    "description": "Optional parameters."
+  },
+  {
+    "displayName": "Body (JSON)",
+    "name": "bodyJson",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "fulfillmentOutbound"
+        ],
+        "operation": [
+          "getOrderPreview"
+        ]
+      }
+    },
+    "default": "{}",
+    "description": "JSON body for this request. Schema: GetOrderPreviewRequest { channel?: string, fulfillmentConfiguration?: PreviewFulfillmentConfiguration { serviceLevel?: PreviewServiceLevel, services?: PreviewServices }, origin?: OrderOrigin { countryCode: CountryCode string }, destination: PreviewDestination { deliveryAddress: Address }, lineItems: PreviewLineItem { product: object, amount: object }[], excludeEstimatedFees?: boolean, includePaymentOnDelivery?: boolean }"
+  },
+  {
     "displayName": "Package Number",
     "name": "packageNumber",
     "type": "string",
@@ -13834,6 +16057,74 @@ export const generatedFields: INodeProperties[] = [
         "required": false,
         "default": "",
         "description": "A string token returned in the response to your previous request."
+      }
+    ],
+    "description": "Optional parameters."
+  },
+  {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "fulfillmentOutbound"
+        ],
+        "operation": [
+          "listOrders"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Return All",
+        "name": "returnAll",
+        "type": "boolean",
+        "default": false,
+        "description": "Automatically fetch all pages when a pagination token is returned."
+      },
+      {
+        "displayName": "Max Results",
+        "name": "maxResults",
+        "type": "number",
+        "default": 0,
+        "description": "Maximum number of items to return. 0 means no limit."
+      },
+      {
+        "displayName": "Updated After",
+        "name": "updatedAfter",
+        "type": "dateTime",
+        "required": false,
+        "default": "",
+        "description": "The response includes orders updated after this time. Must be in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> format."
+      },
+      {
+        "displayName": "Page Token",
+        "name": "pageToken",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "A token that you use to retrieve the next page of results. The response includes <code>pageToken</code> when the number of results exceeds the page size. To get the next page of results, call the operation with this token and include the same arguments as the call that produced the token. To get a complete list, call this operation until <code>pageToken</code> is <code>null</code>."
+      },
+      {
+        "displayName": "Shipments",
+        "name": "shipments",
+        "type": "options",
+        "required": false,
+        "default": "",
+        "description": "Whether to include shipment data in the response. Included by default.",
+        "options": [
+          {
+            "name": "INCLUDE",
+            "value": "INCLUDE"
+          },
+          {
+            "name": "EXCLUDE",
+            "value": "EXCLUDE"
+          }
+        ]
       }
     ],
     "description": "Optional parameters."
@@ -14057,6 +16348,129 @@ export const generatedFields: INodeProperties[] = [
     "description": "JSON body for this request. Schema: UpdateFulfillmentOrderRequest { marketplaceId?: string, displayableOrderId?: string, displayableOrderDate?: Timestamp string, displayableOrderComment?: string, shippingSpeedCategory?: ShippingSpeedCategory &quot;Standard&quot; | &quot;Expedited&quot; | &quot;Priority&quot; | &quot;ScheduledDelivery&quot;, destinationAddress?: Address { name: string, addressLine1: string, addressLine2?: string, addressLine3?: string, city?: string, districtOrCounty?: string, stateOrRegion?: string, postalCode: string, countryCode: string, phone?: string }, fulfillmentAction?: FulfillmentAction &quot;Ship&quot; | &quot;Hold&quot;, fulfillmentPolicy?: FulfillmentPolicy &quot;FillOrKill&quot; | &quot;FillAll&quot; | &quot;FillAllAvailable&quot;, shipFromCountryCode?: string, notificationEmails?: NotificationEmailList string[], featureConstraints?: FeatureSettings { featureName?: string, featureFulfillmentPolicy?: string }[], items?: UpdateFulfillmentOrderItemList UpdateFulfillmentOrderItem[] }"
   },
   {
+    "displayName": "Order Id",
+    "name": "orderId",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "The ID of the order that you want to update and/or request shipment of.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "fulfillmentOutbound"
+        ],
+        "operation": [
+          "updateOrder"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Body (JSON)",
+    "name": "bodyJson",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "fulfillmentOutbound"
+        ],
+        "operation": [
+          "updateOrder"
+        ]
+      }
+    },
+    "default": "{}",
+    "description": "JSON body for this request. Schema: UpdateOrderRequest { fulfillmentConfiguration?: UpdateOrderFulfillmentConfiguration { action?: OrderFulfillmentAction string } }"
+  },
+  {
+    "displayName": "Order Id",
+    "name": "orderId",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "The ID of the order that you want to update.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "fulfillmentOutbound"
+        ],
+        "operation": [
+          "updateOrderStatus"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Body (JSON)",
+    "name": "bodyJson",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "fulfillmentOutbound"
+        ],
+        "operation": [
+          "updateOrderStatus"
+        ]
+      }
+    },
+    "default": "{}",
+    "description": "JSON body for this request. Schema: UpdateOrderStatusRequest { status: OrderStatus string }"
+  },
+  {
+    "displayName": "Order Id",
+    "name": "orderId",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "The ID of the order that contains the package that you want to update.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "fulfillmentOutbound"
+        ],
+        "operation": [
+          "updatePackage"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Package Id",
+    "name": "packageId",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "The ID of the package that you want to update.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "fulfillmentOutbound"
+        ],
+        "operation": [
+          "updatePackage"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Body (JSON)",
+    "name": "bodyJson",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "fulfillmentOutbound"
+        ],
+        "operation": [
+          "updatePackage"
+        ]
+      }
+    },
+    "default": "{}",
+    "description": "JSON body for this request. Schema: UpdatePackageRequest { status: ShipmentPackageStatus string, deliveryTime?: Timestamp string, tracking?: Tracking { carrier?: CarrierTracking, amazon?: AmazonTracking, dropOffLocation?: OrderDropOffLocation, proofOfDelivery?: ProofOfDelivery } }"
+  },
+  {
     "displayName": "Response Type",
     "name": "responseType",
     "type": "options",
@@ -14094,12 +16508,409 @@ export const generatedFields: INodeProperties[] = [
           "invoices"
         ],
         "operation": [
+          "createGovernmentInvoice"
+        ]
+      }
+    },
+    "default": "{}",
+    "description": "JSON body for this request. Schema: GovernmentInvoiceRequest { contexts?: CarrierDetailsContext { name?: string, address?: string, contextType?: string, federalTaxId?: string, regionCode?: string, regionTaxId?: string, vehicleLicensePlate?: string, vehicleRegistrationRegionCode?: string }[], inboundPlanId?: string, invoiceType: string, marketplaceId: string, shipmentId: string, transactionType: string }"
+  },
+  {
+    "displayName": "Body (JSON)",
+    "name": "bodyJson",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "invoices"
+        ],
+        "operation": [
           "createInvoicesExport"
         ]
       }
     },
     "default": "{}",
-    "description": "JSON body for this request. Schema: ExportInvoicesRequest { dateEnd?: string, dateStart?: string, externalInvoiceId?: string, fileFormat?: FileFormat &quot;XML&quot;, invoiceType?: string, marketplaceId: string, series?: string, statuses?: string[], transactionIdentifier?: TransactionIdentifier { name?: string, id?: string }, transactionType?: string }"
+    "description": "JSON body for this request. Schema: ExportInvoicesRequest { dateEnd?: string, dateStart?: string, externalInvoiceId?: string, fileFormat?: FileFormat &quot;XML&quot;, invoiceType?: string, marketplaceId: string, series?: string, statuses?: string[], transactionIdentifier?: TransactionIdentifier { name?: string, id?: string }, transactionType?: string, warehouseCode?: string }"
+  },
+  {
+    "displayName": "Marketplace Id",
+    "name": "marketplaceId",
+    "type": "options",
+    "required": true,
+    "default": "A1PA6795UKMFR9",
+    "description": "The marketplace of the invoice.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "invoices"
+        ],
+        "operation": [
+          "getGovernmentInvoiceDocument"
+        ]
+      }
+    },
+    "options": [
+      {
+        "name": "United States (amazon.com)",
+        "value": "ATVPDKIKX0DER"
+      },
+      {
+        "name": "Canada (amazon.ca)",
+        "value": "A2EUQ1WTGCTBG2"
+      },
+      {
+        "name": "Mexico (amazon.com.mx)",
+        "value": "A1AM78C64UM0Y8"
+      },
+      {
+        "name": "Brazil (amazon.com.br)",
+        "value": "A2Q3Y263D00KWC"
+      },
+      {
+        "name": "United Kingdom (amazon.co.uk)",
+        "value": "A1F83G8C2ARO7P"
+      },
+      {
+        "name": "Germany (amazon.de)",
+        "value": "A1PA6795UKMFR9"
+      },
+      {
+        "name": "France (amazon.fr)",
+        "value": "A13V1IB3VIYZZH"
+      },
+      {
+        "name": "Italy (amazon.it)",
+        "value": "APJ6JRA9NG5V4"
+      },
+      {
+        "name": "Spain (amazon.es)",
+        "value": "A1RKKUPIHCS9HS"
+      },
+      {
+        "name": "Netherlands (amazon.nl)",
+        "value": "A1805IZSGTT6HS"
+      },
+      {
+        "name": "Poland (amazon.pl)",
+        "value": "A1C3SOZRARQ6R3"
+      },
+      {
+        "name": "Sweden (amazon.se)",
+        "value": "A2NODRKZP88ZB9"
+      },
+      {
+        "name": "Belgium (amazon.com.be)",
+        "value": "AMEN7PMS3EDWL"
+      },
+      {
+        "name": "India (amazon.in)",
+        "value": "A21TJRUUN4KGV"
+      },
+      {
+        "name": "Turkey (amazon.com.tr)",
+        "value": "A33AVAJ2PDY3EV"
+      },
+      {
+        "name": "United Arab Emirates (amazon.ae)",
+        "value": "A2VIGQ35RCS4UG"
+      },
+      {
+        "name": "Saudi Arabia (amazon.sa)",
+        "value": "A17E79C6D8DWNP"
+      },
+      {
+        "name": "Egypt (amazon.eg)",
+        "value": "ARBP9OOSHTCHU"
+      },
+      {
+        "name": "Japan (amazon.co.jp)",
+        "value": "A1VC38T7YXB528"
+      },
+      {
+        "name": "Australia (amazon.com.au)",
+        "value": "A39IBJ37TRP1C6"
+      },
+      {
+        "name": "Singapore (amazon.sg)",
+        "value": "A19VAU5U5O7RUS"
+      }
+    ]
+  },
+  {
+    "displayName": "Transaction Type",
+    "name": "transactionType",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "The marketplace-specific classification of the transaction type that originated the invoice. Check <code>transactionType</code> options using the <code>getInvoicesAttributes</code> operation.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "invoices"
+        ],
+        "operation": [
+          "getGovernmentInvoiceDocument"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Shipment Id",
+    "name": "shipmentId",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "The unique shipment identifier for which to get an invoice.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "invoices"
+        ],
+        "operation": [
+          "getGovernmentInvoiceDocument"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Invoice Type",
+    "name": "invoiceType",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "The marketplace-specific classification of the invoice type. Check <code>invoiceType</code> options using the <code>getInvoicesAttributes</code> operation.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "invoices"
+        ],
+        "operation": [
+          "getGovernmentInvoiceDocument"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "invoices"
+        ],
+        "operation": [
+          "getGovernmentInvoiceDocument"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Inbound Plan Id",
+        "name": "inboundPlanId",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The unique inbound plan identifier in which the shipment is contained and for which the invoice will be created."
+      },
+      {
+        "displayName": "File Format",
+        "name": "fileFormat",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The file format of the invoice. The default is XML."
+      }
+    ],
+    "description": "Optional parameters."
+  },
+  {
+    "displayName": "Marketplace Id",
+    "name": "marketplaceId",
+    "type": "options",
+    "required": true,
+    "default": "A1PA6795UKMFR9",
+    "description": "The marketplace of the invoice request.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "invoices"
+        ],
+        "operation": [
+          "getGovernmentInvoiceStatus"
+        ]
+      }
+    },
+    "options": [
+      {
+        "name": "United States (amazon.com)",
+        "value": "ATVPDKIKX0DER"
+      },
+      {
+        "name": "Canada (amazon.ca)",
+        "value": "A2EUQ1WTGCTBG2"
+      },
+      {
+        "name": "Mexico (amazon.com.mx)",
+        "value": "A1AM78C64UM0Y8"
+      },
+      {
+        "name": "Brazil (amazon.com.br)",
+        "value": "A2Q3Y263D00KWC"
+      },
+      {
+        "name": "United Kingdom (amazon.co.uk)",
+        "value": "A1F83G8C2ARO7P"
+      },
+      {
+        "name": "Germany (amazon.de)",
+        "value": "A1PA6795UKMFR9"
+      },
+      {
+        "name": "France (amazon.fr)",
+        "value": "A13V1IB3VIYZZH"
+      },
+      {
+        "name": "Italy (amazon.it)",
+        "value": "APJ6JRA9NG5V4"
+      },
+      {
+        "name": "Spain (amazon.es)",
+        "value": "A1RKKUPIHCS9HS"
+      },
+      {
+        "name": "Netherlands (amazon.nl)",
+        "value": "A1805IZSGTT6HS"
+      },
+      {
+        "name": "Poland (amazon.pl)",
+        "value": "A1C3SOZRARQ6R3"
+      },
+      {
+        "name": "Sweden (amazon.se)",
+        "value": "A2NODRKZP88ZB9"
+      },
+      {
+        "name": "Belgium (amazon.com.be)",
+        "value": "AMEN7PMS3EDWL"
+      },
+      {
+        "name": "India (amazon.in)",
+        "value": "A21TJRUUN4KGV"
+      },
+      {
+        "name": "Turkey (amazon.com.tr)",
+        "value": "A33AVAJ2PDY3EV"
+      },
+      {
+        "name": "United Arab Emirates (amazon.ae)",
+        "value": "A2VIGQ35RCS4UG"
+      },
+      {
+        "name": "Saudi Arabia (amazon.sa)",
+        "value": "A17E79C6D8DWNP"
+      },
+      {
+        "name": "Egypt (amazon.eg)",
+        "value": "ARBP9OOSHTCHU"
+      },
+      {
+        "name": "Japan (amazon.co.jp)",
+        "value": "A1VC38T7YXB528"
+      },
+      {
+        "name": "Australia (amazon.com.au)",
+        "value": "A39IBJ37TRP1C6"
+      },
+      {
+        "name": "Singapore (amazon.sg)",
+        "value": "A19VAU5U5O7RUS"
+      }
+    ]
+  },
+  {
+    "displayName": "Transaction Type",
+    "name": "transactionType",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "The marketplace-specific classification of the transaction type that originated the invoice. Check <code>transactionType</code> options using the <code>getInvoicesAttributes</code> operation.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "invoices"
+        ],
+        "operation": [
+          "getGovernmentInvoiceStatus"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Shipment Id",
+    "name": "shipmentId",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "The unique shipment identifier for which to get an invoice.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "invoices"
+        ],
+        "operation": [
+          "getGovernmentInvoiceStatus"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Invoice Type",
+    "name": "invoiceType",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "The marketplace-specific classification of the invoice type. Check <code>invoiceType</code> options using the <code>getInvoicesAttributes</code> operation.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "invoices"
+        ],
+        "operation": [
+          "getGovernmentInvoiceStatus"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "invoices"
+        ],
+        "operation": [
+          "getGovernmentInvoiceStatus"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Inbound Plan Id",
+        "name": "inboundPlanId",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The unique inbound plan identifier in which the shipment is contained and for which the invoice will be created."
+      }
+    ],
+    "description": "Optional parameters."
   },
   {
     "displayName": "Marketplace Id",
@@ -14222,6 +17033,34 @@ export const generatedFields: INodeProperties[] = [
         ]
       }
     }
+  },
+  {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "invoices"
+        ],
+        "operation": [
+          "getInvoice"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Warehouse Code",
+        "name": "warehouseCode",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The Warehouse code included in the invoice issued on behalf of the vendor. Check the warehouse code under your WarehouseSettings in VendorCentral."
+      }
+    ],
+    "description": "Optional parameters."
   },
   {
     "displayName": "Marketplace Id",
@@ -14477,6 +17316,14 @@ export const generatedFields: INodeProperties[] = [
             "value": "START_DATE_TIME"
           }
         ]
+      },
+      {
+        "displayName": "Warehouse Code",
+        "name": "warehouseCode",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The Warehouse code included in the invoice issued on behalf of the vendor. Check the warehouse code under your WarehouseSettings in VendorCentral."
       }
     ],
     "description": "Optional parameters."
@@ -14586,6 +17433,34 @@ export const generatedFields: INodeProperties[] = [
     ]
   },
   {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "invoices"
+        ],
+        "operation": [
+          "getInvoicesAttributes"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Warehouse Code",
+        "name": "warehouseCode",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The Warehouse code included in the invoice issued on behalf of the vendor. Check the warehouse code under your WarehouseSettings in VendorCentral."
+      }
+    ],
+    "description": "Optional parameters."
+  },
+  {
     "displayName": "Invoices Document Id",
     "name": "invoicesDocumentId",
     "type": "string",
@@ -14604,6 +17479,34 @@ export const generatedFields: INodeProperties[] = [
     }
   },
   {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "invoices"
+        ],
+        "operation": [
+          "getInvoicesDocument"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Warehouse Code",
+        "name": "warehouseCode",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The Warehouse code included in the invoice issued on behalf of the vendor. Check the warehouse code under your WarehouseSettings in VendorCentral."
+      }
+    ],
+    "description": "Optional parameters."
+  },
+  {
     "displayName": "Export Id",
     "name": "exportId",
     "type": "string",
@@ -14620,6 +17523,34 @@ export const generatedFields: INodeProperties[] = [
         ]
       }
     }
+  },
+  {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "invoices"
+        ],
+        "operation": [
+          "getInvoicesExport"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Warehouse Code",
+        "name": "warehouseCode",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The Warehouse code included in the invoice issued on behalf of the vendor. Check the warehouse code under your WarehouseSettings in VendorCentral."
+      }
+    ],
+    "description": "Optional parameters."
   },
   {
     "displayName": "Marketplace Id",
@@ -14813,6 +17744,14 @@ export const generatedFields: INodeProperties[] = [
             "value": "ERROR"
           }
         ]
+      },
+      {
+        "displayName": "Warehouse Code",
+        "name": "warehouseCode",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The Warehouse code included in the invoice issued on behalf of the vendor. Check the warehouse code under your WarehouseSettings in VendorCentral."
       }
     ],
     "description": "Optional parameters."
@@ -15011,7 +17950,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "string",
     "required": true,
     "default": "",
-    "description": "A selling partner provided identifier for an Amazon listing.",
+    "description": "A selling partner-provided identifier for an Amazon listing.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -15031,7 +17970,7 @@ export const generatedFields: INodeProperties[] = [
     "default": [
       "A1PA6795UKMFR9"
     ],
-    "description": "A comma-delimited list of Amazon marketplace identifiers for the request.",
+    "description": "A comma-delimited list of Amazon store identifiers for the request.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -15160,7 +18099,7 @@ export const generatedFields: INodeProperties[] = [
         "type": "string",
         "required": false,
         "default": "",
-        "description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: <code>en_US</code>, <code>fr_CA</code>, <code>fr_FR</code>. Localized messages default to <code>en_US</code> when a localization is not available in the specified locale."
+        "description": "A locale for localization of issues. When not provided, the default language code of the first Amazon store is used. Examples: <code>en_US</code>, <code>fr_CA</code>, <code>fr_FR</code>. Localized messages default to <code>en_US</code> when localization is not available for the specified locale."
       }
     ],
     "description": "Optional parameters."
@@ -15171,7 +18110,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "string",
     "required": true,
     "default": "",
-    "description": "A selling partner provided identifier for an Amazon listing.",
+    "description": "A selling partner-provided identifier for an Amazon listing.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -15191,7 +18130,7 @@ export const generatedFields: INodeProperties[] = [
     "default": [
       "A1PA6795UKMFR9"
     ],
-    "description": "A comma-delimited list of Amazon marketplace identifiers for the request.",
+    "description": "A comma-delimited list of Amazon store identifiers for the request.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -15320,7 +18259,7 @@ export const generatedFields: INodeProperties[] = [
         "type": "string",
         "required": false,
         "default": "",
-        "description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: <code>en_US</code>, <code>fr_CA</code>, <code>fr_FR</code>. Localized messages default to <code>en_US</code> when a localization is not available in the specified locale."
+        "description": "A locale for localization of issues. When not provided, the default language code of the first Amazon store is used. Examples: <code>en_US</code>, <code>fr_CA</code>, <code>fr_FR</code>. Localized messages default to <code>en_US</code> when localization is not available for the specified locale."
       },
       {
         "displayName": "Included Data",
@@ -15550,7 +18489,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "string",
     "required": true,
     "default": "",
-    "description": "A selling partner provided identifier for an Amazon listing.",
+    "description": "A selling partner-provided identifier for an Amazon listing.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -15570,7 +18509,7 @@ export const generatedFields: INodeProperties[] = [
     "default": [
       "A1PA6795UKMFR9"
     ],
-    "description": "A comma-delimited list of Amazon marketplace identifiers for the request.",
+    "description": "A comma-delimited list of Amazon store identifiers for the request.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -15734,7 +18673,7 @@ export const generatedFields: INodeProperties[] = [
         "type": "options",
         "required": false,
         "default": "",
-        "description": "The mode of operation for the request.",
+        "description": "Describes the mode of operation for the request.",
         "options": [
           {
             "name": "VALIDATION_PREVIEW",
@@ -15748,7 +18687,7 @@ export const generatedFields: INodeProperties[] = [
         "type": "string",
         "required": false,
         "default": "",
-        "description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: <code>en_US</code>, <code>fr_CA</code>, <code>fr_FR</code>. Localized messages default to <code>en_US</code> when a localization is not available in the specified locale."
+        "description": "A locale for localization of issues. When not provided, the default language code of the first Amazon store is used. Examples: <code>en_US</code>, <code>fr_CA</code>, <code>fr_FR</code>. Localized messages default to <code>en_US</code> when localization is not available for the specified locale."
       }
     ],
     "description": "Optional parameters."
@@ -15936,7 +18875,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "string",
     "required": true,
     "default": "",
-    "description": "A selling partner provided identifier for an Amazon listing.",
+    "description": "A selling partner-provided identifier for an Amazon listing.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -15956,7 +18895,7 @@ export const generatedFields: INodeProperties[] = [
     "default": [
       "A1PA6795UKMFR9"
     ],
-    "description": "A comma-delimited list of Amazon marketplace identifiers for the request.",
+    "description": "A comma-delimited list of Amazon store identifiers for the request.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -16120,7 +19059,7 @@ export const generatedFields: INodeProperties[] = [
         "type": "options",
         "required": false,
         "default": "",
-        "description": "The mode of operation for the request.",
+        "description": "Describes the mode of operation for the request.",
         "options": [
           {
             "name": "VALIDATION_PREVIEW",
@@ -16134,7 +19073,7 @@ export const generatedFields: INodeProperties[] = [
         "type": "string",
         "required": false,
         "default": "",
-        "description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: <code>en_US</code>, <code>fr_CA</code>, <code>fr_FR</code>. Localized messages default to <code>en_US</code> when a localization is not available in the specified locale."
+        "description": "A locale for localization of issues. When not provided, the default language code of the first Amazon store is used. Examples: <code>en_US</code>, <code>fr_CA</code>, <code>fr_FR</code>. Localized messages default to <code>en_US</code> when localization is not available for the specified locale."
       }
     ],
     "description": "Optional parameters."
@@ -16147,7 +19086,7 @@ export const generatedFields: INodeProperties[] = [
     "default": [
       "A1PA6795UKMFR9"
     ],
-    "description": "A comma-delimited list of Amazon marketplace identifiers for the request.",
+    "description": "A comma-delimited list of Amazon store identifiers for the request.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -16290,7 +19229,7 @@ export const generatedFields: INodeProperties[] = [
         "type": "string",
         "required": false,
         "default": "",
-        "description": "A locale that is used to localize issues. When not provided, the default language code of the first marketplace is used. Examples: &quot;en_US&quot;, &quot;fr_CA&quot;, &quot;fr_FR&quot;. When a localization is not available in the specified locale, localized messages default to &quot;en_US&quot;."
+        "description": "A locale that is used to localize issues. When not provided, the default language code of the first Amazon store is used. Examples: &quot;en_US&quot;, &quot;fr_CA&quot;, &quot;fr_FR&quot;. When a localization is not available in the specified locale, localized messages default to &quot;en_US&quot;."
       },
       {
         "displayName": "Included Data",
@@ -16298,7 +19237,7 @@ export const generatedFields: INodeProperties[] = [
         "type": "multiOptions",
         "required": false,
         "default": [],
-        "description": "A comma-delimited list of datasets that you want to include in the response. Default: <code>summaries</code>.",
+        "description": "A comma-delimited list of data sets that you want to include in the response. Default: <code>summaries</code>.",
         "options": [
           {
             "name": "summaries",
@@ -16795,6 +19734,14 @@ export const generatedFields: INodeProperties[] = [
         "required": false,
         "default": "",
         "description": "A locale for reason text localization. When not provided, the default language code of the first marketplace is used. Examples: &quot;en_US&quot;, &quot;fr_CA&quot;, &quot;fr_FR&quot;. Localized messages default to &quot;en_US&quot; when a localization is not available in the specified locale."
+      },
+      {
+        "displayName": "Product Type",
+        "name": "productType",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The product type of the item. When provided with the brand name, the API evaluates GTIN exemption restrictions in addition to brand restrictions for the specified product type."
       }
     ],
     "description": "Optional parameters."
@@ -17082,147 +20029,6 @@ export const generatedFields: INodeProperties[] = [
     },
     "default": "{}",
     "description": "JSON body for this request. Schema: CreateConfirmCustomizationDetailsRequest { text?: string, attachments?: Attachment { uploadDestinationId: string, fileName: string }[] }"
-  },
-  {
-    "displayName": "Amazon Order Id",
-    "name": "amazonOrderId",
-    "type": "string",
-    "required": true,
-    "default": "",
-    "description": "An Amazon order identifier. This identifies the order for which a message is sent.",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "messaging"
-        ],
-        "operation": [
-          "CreateAmazonMotors"
-        ]
-      }
-    }
-  },
-  {
-    "displayName": "Marketplace Ids",
-    "name": "marketplaceIds",
-    "type": "multiOptions",
-    "required": true,
-    "default": [
-      "A1PA6795UKMFR9"
-    ],
-    "description": "A marketplace identifier. This identifies the marketplace in which the order was placed. You can only specify one marketplace.",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "messaging"
-        ],
-        "operation": [
-          "CreateAmazonMotors"
-        ]
-      }
-    },
-    "options": [
-      {
-        "name": "United States (amazon.com)",
-        "value": "ATVPDKIKX0DER"
-      },
-      {
-        "name": "Canada (amazon.ca)",
-        "value": "A2EUQ1WTGCTBG2"
-      },
-      {
-        "name": "Mexico (amazon.com.mx)",
-        "value": "A1AM78C64UM0Y8"
-      },
-      {
-        "name": "Brazil (amazon.com.br)",
-        "value": "A2Q3Y263D00KWC"
-      },
-      {
-        "name": "United Kingdom (amazon.co.uk)",
-        "value": "A1F83G8C2ARO7P"
-      },
-      {
-        "name": "Germany (amazon.de)",
-        "value": "A1PA6795UKMFR9"
-      },
-      {
-        "name": "France (amazon.fr)",
-        "value": "A13V1IB3VIYZZH"
-      },
-      {
-        "name": "Italy (amazon.it)",
-        "value": "APJ6JRA9NG5V4"
-      },
-      {
-        "name": "Spain (amazon.es)",
-        "value": "A1RKKUPIHCS9HS"
-      },
-      {
-        "name": "Netherlands (amazon.nl)",
-        "value": "A1805IZSGTT6HS"
-      },
-      {
-        "name": "Poland (amazon.pl)",
-        "value": "A1C3SOZRARQ6R3"
-      },
-      {
-        "name": "Sweden (amazon.se)",
-        "value": "A2NODRKZP88ZB9"
-      },
-      {
-        "name": "Belgium (amazon.com.be)",
-        "value": "AMEN7PMS3EDWL"
-      },
-      {
-        "name": "India (amazon.in)",
-        "value": "A21TJRUUN4KGV"
-      },
-      {
-        "name": "Turkey (amazon.com.tr)",
-        "value": "A33AVAJ2PDY3EV"
-      },
-      {
-        "name": "United Arab Emirates (amazon.ae)",
-        "value": "A2VIGQ35RCS4UG"
-      },
-      {
-        "name": "Saudi Arabia (amazon.sa)",
-        "value": "A17E79C6D8DWNP"
-      },
-      {
-        "name": "Egypt (amazon.eg)",
-        "value": "ARBP9OOSHTCHU"
-      },
-      {
-        "name": "Japan (amazon.co.jp)",
-        "value": "A1VC38T7YXB528"
-      },
-      {
-        "name": "Australia (amazon.com.au)",
-        "value": "A39IBJ37TRP1C6"
-      },
-      {
-        "name": "Singapore (amazon.sg)",
-        "value": "A19VAU5U5O7RUS"
-      }
-    ]
-  },
-  {
-    "displayName": "Body (JSON)",
-    "name": "bodyJson",
-    "type": "json",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "messaging"
-        ],
-        "operation": [
-          "CreateAmazonMotors"
-        ]
-      }
-    },
-    "default": "{}",
-    "description": "JSON body for this request. Schema: CreateAmazonMotorsRequest { attachments?: Attachment { uploadDestinationId: string, fileName: string }[] }"
   },
   {
     "displayName": "Amazon Order Id",
@@ -18646,6 +21452,24 @@ export const generatedFields: INodeProperties[] = [
     "description": "JSON body for this request. Schema: CreateDestinationRequest { resourceSpecification: DestinationResourceSpecification { sqs?: SqsResource, eventBridge?: EventBridgeResourceSpecification }, name: string }"
   },
   {
+    "displayName": "Notification Type",
+    "name": "notificationType",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "The type of notification.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "notifications"
+        ],
+        "operation": [
+          "createSubscription"
+        ]
+      }
+    }
+  },
+  {
     "displayName": "Body (JSON)",
     "name": "bodyJson",
     "type": "json",
@@ -18660,7 +21484,7 @@ export const generatedFields: INodeProperties[] = [
       }
     },
     "default": "{}",
-    "description": "JSON body for this request. Schema: CreateSubscriptionRequest { payloadVersion: string, destinationId: string, processingDirective?: ProcessingDirective { eventFilter?: EventFilter } }"
+    "description": "JSON body for this request. Schema: CreateSubscriptionRequest { payloadVersion: string, destinationId: string, processingDirective?: ProcessingDirective { eventFilter?: EventFilter, filterExpression?: string } }"
   },
   {
     "displayName": "Destination Id",
@@ -18699,6 +21523,24 @@ export const generatedFields: INodeProperties[] = [
     }
   },
   {
+    "displayName": "Notification Type",
+    "name": "notificationType",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "The type of notification.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "notifications"
+        ],
+        "operation": [
+          "deleteSubscriptionById"
+        ]
+      }
+    }
+  },
+  {
     "displayName": "Destination Id",
     "name": "destinationId",
     "type": "string",
@@ -18712,6 +21554,24 @@ export const generatedFields: INodeProperties[] = [
         ],
         "operation": [
           "getDestination"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Notification Type",
+    "name": "notificationType",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "The type of notification.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "notifications"
+        ],
+        "operation": [
+          "getSubscription"
         ]
       }
     }
@@ -18761,6 +21621,135 @@ export const generatedFields: INodeProperties[] = [
         ]
       }
     }
+  },
+  {
+    "displayName": "Notification Type",
+    "name": "notificationType",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "The type of notification.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "notifications"
+        ],
+        "operation": [
+          "getSubscriptionById"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Notification Types",
+    "name": "notificationTypes",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "A list of notification types to retrieve subscriptions for. Currently limited to a single notification type per request.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "notifications"
+        ],
+        "operation": [
+          "getSubscriptions"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "notifications"
+        ],
+        "operation": [
+          "getSubscriptions"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Return All",
+        "name": "returnAll",
+        "type": "boolean",
+        "default": false,
+        "description": "Automatically fetch all pages when a pagination token is returned."
+      },
+      {
+        "displayName": "Max Results",
+        "name": "maxResults",
+        "type": "number",
+        "default": 0,
+        "description": "Maximum number of items to return. 0 means no limit."
+      },
+      {
+        "displayName": "Payload Version",
+        "name": "payloadVersion",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The version of the payload object to be used in the notification."
+      },
+      {
+        "displayName": "Page Size",
+        "name": "pageSize",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The maximum number of subscriptions to return per page. Minimum value is 30. Maximum value is 100. Default is 30."
+      },
+      {
+        "displayName": "Next Token",
+        "name": "nextToken",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "A token to retrieve the next page of results. If this field is not empty in a response, pass its value in the next request to retrieve the next page."
+      }
+    ],
+    "description": "Optional parameters."
+  },
+  {
+    "displayName": "Notification Type",
+    "name": "notificationType",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "The type of notification.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "notifications"
+        ],
+        "operation": [
+          "sendTestNotification"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Body (JSON)",
+    "name": "bodyJson",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "notifications"
+        ],
+        "operation": [
+          "sendTestNotification"
+        ]
+      }
+    },
+    "default": "{}",
+    "description": "JSON body for this request. Schema: SendTestNotificationRequest { destinationId?: string, testNotification?: TestNotification { payloadVersion: string, testScenario?: string } }"
   },
   {
     "displayName": "Response Type",
@@ -18831,6 +21820,98 @@ export const generatedFields: INodeProperties[] = [
     "type": "string",
     "required": true,
     "default": "",
+    "description": "An Amazon-defined order identifier.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "orders"
+        ],
+        "operation": [
+          "getOrder_2026_01_01"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "orders"
+        ],
+        "operation": [
+          "getOrder_2026_01_01"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Included Data",
+        "name": "includedData",
+        "type": "multiOptions",
+        "required": false,
+        "default": [],
+        "description": "A list of datasets to include in the response.",
+        "options": [
+          {
+            "name": "BUYER",
+            "value": "BUYER"
+          },
+          {
+            "name": "RECIPIENT",
+            "value": "RECIPIENT"
+          },
+          {
+            "name": "PROCEEDS",
+            "value": "PROCEEDS"
+          },
+          {
+            "name": "EXPENSE",
+            "value": "EXPENSE"
+          },
+          {
+            "name": "PROMOTION",
+            "value": "PROMOTION"
+          },
+          {
+            "name": "CANCELLATION",
+            "value": "CANCELLATION"
+          },
+          {
+            "name": "FULFILLMENT",
+            "value": "FULFILLMENT"
+          },
+          {
+            "name": "PACKAGES",
+            "value": "PACKAGES"
+          },
+          {
+            "name": "TAX",
+            "value": "TAX"
+          },
+          {
+            "name": "PAYMENT",
+            "value": "PAYMENT"
+          },
+          {
+            "name": "FULFILLMENT_ORDERS",
+            "value": "FULFILLMENT_ORDERS"
+          }
+        ]
+      }
+    ],
+    "description": "Optional parameters."
+  },
+  {
+    "displayName": "Order Id",
+    "name": "orderId",
+    "type": "string",
+    "required": true,
+    "default": "",
     "description": "An Amazon-defined order identifier, in 3-7-7 format.",
     "displayOptions": {
       "show": {
@@ -18838,7 +21919,7 @@ export const generatedFields: INodeProperties[] = [
           "orders"
         ],
         "operation": [
-          "getOrder"
+          "getOrder_v0"
         ]
       }
     }
@@ -19094,7 +22175,7 @@ export const generatedFields: INodeProperties[] = [
         "type": "string",
         "required": false,
         "default": "",
-        "description": "An order identifier that is specified by the seller. Used to select only the orders that match the order identifier. If <code>SellerOrderId</code> is specified, then <code>FulfillmentChannels</code>, <code>OrderStatuses</code>, <code>PaymentMethod</code>, <code>LastUpdatedAfter</code>, LastUpdatedBefore, and <code>BuyerEmail</code> cannot be specified."
+        "description": "An order identifier that is specified by the seller. Used to select only the orders that match the order identifier. If <code>SellerOrderId</code> is specified, then <code>FulfillmentChannels</code>, <code>OrderStatuses</code>, <code>PaymentMethod</code>, <code>LastUpdatedAfter</code>, <code>LastUpdatedBefore</code>, and <code>BuyerEmail</code> cannot be specified."
       },
       {
         "displayName": "Max Results Per Page",
@@ -19166,7 +22247,7 @@ export const generatedFields: INodeProperties[] = [
         "type": "string",
         "required": false,
         "default": "",
-        "description": "Use this date to select orders with a earliest delivery date before (or at) a specified time. The date must be in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> format."
+        "description": "Use this date to select orders with an earliest delivery date before (or at) a specified time. The date must be in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> format."
       },
       {
         "displayName": "Earliest Delivery Date After",
@@ -19174,7 +22255,7 @@ export const generatedFields: INodeProperties[] = [
         "type": "string",
         "required": false,
         "default": "",
-        "description": "Use this date to select orders with a earliest delivery date after (or at) a specified time. The date must be in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> format."
+        "description": "Use this date to select orders with an earliest delivery date after (or at) a specified time. The date must be in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> format."
       },
       {
         "displayName": "Latest Delivery Date Before",
@@ -19191,6 +22272,294 @@ export const generatedFields: INodeProperties[] = [
         "required": false,
         "default": "",
         "description": "Use this date to select orders with a latest delivery date after (or at) a specified time. The date must be in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> format."
+      }
+    ],
+    "description": "Optional parameters."
+  },
+  {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "orders"
+        ],
+        "operation": [
+          "searchOrders"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Return All",
+        "name": "returnAll",
+        "type": "boolean",
+        "default": false,
+        "description": "Automatically fetch all pages when a pagination token is returned."
+      },
+      {
+        "displayName": "Max Results",
+        "name": "maxResults",
+        "type": "number",
+        "default": 0,
+        "description": "Maximum number of items to return. 0 means no limit."
+      },
+      {
+        "displayName": "Created After",
+        "name": "createdAfter",
+        "type": "dateTime",
+        "required": false,
+        "default": "",
+        "description": "The response includes orders created at or after this time. The date must be in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> format."
+      },
+      {
+        "displayName": "Created Before",
+        "name": "createdBefore",
+        "type": "dateTime",
+        "required": false,
+        "default": "",
+        "description": "The response includes orders created at or before this time. The date must be in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> format."
+      },
+      {
+        "displayName": "Last Updated After",
+        "name": "lastUpdatedAfter",
+        "type": "dateTime",
+        "required": false,
+        "default": "",
+        "description": "The response includes orders updated at or after this time. An update is any change made by Amazon or the seller, including changes to order status. The date must be in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> format."
+      },
+      {
+        "displayName": "Last Updated Before",
+        "name": "lastUpdatedBefore",
+        "type": "dateTime",
+        "required": false,
+        "default": "",
+        "description": "The response includes orders updated at or before this time. An update is any change made by Amazon or the seller, including changes to order status. The date must be in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> format."
+      },
+      {
+        "displayName": "Fulfillment Statuses",
+        "name": "fulfillmentStatuses",
+        "type": "multiOptions",
+        "required": false,
+        "default": [],
+        "description": "A list of <code>FulfillmentStatus</code> values you can use to filter the results.",
+        "options": [
+          {
+            "name": "PENDING_AVAILABILITY",
+            "value": "PENDING_AVAILABILITY"
+          },
+          {
+            "name": "PENDING",
+            "value": "PENDING"
+          },
+          {
+            "name": "UNSHIPPED",
+            "value": "UNSHIPPED"
+          },
+          {
+            "name": "PARTIALLY_SHIPPED",
+            "value": "PARTIALLY_SHIPPED"
+          },
+          {
+            "name": "SHIPPED",
+            "value": "SHIPPED"
+          },
+          {
+            "name": "CANCELLED",
+            "value": "CANCELLED"
+          },
+          {
+            "name": "UNFULFILLABLE",
+            "value": "UNFULFILLABLE"
+          }
+        ]
+      },
+      {
+        "displayName": "Marketplace Ids",
+        "name": "marketplaceIds",
+        "type": "multiOptions",
+        "required": false,
+        "default": [
+          "A1PA6795UKMFR9"
+        ],
+        "description": "The response includes orders that were placed in marketplaces you include in this list.",
+        "options": [
+          {
+            "name": "United States (amazon.com)",
+            "value": "ATVPDKIKX0DER"
+          },
+          {
+            "name": "Canada (amazon.ca)",
+            "value": "A2EUQ1WTGCTBG2"
+          },
+          {
+            "name": "Mexico (amazon.com.mx)",
+            "value": "A1AM78C64UM0Y8"
+          },
+          {
+            "name": "Brazil (amazon.com.br)",
+            "value": "A2Q3Y263D00KWC"
+          },
+          {
+            "name": "United Kingdom (amazon.co.uk)",
+            "value": "A1F83G8C2ARO7P"
+          },
+          {
+            "name": "Germany (amazon.de)",
+            "value": "A1PA6795UKMFR9"
+          },
+          {
+            "name": "France (amazon.fr)",
+            "value": "A13V1IB3VIYZZH"
+          },
+          {
+            "name": "Italy (amazon.it)",
+            "value": "APJ6JRA9NG5V4"
+          },
+          {
+            "name": "Spain (amazon.es)",
+            "value": "A1RKKUPIHCS9HS"
+          },
+          {
+            "name": "Netherlands (amazon.nl)",
+            "value": "A1805IZSGTT6HS"
+          },
+          {
+            "name": "Poland (amazon.pl)",
+            "value": "A1C3SOZRARQ6R3"
+          },
+          {
+            "name": "Sweden (amazon.se)",
+            "value": "A2NODRKZP88ZB9"
+          },
+          {
+            "name": "Belgium (amazon.com.be)",
+            "value": "AMEN7PMS3EDWL"
+          },
+          {
+            "name": "India (amazon.in)",
+            "value": "A21TJRUUN4KGV"
+          },
+          {
+            "name": "Turkey (amazon.com.tr)",
+            "value": "A33AVAJ2PDY3EV"
+          },
+          {
+            "name": "United Arab Emirates (amazon.ae)",
+            "value": "A2VIGQ35RCS4UG"
+          },
+          {
+            "name": "Saudi Arabia (amazon.sa)",
+            "value": "A17E79C6D8DWNP"
+          },
+          {
+            "name": "Egypt (amazon.eg)",
+            "value": "ARBP9OOSHTCHU"
+          },
+          {
+            "name": "Japan (amazon.co.jp)",
+            "value": "A1VC38T7YXB528"
+          },
+          {
+            "name": "Australia (amazon.com.au)",
+            "value": "A39IBJ37TRP1C6"
+          },
+          {
+            "name": "Singapore (amazon.sg)",
+            "value": "A19VAU5U5O7RUS"
+          }
+        ]
+      },
+      {
+        "displayName": "Fulfilled By",
+        "name": "fulfilledBy",
+        "type": "multiOptions",
+        "required": false,
+        "default": [],
+        "description": "The response includes orders that are fulfilled by the parties that you include in this list.",
+        "options": [
+          {
+            "name": "MERCHANT",
+            "value": "MERCHANT"
+          },
+          {
+            "name": "AMAZON",
+            "value": "AMAZON"
+          }
+        ]
+      },
+      {
+        "displayName": "Max Results Per Page",
+        "name": "maxResultsPerPage",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The maximum number of orders that can be returned per page. The value must be between 1 and 100. <strong>Default:</strong> 100."
+      },
+      {
+        "displayName": "Pagination Token",
+        "name": "paginationToken",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "Pagination occurs when a request produces a response that exceeds the <code>maxResultsPerPage</code>. This means that the response is divided into individual pages. To retrieve the next page, you must pass the <code>nextToken</code> value as the <code>paginationToken</code> query parameter in the next request. You will not receive a <code>nextToken</code> value on the last page."
+      },
+      {
+        "displayName": "Included Data",
+        "name": "includedData",
+        "type": "multiOptions",
+        "required": false,
+        "default": [],
+        "description": "A list of datasets to include in the response.",
+        "options": [
+          {
+            "name": "BUYER",
+            "value": "BUYER"
+          },
+          {
+            "name": "RECIPIENT",
+            "value": "RECIPIENT"
+          },
+          {
+            "name": "PROCEEDS",
+            "value": "PROCEEDS"
+          },
+          {
+            "name": "EXPENSE",
+            "value": "EXPENSE"
+          },
+          {
+            "name": "PROMOTION",
+            "value": "PROMOTION"
+          },
+          {
+            "name": "CANCELLATION",
+            "value": "CANCELLATION"
+          },
+          {
+            "name": "FULFILLMENT",
+            "value": "FULFILLMENT"
+          },
+          {
+            "name": "PACKAGES",
+            "value": "PACKAGES"
+          },
+          {
+            "name": "TAX",
+            "value": "TAX"
+          },
+          {
+            "name": "PAYMENT",
+            "value": "PAYMENT"
+          },
+          {
+            "name": "FULFILLMENT_ORDERS",
+            "value": "FULFILLMENT_ORDERS"
+          }
+        ]
       }
     ],
     "description": "Optional parameters."
@@ -20117,7 +23486,7 @@ export const generatedFields: INodeProperties[] = [
         "type": "string",
         "required": false,
         "default": "",
-        "description": "The version of the Amazon product type to retrieve. Defaults to &quot;LATEST&quot;,. Prerelease versions of product type definitions may be retrieved with &quot;RELEASE_CANDIDATE&quot;. If no prerelease version is currently available, the &quot;LATEST&quot; live version will be provided."
+        "description": "The version of the Amazon product type to retrieve. Defaults to &quot;LATEST&quot;. Prerelease versions of product type definitions may be retrieved with &quot;RELEASE_CANDIDATE&quot;. If no prerelease version is currently available, the &quot;LATEST&quot; live version will be provided."
       },
       {
         "displayName": "Requirements",
@@ -20320,6 +23689,28 @@ export const generatedFields: INodeProperties[] = [
             "value": "zh_TW"
           }
         ]
+      },
+      {
+        "displayName": "Parentage Level",
+        "name": "parentageLevel",
+        "type": "options",
+        "required": false,
+        "default": "",
+        "description": "The parentage level of the listing to retrieve a schema for. When provided, the schema is simplified by resolving all conditional logic related to the specified parentage level, resulting in a smaller schema with fewer conditions.",
+        "options": [
+          {
+            "name": "NONE",
+            "value": "NONE"
+          },
+          {
+            "name": "CHILD",
+            "value": "CHILD"
+          },
+          {
+            "name": "PARENT",
+            "value": "PARENT"
+          }
+        ]
       }
     ],
     "description": "Optional parameters."
@@ -20461,7 +23852,7 @@ export const generatedFields: INodeProperties[] = [
         "type": "string",
         "required": false,
         "default": "",
-        "description": "The title of the ASIN to get the product type recommendation. <strong>Note:</strong> Cannot be used with <code>keywords</code>."
+        "description": "Title of ASIN to get product type recommendation. <strong>Note:</strong> Cannot be used with <code>keywords</code>."
       },
       {
         "displayName": "Locale",
@@ -20469,7 +23860,7 @@ export const generatedFields: INodeProperties[] = [
         "type": "string",
         "required": false,
         "default": "",
-        "description": "The locale for the display names in the response. Defaults to the primary locale of the marketplace."
+        "description": "Locale for display names in response. Defaults to primary locale of the marketplace."
       },
       {
         "displayName": "Search Locale",
@@ -20477,7 +23868,561 @@ export const generatedFields: INodeProperties[] = [
         "type": "string",
         "required": false,
         "default": "",
-        "description": "The locale used for the <code>keywords</code> and <code>itemName</code> parameters. Defaults to the primary locale of the marketplace."
+        "description": "Language used for <code>keywords</code> or <code>itemName</code> parameters. Defaults to primary locale of the marketplace."
+      }
+    ],
+    "description": "Optional parameters."
+  },
+  {
+    "displayName": "Response Type",
+    "name": "responseType",
+    "type": "options",
+    "options": [
+      {
+        "name": "JSON",
+        "value": "json"
+      },
+      {
+        "name": "Text",
+        "value": "text"
+      },
+      {
+        "name": "Stream",
+        "value": "stream"
+      }
+    ],
+    "default": "json",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "promotions"
+        ]
+      }
+    },
+    "description": "Response handling for this request."
+  },
+  {
+    "displayName": "Promotion Id",
+    "name": "promotionId",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "The ID of the promotion.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "promotions"
+        ],
+        "operation": [
+          "getPromotion"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "promotions"
+        ],
+        "operation": [
+          "getPromotion"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Included Data",
+        "name": "includedData",
+        "type": "multiOptions",
+        "required": false,
+        "default": [],
+        "description": "A comma-delimited list of datasets to include in the response.",
+        "options": [
+          {
+            "name": "ISSUES",
+            "value": "ISSUES"
+          },
+          {
+            "name": "SELECTION",
+            "value": "SELECTION"
+          },
+          {
+            "name": "CUSTOMER_SEGMENTS",
+            "value": "CUSTOMER_SEGMENTS"
+          }
+        ]
+      },
+      {
+        "displayName": "Locale",
+        "name": "locale",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The locale of the promotion. Formatted as an ISO 639 language code, followed by an underscore, followed by an ISO 3166-1 alpha-2 country code."
+      }
+    ],
+    "description": "Optional parameters."
+  },
+  {
+    "displayName": "Promotion Id",
+    "name": "promotionId",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "The ID of the promotion.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "promotions"
+        ],
+        "operation": [
+          "getSelection"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Selection Id",
+    "name": "selectionId",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "The ID of the selection.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "promotions"
+        ],
+        "operation": [
+          "getSelection"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Revision Id",
+    "name": "revisionId",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "The revision identifier for the selection. Use the <code>revisionId</code> from the <code>getPromotion</code> response. A promotion may have multiple selection revisions when an update is in progress. Passing the correct <code>revisionId</code> ensures you retrieve the expected data.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "promotions"
+        ],
+        "operation": [
+          "getSelection"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "promotions"
+        ],
+        "operation": [
+          "getSelection"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Return All",
+        "name": "returnAll",
+        "type": "boolean",
+        "default": false,
+        "description": "Automatically fetch all pages when a pagination token is returned."
+      },
+      {
+        "displayName": "Max Results",
+        "name": "maxResults",
+        "type": "number",
+        "default": 0,
+        "description": "Maximum number of items to return. 0 means no limit."
+      },
+      {
+        "displayName": "Locale",
+        "name": "locale",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The locale of the promotion. Formatted as an ISO 639 language code, followed by an underscore, followed by an ISO 3166-1 alpha-2 country code."
+      },
+      {
+        "displayName": "Pagination Token",
+        "name": "paginationToken",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "A token that you use to retrieve the next page of results. The response includes <code>paginationToken</code> when the number of results exceeds the specified <code>limit</code> value. To get the next page of results, call the operation with this token and include the same arguments as the call that produced the token. To get a complete list, call this operation until <code>paginationToken</code> is null. Note that this operation can return empty pages."
+      },
+      {
+        "displayName": "Limit",
+        "name": "limit",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The maximum number of response results per page."
+      },
+      {
+        "displayName": "Included Data",
+        "name": "includedData",
+        "type": "multiOptions",
+        "required": false,
+        "default": [],
+        "description": "A comma-delimited list of datasets to include in the response.",
+        "options": [
+          {
+            "name": "ISSUES",
+            "value": "ISSUES"
+          }
+        ]
+      }
+    ],
+    "description": "Optional parameters."
+  },
+  {
+    "displayName": "Marketplace Ids",
+    "name": "marketplaceIds",
+    "type": "multiOptions",
+    "required": true,
+    "default": [
+      "A1PA6795UKMFR9"
+    ],
+    "description": "The Amazon stores from which to retrieve promotions. Refer to <a href=\"https://developer-docs.amazon/sp-api/docs/store-identifiers\" target=\"_blank\" rel=\"noopener noreferrer\">Store Identifiers</a> for a list of Amazon store values.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "promotions"
+        ],
+        "operation": [
+          "searchPromotions"
+        ]
+      }
+    },
+    "options": [
+      {
+        "name": "United States (amazon.com)",
+        "value": "ATVPDKIKX0DER"
+      },
+      {
+        "name": "Canada (amazon.ca)",
+        "value": "A2EUQ1WTGCTBG2"
+      },
+      {
+        "name": "Mexico (amazon.com.mx)",
+        "value": "A1AM78C64UM0Y8"
+      },
+      {
+        "name": "Brazil (amazon.com.br)",
+        "value": "A2Q3Y263D00KWC"
+      },
+      {
+        "name": "United Kingdom (amazon.co.uk)",
+        "value": "A1F83G8C2ARO7P"
+      },
+      {
+        "name": "Germany (amazon.de)",
+        "value": "A1PA6795UKMFR9"
+      },
+      {
+        "name": "France (amazon.fr)",
+        "value": "A13V1IB3VIYZZH"
+      },
+      {
+        "name": "Italy (amazon.it)",
+        "value": "APJ6JRA9NG5V4"
+      },
+      {
+        "name": "Spain (amazon.es)",
+        "value": "A1RKKUPIHCS9HS"
+      },
+      {
+        "name": "Netherlands (amazon.nl)",
+        "value": "A1805IZSGTT6HS"
+      },
+      {
+        "name": "Poland (amazon.pl)",
+        "value": "A1C3SOZRARQ6R3"
+      },
+      {
+        "name": "Sweden (amazon.se)",
+        "value": "A2NODRKZP88ZB9"
+      },
+      {
+        "name": "Belgium (amazon.com.be)",
+        "value": "AMEN7PMS3EDWL"
+      },
+      {
+        "name": "India (amazon.in)",
+        "value": "A21TJRUUN4KGV"
+      },
+      {
+        "name": "Turkey (amazon.com.tr)",
+        "value": "A33AVAJ2PDY3EV"
+      },
+      {
+        "name": "United Arab Emirates (amazon.ae)",
+        "value": "A2VIGQ35RCS4UG"
+      },
+      {
+        "name": "Saudi Arabia (amazon.sa)",
+        "value": "A17E79C6D8DWNP"
+      },
+      {
+        "name": "Egypt (amazon.eg)",
+        "value": "ARBP9OOSHTCHU"
+      },
+      {
+        "name": "Japan (amazon.co.jp)",
+        "value": "A1VC38T7YXB528"
+      },
+      {
+        "name": "Australia (amazon.com.au)",
+        "value": "A39IBJ37TRP1C6"
+      },
+      {
+        "name": "Singapore (amazon.sg)",
+        "value": "A19VAU5U5O7RUS"
+      }
+    ]
+  },
+  {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "promotions"
+        ],
+        "operation": [
+          "searchPromotions"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Return All",
+        "name": "returnAll",
+        "type": "boolean",
+        "default": false,
+        "description": "Automatically fetch all pages when a pagination token is returned."
+      },
+      {
+        "displayName": "Max Results",
+        "name": "maxResults",
+        "type": "number",
+        "default": 0,
+        "description": "Maximum number of items to return. 0 means no limit."
+      },
+      {
+        "displayName": "Locale",
+        "name": "locale",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The locale from which to retrieve promotions. Formatted as an ISO 639 language code, followed by an underscore, followed by an ISO 3166-1 alpha-2 country code."
+      },
+      {
+        "displayName": "Statuses",
+        "name": "statuses",
+        "type": "multiOptions",
+        "required": false,
+        "default": [],
+        "description": "The statuses of promotions to retrieve, formatted as a comma-delimited list.",
+        "options": [
+          {
+            "name": "PROCESSING",
+            "value": "PROCESSING"
+          },
+          {
+            "name": "UPCOMING",
+            "value": "UPCOMING"
+          },
+          {
+            "name": "RUNNING",
+            "value": "RUNNING"
+          },
+          {
+            "name": "EXPIRED",
+            "value": "EXPIRED"
+          },
+          {
+            "name": "FAILED",
+            "value": "FAILED"
+          },
+          {
+            "name": "CANCELLING",
+            "value": "CANCELLING"
+          },
+          {
+            "name": "CANCELLED",
+            "value": "CANCELLED"
+          }
+        ]
+      },
+      {
+        "displayName": "Asins",
+        "name": "asins",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The ASINs to which promotions apply, formatted as a comma-delimited list."
+      },
+      {
+        "displayName": "Skus",
+        "name": "skus",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The SKUs to which promotions apply, formatted as a comma-delimited list."
+      },
+      {
+        "displayName": "Promotion Types",
+        "name": "promotionTypes",
+        "type": "multiOptions",
+        "required": false,
+        "default": [],
+        "description": "The promotion types to which promotions apply, formatted as a comma-delimited list.",
+        "options": [
+          {
+            "name": "BASKET_BUILDING",
+            "value": "BASKET_BUILDING"
+          },
+          {
+            "name": "DEAL",
+            "value": "DEAL"
+          },
+          {
+            "name": "PRICE_DISCOUNT",
+            "value": "PRICE_DISCOUNT"
+          },
+          {
+            "name": "COUPON",
+            "value": "COUPON"
+          }
+        ]
+      },
+      {
+        "displayName": "Start Date Before",
+        "name": "startDateBefore",
+        "type": "dateTime",
+        "required": false,
+        "default": "",
+        "description": "Promotions that start before this date are returned. Formatted in ISO 8601 format, including the timezone. For example: <code>1970-01-01T00:00:00-07:00</code>."
+      },
+      {
+        "displayName": "Start Date After",
+        "name": "startDateAfter",
+        "type": "dateTime",
+        "required": false,
+        "default": "",
+        "description": "Promotions that start after this date are returned. Formatted in ISO 8601 format, including the timezone. For example: <code>1970-01-01T00:00:00-07:00</code>."
+      },
+      {
+        "displayName": "End Date Before",
+        "name": "endDateBefore",
+        "type": "dateTime",
+        "required": false,
+        "default": "",
+        "description": "Promotions that end before this date are returned. Formatted in ISO 8601 format, including the timezone. For example: <code>1970-01-01T00:00:00-07:00</code>."
+      },
+      {
+        "displayName": "End Date After",
+        "name": "endDateAfter",
+        "type": "dateTime",
+        "required": false,
+        "default": "",
+        "description": "Promotions that end after this date are returned. Formatted in ISO 8601 format, including the timezone. For example: <code>1970-01-01T00:00:00-07:00</code>."
+      },
+      {
+        "displayName": "Update Date After",
+        "name": "updateDateAfter",
+        "type": "dateTime",
+        "required": false,
+        "default": "",
+        "description": "Filter promotions that were last modified after this timestamp. Zoned Datetime in ISO 8601 format (e.g., 1970-01-01T00:00:00-07:00)."
+      },
+      {
+        "displayName": "Update Date Before",
+        "name": "updateDateBefore",
+        "type": "dateTime",
+        "required": false,
+        "default": "",
+        "description": "Filter promotions that were last modified before this timestamp. Zoned Datetime in ISO 8601 format (e.g., 1970-01-01T00:00:00-07:00)."
+      },
+      {
+        "displayName": "Pagination Token",
+        "name": "paginationToken",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "A token that you use to retrieve the next page of results. The response includes <code>paginationToken</code> when the number of results exceeds the specified <code>limit</code> value. To get the next page of results, call the operation with this token and include the same arguments as the call that produced the token. To get a complete list, call this operation until <code>paginationToken</code> is null. Note that this operation can return empty pages."
+      },
+      {
+        "displayName": "Revision",
+        "name": "revision",
+        "type": "options",
+        "required": false,
+        "default": "",
+        "description": "Specifies which promotion revision or revisions to match against when filtering. This controls which promotions are included in search results, not the shape of the response. The response always returns the published revision in the main body, with <code>latestRevision</code> included when the latest revision diverges.",
+        "options": [
+          {
+            "name": "LATEST",
+            "value": "LATEST"
+          },
+          {
+            "name": "PUBLISHED",
+            "value": "PUBLISHED"
+          },
+          {
+            "name": "ANY",
+            "value": "ANY"
+          }
+        ]
+      },
+      {
+        "displayName": "Limit",
+        "name": "limit",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The maximum number of response results per page."
+      },
+      {
+        "displayName": "Included Data",
+        "name": "includedData",
+        "type": "multiOptions",
+        "required": false,
+        "default": [],
+        "description": "A comma-delimited list of datasets to include in the response.",
+        "options": [
+          {
+            "name": "ISSUES",
+            "value": "ISSUES"
+          },
+          {
+            "name": "CUSTOMER_SEGMENTS",
+            "value": "CUSTOMER_SEGMENTS"
+          }
+        ]
       }
     ],
     "description": "Optional parameters."
@@ -20525,7 +24470,7 @@ export const generatedFields: INodeProperties[] = [
       }
     },
     "default": "{}",
-    "description": "JSON body for this request. Schema: GetSellingPartnerMetricsRequest { aggregationFrequency?: AggregationFrequency &quot;WEEK&quot; | &quot;MONTH&quot; | &quot;QUARTER&quot; | &quot;YEAR&quot;, timeInterval: TimeInterval { startDate: string, endDate: string }, metrics?: Metric &quot;SHIPPED_SUBSCRIPTION_UNITS&quot; | &quot;TOTAL_SUBSCRIPTIONS_REVENUE&quot; | &quot;ACTIVE_SUBSCRIPTIONS&quot; | &quot;NOT_DELIVERED_DUE_TO_OOS&quot; | &quot;SUBSCRIBER_NON_SUBSCRIBER_AVERAGE_REVENUE&quot; | &quot;LOST_REVENUE_DUE_TO_OOS&quot; | &quot;SUBSCRIBER_NON_SUBSCRIBER_AVERAGE_REORDERS&quot; | &quot;COUPONS_REVENUE_PENETRATION&quot; | &quot;REVENUE_BY_DELIVERIES&quot; | &quot;SUBSCRIBER_RETENTION&quot; | &quot;REVENUE_PENETRATION_BY_SELLER_FUNDING&quot; | &quot;SHARE_OF_COUPON_SUBSCRIPTIONS&quot; | &quot;SUBSCRIBER_LIFETIME_VALUE_BY_CUSTOMER_SEGMENT&quot; | &quot;SIGNUP_CONVERSION_BY_SELLER_FUNDING&quot;[], timePeriodType: TimePeriodType &quot;PERFORMANCE&quot; | &quot;FORECAST&quot;, marketplaceId: MarketplaceId string, programTypes: ProgramTypes ProgramType string[] }"
+    "description": "JSON body for this request. Schema: GetSellingPartnerMetricsRequest { aggregationFrequency?: AggregationFrequency &quot;DAY&quot; | &quot;WEEK&quot; | &quot;MONTH&quot; | &quot;QUARTER&quot; | &quot;YEAR&quot;, timeInterval: TimeInterval { startDate: string, endDate: string }, metrics?: Metric &quot;SHIPPED_SUBSCRIPTION_UNITS&quot; | &quot;TOTAL_SUBSCRIPTIONS_REVENUE&quot; | &quot;ACTIVE_SUBSCRIPTIONS&quot; | &quot;NOT_DELIVERED_DUE_TO_OOS&quot; | &quot;SUBSCRIBER_NON_SUBSCRIBER_AVERAGE_REVENUE&quot; | &quot;LOST_REVENUE_DUE_TO_OOS&quot; | &quot;SUBSCRIBER_NON_SUBSCRIBER_AVERAGE_REORDERS&quot; | &quot;COUPONS_REVENUE_PENETRATION&quot; | &quot;REVENUE_BY_DELIVERIES&quot; | &quot;SUBSCRIBER_RETENTION&quot; | &quot;REVENUE_PENETRATION_BY_SELLER_FUNDING&quot; | &quot;SHARE_OF_COUPON_SUBSCRIPTIONS&quot; | &quot;SUBSCRIBER_LIFETIME_VALUE_BY_CUSTOMER_SEGMENT&quot; | &quot;SIGNUP_CONVERSION_BY_SELLER_FUNDING&quot; | &quot;REVENUE_PENETRATION&quot;[], filters?: GetSellingPartnerMetricsRequestFilters { asins?: string[], skus?: string[], fulfillmentChannelTypes?: object[], brandNames?: string[], productGroups?: string[] }, timePeriodType: TimePeriodType &quot;PERFORMANCE&quot; | &quot;FORECAST&quot;, marketplaceId: MarketplaceId string, programTypes: ProgramTypes ProgramType string[] }"
   },
   {
     "displayName": "Body (JSON)",
@@ -20542,7 +24487,7 @@ export const generatedFields: INodeProperties[] = [
       }
     },
     "default": "{}",
-    "description": "JSON body for this request. Schema: ListOfferMetricsRequest { pagination: ListOfferMetricsRequestPagination { limit: integer, offset: integer }, sort?: ListOfferMetricsRequestSort { order: SortOrder string, key: ListOfferMetricsSortKey string }, filters: ListOfferMetricsRequestFilters { aggregationFrequency?: AggregationFrequency string, timeInterval: TimeInterval, timePeriodType: TimePeriodType string, marketplaceId: MarketplaceId string, programTypes: ProgramTypes array, asins?: string[] } }"
+    "description": "JSON body for this request. Schema: ListOfferMetricsRequest { pagination: ListOfferMetricsRequestPagination { limit: integer, offset: integer }, sort?: ListOfferMetricsRequestSort { order: SortOrder string, key: ListOfferMetricsSortKey string }, filters: ListOfferMetricsRequestFilters { aggregationFrequency?: AggregationFrequency string, timeInterval: TimeInterval, timePeriodType: TimePeriodType string, marketplaceId: MarketplaceId string, programTypes: ProgramTypes array, asins?: string[], skus?: string[], fulfillmentChannelTypes?: object[], brandNames?: string[], productGroups?: string[] } }"
   },
   {
     "displayName": "Body (JSON)",
@@ -20559,7 +24504,7 @@ export const generatedFields: INodeProperties[] = [
       }
     },
     "default": "{}",
-    "description": "JSON body for this request. Schema: ListOffersRequest { pagination: ListOffersRequestPagination { limit: integer, offset: integer }, filters: ListOffersRequestFilters { marketplaceId: MarketplaceId string, skus?: string[], asins?: string[], eligibilities?: object[], preferences?: Preference, promotions?: Promotion, programTypes: ProgramTypes array }, sort?: ListOffersRequestSort { order: SortOrder string, key: ListOffersSortKey string } }"
+    "description": "JSON body for this request. Schema: ListOffersRequest { pagination: ListOffersRequestPagination { limit: integer, offset: integer }, filters: ListOffersRequestFilters { marketplaceId: MarketplaceId string, skus?: string[], asins?: string[], eligibilities?: object[], preferences?: Preference, promotions?: Promotion, programTypes: ProgramTypes array, deliveriesConditions?: string[] }, sort?: ListOffersRequestSort { order: SortOrder string, key: ListOffersSortKey string } }"
   },
   {
     "displayName": "Response Type",
@@ -20694,6 +24639,34 @@ export const generatedFields: INodeProperties[] = [
         ]
       }
     }
+  },
+  {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "reports"
+        ],
+        "operation": [
+          "getReportDocument"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Enable Content Encoding Url Header",
+        "name": "enableContentEncodingUrlHeader",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "When <code>true</code>, the Content-Encoding header on the returned URL is set to <code>gzip</code> instead of the default <code>identity</code> when <code>compressionAlgorithm</code> is <code>GZIP</code>. This allows automatic decompression by HTTP clients."
+      }
+    ],
+    "description": "Optional parameters."
   },
   {
     "displayName": "Report Schedule Id",
@@ -21631,7 +25604,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "string",
     "required": true,
     "default": "",
-    "description": "ID of the Amazon SW account",
+    "description": "The ID of the Amazon Seller Wallet account.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -21753,7 +25726,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "string",
     "required": true,
     "default": "",
-    "description": "ID of the Amazon SW transaction",
+    "description": "The ID of the Amazon Seller Wallet transaction.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -21875,7 +25848,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "string",
     "required": true,
     "default": "",
-    "description": "Represents 2 character country code of source transaction account in ISO 3166 standard format.",
+    "description": "Country code of the source transaction account in ISO 3166 format.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -21893,7 +25866,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "string",
     "required": true,
     "default": "",
-    "description": "Represents 3 letter currency code in ISO 4217 standard format of the source transaction country.",
+    "description": "Currency code of the source transaction country in ISO 4217 format.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -21911,7 +25884,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "string",
     "required": true,
     "default": "",
-    "description": "Represents 2 character country code of destination transaction account in ISO 3166 standard format.",
+    "description": "Country code of the destination transaction account in ISO 3166 format.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -21929,7 +25902,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "string",
     "required": true,
     "default": "",
-    "description": "Represents 3 letter currency code in ISO 4217 standard format of the destination transaction country.",
+    "description": "Currency code of the destination transaction country in ISO 4217 format.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -21947,7 +25920,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "string",
     "required": true,
     "default": "",
-    "description": "Represents the base transaction amount without any markup fees, rates that will be used to get the transfer preview.",
+    "description": "The base transaction amount without any markup fees.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -22191,7 +26164,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "string",
     "required": true,
     "default": "",
-    "description": "ID of the Amazon SW account",
+    "description": "The ID of the Amazon Seller Wallet account.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -22313,7 +26286,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "string",
     "required": true,
     "default": "",
-    "description": "ID of the Amazon SW account",
+    "description": "The ID of the Amazon Seller Wallet account.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -22466,7 +26439,7 @@ export const generatedFields: INodeProperties[] = [
         "type": "string",
         "required": false,
         "default": "",
-        "description": "Pagination token to retrieve a specific page of results."
+        "description": "A token that you use to retrieve the next page of results. The response includes <code>nextPageToken</code> when the number of results exceeds 100. To get the next page of results, call the operation with this token and include the same arguments as the call that produced the token. To get a complete list, call this operation until <code>nextPageToken</code> is null. Note that this operation can return empty pages."
       }
     ],
     "description": "Optional parameters."
@@ -22477,7 +26450,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "options",
     "required": true,
     "default": "A1PA6795UKMFR9",
-    "description": "A marketplace identifier. Specifies the marketplace for which items are returned.",
+    "description": "The marketplace for which items are returned. The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -22581,7 +26554,7 @@ export const generatedFields: INodeProperties[] = [
     "type": "string",
     "required": true,
     "default": "",
-    "description": "ID of the Amazon SW account",
+    "description": "The ID of the Amazon Seller Wallet account.",
     "displayOptions": {
       "show": {
         "resource": [
@@ -22734,7 +26707,7 @@ export const generatedFields: INodeProperties[] = [
         "type": "string",
         "required": false,
         "default": "",
-        "description": "Pagination token to retrieve a specific page of results."
+        "description": "A token that you use to retrieve the next page of results. The response includes <code>nextPageToken</code> when the number of results exceeds the specified <code>pageSize</code> value. To get the next page of results, call the operation with this token and include the same arguments as the call that produced the token. To get a complete list, call this operation until <code>nextPageToken</code> is null. Note that this operation can return empty pages."
       }
     ],
     "description": "Optional parameters."
@@ -24188,6 +28161,22 @@ export const generatedFields: INodeProperties[] = [
         "required": false,
         "default": "",
         "description": "List of service order ids for the query you want to perform.Max values supported 20."
+      },
+      {
+        "displayName": "Product Order Ids",
+        "name": "productOrderIds",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "A list of up to 20 associated product order IDs. You can use these IDs to query service jobs."
+      },
+      {
+        "displayName": "Tracking Ids",
+        "name": "trackingIds",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "A list of up to 20 associated product tracking IDs. You can use these IDs to query service jobs."
       },
       {
         "displayName": "Service Job Status",
@@ -26104,6 +30093,155 @@ export const generatedFields: INodeProperties[] = [
     "displayOptions": {
       "show": {
         "resource": [
+          "support"
+        ]
+      }
+    },
+    "description": "Response handling for this request."
+  },
+  {
+    "displayName": "Case Id",
+    "name": "caseId",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "The case identifier.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "support"
+        ],
+        "operation": [
+          "getCase"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Body (JSON)",
+    "name": "bodyJson",
+    "type": "json",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "support"
+        ],
+        "operation": [
+          "listCases"
+        ]
+      }
+    },
+    "default": "{}",
+    "description": "JSON body for this request. Schema: ListCasesRequest { marketplaceId?: string, caseFilters?: CaseFilters { caseStatuses?: string[], createdDate?: DateFilter, lastOutboundDate?: DateFilter, resolvedDate?: DateFilter, primaryEmails?: string[], ccEmails?: string[], subjectKeywords?: string }, sortField?: &quot;CASE_ID&quot; | &quot;STATUS&quot; | &quot;SUBJECT&quot; | &quot;PRIMARY_EMAIL&quot; | &quot;CREATION_DATE&quot; | &quot;LAST_OUTBOUND_DATE&quot; | &quot;RESOLUTION_DATE&quot;, sortOrder?: &quot;ASC&quot; | &quot;DESC&quot;, maxResults?: integer, nextToken?: string }"
+  },
+  {
+    "displayName": "Case Id",
+    "name": "caseId",
+    "type": "string",
+    "required": true,
+    "default": "",
+    "description": "The case identifier.",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "support"
+        ],
+        "operation": [
+          "listContacts"
+        ]
+      }
+    }
+  },
+  {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "support"
+        ],
+        "operation": [
+          "listContacts"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Return All",
+        "name": "returnAll",
+        "type": "boolean",
+        "default": false,
+        "description": "Automatically fetch all pages when a pagination token is returned."
+      },
+      {
+        "displayName": "Max Results",
+        "name": "maxResults",
+        "type": "number",
+        "default": 0,
+        "description": "Maximum number of items to return. 0 means no limit."
+      },
+      {
+        "displayName": "Max Results",
+        "name": "maxResults",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The maximum number of results to include in the response."
+      },
+      {
+        "displayName": "Next Token",
+        "name": "nextToken",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "A token to retrieve the next page of results. The response includes <code>nextToken</code> when the number of results exceeds the specified <code>maxResults</code> value. To get the next page of results, call the operation with this token and include the same arguments as the call that produced the token. To get a complete list, call this operation until <code>nextToken</code> is null. Note that this operation can return empty pages."
+      },
+      {
+        "displayName": "Sort Order",
+        "name": "sortOrder",
+        "type": "options",
+        "required": false,
+        "default": "",
+        "description": "Sort the returned contacts by <code>createdDate</code> in either ascending or descending order.",
+        "options": [
+          {
+            "name": "ASC",
+            "value": "ASC"
+          },
+          {
+            "name": "DESC",
+            "value": "DESC"
+          }
+        ]
+      }
+    ],
+    "description": "Optional parameters."
+  },
+  {
+    "displayName": "Response Type",
+    "name": "responseType",
+    "type": "options",
+    "options": [
+      {
+        "name": "JSON",
+        "value": "json"
+      },
+      {
+        "name": "Text",
+        "value": "text"
+      },
+      {
+        "name": "Stream",
+        "value": "stream"
+      }
+    ],
+    "default": "json",
+    "displayOptions": {
+      "show": {
+        "resource": [
           "tokens"
         ]
       }
@@ -26126,6 +30264,118 @@ export const generatedFields: INodeProperties[] = [
     },
     "default": "{}",
     "description": "JSON body for this request. Schema: CreateRestrictedDataTokenRequest { targetApplication?: string, restrictedResources: RestrictedResource { method: string, path: string, dataElements?: array }[] }"
+  },
+  {
+    "displayName": "Response Type",
+    "name": "responseType",
+    "type": "options",
+    "options": [
+      {
+        "name": "JSON",
+        "value": "json"
+      },
+      {
+        "name": "Text",
+        "value": "text"
+      },
+      {
+        "name": "Stream",
+        "value": "stream"
+      }
+    ],
+    "default": "json",
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "tracking"
+        ]
+      }
+    },
+    "description": "Response handling for this request."
+  },
+  {
+    "displayName": "Options",
+    "name": "additionalOptions",
+    "type": "collection",
+    "placeholder": "Add Optional Field",
+    "default": {},
+    "displayOptions": {
+      "show": {
+        "resource": [
+          "tracking"
+        ],
+        "operation": [
+          "getShipmentTracking"
+        ]
+      }
+    },
+    "options": [
+      {
+        "displayName": "Id",
+        "name": "id",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The unique tracking request identifier."
+      },
+      {
+        "displayName": "Acsin",
+        "name": "acsin",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The Air Cargo Shipment Identification Number."
+      },
+      {
+        "displayName": "Aftn",
+        "name": "aftn",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The Amazon Fulfillment Tracking Number."
+      },
+      {
+        "displayName": "Container Number",
+        "name": "containerNumber",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The container number provided by the Logistics Service Provider."
+      },
+      {
+        "displayName": "House Bill Of Lading Number",
+        "name": "houseBillOfLadingNumber",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The House Bill of Lading (HBL) number."
+      },
+      {
+        "displayName": "Pro Number",
+        "name": "proNumber",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The PRO number assigned by the freight carrier"
+      },
+      {
+        "displayName": "Carrier Tracking.tracking Number",
+        "name": "carrierTracking.trackingNumber",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The tracking number assigned by the carrier."
+      },
+      {
+        "displayName": "Carrier Tracking.carrier Code",
+        "name": "carrierTracking.carrierCode",
+        "type": "string",
+        "required": false,
+        "default": "",
+        "description": "The carrier code associated with the carrier tracking number."
+      }
+    ],
+    "description": "Optional parameters."
   },
   {
     "displayName": "Response Type",
@@ -26320,7 +30570,7 @@ export const generatedFields: INodeProperties[] = [
         "type": "string",
         "required": false,
         "default": "",
-        "description": "The content type of the file you upload."
+        "description": "The content type of the file you upload. This parameter is required for A+ content."
       }
     ],
     "description": "Optional parameters."
@@ -27031,7 +31281,7 @@ export const generatedFields: INodeProperties[] = [
       }
     },
     "default": "{}",
-    "description": "JSON body for this request. Schema: SubmitInvoiceRequest { invoices?: InvoiceDetail { invoiceNumber: string, invoiceDate: string, referenceNumber?: string, remitToParty: object, shipFromParty: object, billToParty?: object, shipToCountryCode?: string, paymentTermsCode?: string, invoiceTotal: object, taxTotals?: array, additionalDetails?: array, chargeDetails?: array, items: array }[] }"
+    "description": "JSON body for this request. Schema: SubmitInvoiceRequest { invoices?: InvoiceDetail { invoiceNumber: string, invoiceDate: string, taxPointDate?: string, deliveryDate?: string, referenceNumber?: string, remitToParty: object, shipFromParty: object, billToParty?: object, billFromParty?: object, vatGroupParty?: object, taxRepresentativeParty?: object, shipToParty?: object, shipToCountryCode?: string, paymentTermsCode?: string, invoiceTotal: object, invoiceBaseAmount?: object, exchangeRate?: object, taxTotals?: array, additionalDetails?: array, chargeDetails?: array, allowanceDetails?: array, items: array }[] }"
   },
   {
     "displayName": "Response Type",
@@ -28165,7 +32415,7 @@ export const generatedFields: INodeProperties[] = [
       }
     },
     "default": "{}",
-    "description": "JSON body for this request. Schema: SubmitInvoicesRequest { invoices?: Invoice { invoiceType: string, id: string, referenceNumber?: string, date: object, remitToParty: object, shipToParty?: object, shipFromParty?: object, billToParty?: object, paymentTerms?: object, invoiceTotal: object, taxDetails?: array, additionalDetails?: array, chargeDetails?: array, allowanceDetails?: array, items?: array }[] }"
+    "description": "JSON body for this request. Schema: SubmitInvoicesRequest { invoices?: Invoice { invoiceType: string, id: string, referenceNumber?: string, date: object, remitToParty: object, shipToParty?: object, shipFromParty?: object, billToParty?: object, billFromParty?: object, vatGroupParty?: object, taxRepresentativeParty?: object, paymentTerms?: object, invoiceTotal: object, invoiceBaseAmount?: object, taxPointDate?: object, taxDetails?: array, additionalDetails?: array, chargeDetails?: array, allowanceDetails?: array, items?: array }[] }"
   },
   {
     "displayName": "Response Type",
@@ -28962,23 +33212,6 @@ export const generatedFields: INodeProperties[] = [
           "vendorShipments"
         ],
         "operation": [
-          "SubmitShipmentConfirmation"
-        ]
-      }
-    },
-    "default": "{}",
-    "description": "JSON body for this request. Schema: SubmitShipmentConfirmationRequest { shipmentConfirmation: ShipmentConfirmation { shipmentIdentifier: string, shipmentConfirmationType: &quot;Original&quot; | &quot;Replace&quot;, shipmentType?: &quot;TruckLoad&quot; | &quot;LessThanTruckLoad&quot; | &quot;SmallParcel&quot;, shipmentStructure?: &quot;PalletizedAssortmentCase&quot; | &quot;LooseAssortmentCase&quot; | &quot;PalletOfItems&quot; | &quot;PalletizedStandardCase&quot; | &quot;LooseStandardCase&quot; | &quot;MasterPallet&quot; | &quot;MasterCase&quot;, transportationDetails?: TransportationDetailsForShipmentConfirmation, amazonReferenceNumber?: string, shipmentConfirmationDate: string, shippedDate?: string, estimatedDeliveryDate?: string, sellingParty: PartyIdentification, shipFromParty: PartyIdentification, shipToParty: PartyIdentification, shipmentMeasurements?: ShipmentMeasurements, importDetails?: ImportDetails, shippedItems: object[], cartons?: object[], pallets?: object[] } }"
-  },
-  {
-    "displayName": "Body (JSON)",
-    "name": "bodyJson",
-    "type": "json",
-    "displayOptions": {
-      "show": {
-        "resource": [
-          "vendorShipments"
-        ],
-        "operation": [
           "SubmitShipmentConfirmations"
         ]
       }
@@ -29185,9 +33418,7 @@ export const generatedOperationMap = {
           "type": "string",
           "isArray": false,
           "enumValues": [
-            "THERMAL_NONPCP",
-            "PLAIN_PAPER",
-            "LETTER_6"
+            "PLAIN_PAPER"
           ]
         },
         {
@@ -29200,6 +33431,21 @@ export const generatedOperationMap = {
           "enumValues": [
             "PDF"
           ]
+        }
+      ],
+      "hasBody": false
+    },
+    "getLabelPageTypes": {
+      "method": "GET",
+      "endpoint": "/awd/2024-05-09/inboundShipments/{shipmentId}/labelPageTypes",
+      "params": [
+        {
+          "name": "shipmentId",
+          "in": "path",
+          "description": "ID for the shipment.",
+          "required": true,
+          "type": "string",
+          "isArray": false
         }
       ],
       "hasBody": false
@@ -29382,6 +33628,230 @@ export const generatedOperationMap = {
         }
       ],
       "hasBody": false
+    },
+    "listOutbounds": {
+      "method": "GET",
+      "endpoint": "/awd/2024-05-09/outboundOrders",
+      "params": [
+        {
+          "name": "updatedAfter",
+          "in": "query",
+          "description": "Get the outbound orders updated after a certain time (inclusive). The date must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "format": "date-time"
+        },
+        {
+          "name": "updatedBefore",
+          "in": "query",
+          "description": "Get the outbound orders updated before a certain time (inclusive). The date must be in <a href='https://developer-docs.amazon.com/sp-api/docs/iso-8601'>ISO 8601</a> format.",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "format": "date-time"
+        },
+        {
+          "name": "sortOrder",
+          "in": "query",
+          "description": "Sort the response in <code>ASCENDING</code> or <code>DESCENDING</code> order.",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "enumValues": [
+            "ASCENDING",
+            "DESCENDING"
+          ]
+        },
+        {
+          "name": "maxResults",
+          "in": "query",
+          "description": "Maximum number of results to return.",
+          "required": false,
+          "type": "integer",
+          "isArray": false,
+          "format": "int32"
+        },
+        {
+          "name": "nextToken",
+          "in": "query",
+          "description": "A token that is used to retrieve the next page of results. The response includes <code>nextToken</code> when the number of results exceeds the specified <code>maxResults</code> value. To get the next page of results, call the operation with this token and include the same arguments as the call that produced the token. To get a complete list, call this operation until <code>nextToken</code> is null. Note that this operation can return empty pages.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "hasBody": false
+    },
+    "createOutbound": {
+      "method": "POST",
+      "endpoint": "/awd/2024-05-09/outboundOrders",
+      "params": [
+        {
+          "name": "body",
+          "in": "body",
+          "description": "Payload for creating an outbound order.",
+          "required": true,
+          "type": "string",
+          "isArray": false,
+          "schemaSummary": "OutboundOrderCreationData { orderPreferences?: OrderAttribute { orderPreference: object, orderPreferenceValue: object }[], packagesToOutbound?: DistributionPackageQuantity { count: integer, distributionPackage: object }[], productsToOutbound?: ProductQuantity { attributes?: array, quantity: integer, sku: string, expiration?: string, prepDetails?: object }[] }"
+        }
+      ],
+      "hasBody": true
+    },
+    "getOutbound": {
+      "method": "GET",
+      "endpoint": "/awd/2024-05-09/outboundOrders/{orderId}",
+      "params": [
+        {
+          "name": "orderId",
+          "in": "path",
+          "description": "ID for the outbound order to be retrieved.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "hasBody": false
+    },
+    "updateOutbound": {
+      "method": "PUT",
+      "endpoint": "/awd/2024-05-09/outboundOrders/{orderId}",
+      "params": [
+        {
+          "name": "orderId",
+          "in": "path",
+          "description": "ID for the outbound order to be updated.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "body",
+          "in": "body",
+          "description": "Represents an AWD outbound order.",
+          "required": true,
+          "type": "string",
+          "isArray": false,
+          "schemaSummary": "OutboundOrder { confirmedOn?: string, createdAt?: string, eligiblePackagesToOutbound?: DistributionPackageQuantity { count: integer, distributionPackage: object }[], eligibleProductsToOutbound?: ProductQuantity { attributes?: array, quantity: integer, sku: string, expiration?: string, prepDetails?: object }[], executionErrors?: OutboundExecutionError { failureCode: string, failureReasons: array, sku?: string }[], orderId: string, orderPreferences?: OrderAttribute { orderPreference: object, orderPreferenceValue: object }[], orderStatus: OutboundStatus \"CONFIRMED\" | \"DRAFT\" | \"ELIGIBLE\" | \"EXECUTING\" | \"FAILURE\" | \"INELIGIBLE\" | \"INVENTORY_OUTBOUND\" | \"SUCCESS\" | \"VALIDATING\", outboundShipments: OutboundShipment { createdAt?: string, destinationAddress: object, orderId: string, originAddress: object, shipmentPackageQuantities?: array, shipmentId: string, shipmentProductQuantities?: array, shipmentStatus: object, updatedAt?: string }[], packagesToOutbound?: DistributionPackageQuantity { count: integer, distributionPackage: object }[], productsToOutbound?: ProductQuantity { attributes?: array, quantity: integer, sku: string, expiration?: string, prepDetails?: object }[], shippedOutboundPackages?: DistributionPackageQuantity { count: integer, distributionPackage: object }[], shippedOutboundProducts?: ProductQuantity { attributes?: array, quantity: integer, sku: string, expiration?: string, prepDetails?: object }[], updatedAt?: string }"
+        }
+      ],
+      "hasBody": true
+    },
+    "confirmOutbound": {
+      "method": "POST",
+      "endpoint": "/awd/2024-05-09/outboundOrders/{orderId}/confirmation",
+      "params": [
+        {
+          "name": "orderId",
+          "in": "path",
+          "description": "ID for the outbound order you want to confirm.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "hasBody": false
+    },
+    "listReplenishmentOrders": {
+      "method": "GET",
+      "endpoint": "/awd/2024-05-09/replenishmentOrders",
+      "params": [
+        {
+          "name": "updatedAfter",
+          "in": "query",
+          "description": "Get the replenishment orders updated after certain time (Inclusive)<br>Date should be in ISO 8601 format as defined by date-time in - https://www.rfc-editor.org/rfc/rfc3339.",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "format": "date-time"
+        },
+        {
+          "name": "updatedBefore",
+          "in": "query",
+          "description": "Get the replenishment orders updated before certain time (Inclusive)<br>Date should be in ISO 8601 format as defined by date-time in - https://www.rfc-editor.org/rfc/rfc3339.",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "format": "date-time"
+        },
+        {
+          "name": "sortOrder",
+          "in": "query",
+          "description": "Sort the response in ASCENDING or DESCENDING order. The default sort order is DESCENDING.",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "enumValues": [
+            "ASCENDING",
+            "DESCENDING"
+          ]
+        },
+        {
+          "name": "maxResults",
+          "in": "query",
+          "description": "Maximum results to be returned in a single response.",
+          "required": false,
+          "type": "integer",
+          "isArray": false,
+          "format": "int32"
+        },
+        {
+          "name": "nextToken",
+          "in": "query",
+          "description": "A token that is used to retrieve the next page of results. The response includes <code>nextToken</code> when the number of results exceeds the specified <code>maxResults</code> value. To get the next page of results, call the operation with this token and include the same arguments as the call that produced the token. To get a complete list, call this operation until <code>nextToken</code> is null. Note that this operation can return empty pages.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "hasBody": false
+    },
+    "createReplenishmentOrder": {
+      "method": "POST",
+      "endpoint": "/awd/2024-05-09/replenishmentOrders",
+      "params": [
+        {
+          "name": "body",
+          "in": "body",
+          "description": "Payload for creating a replenishment order.",
+          "required": true,
+          "type": "string",
+          "isArray": false,
+          "schemaSummary": "ReplenishmentOrderCreationData { preferences?: ReplenishmentPreferences { confirmation?: ConfirmationMode string }, products?: DistributionProduct { attributes?: array, quantity: integer, sku: string }[] }"
+        }
+      ],
+      "hasBody": true
+    },
+    "getReplenishmentOrder": {
+      "method": "GET",
+      "endpoint": "/awd/2024-05-09/replenishmentOrders/{orderId}",
+      "params": [
+        {
+          "name": "orderId",
+          "in": "path",
+          "description": "ID of the replenishment order to be retrieved.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "hasBody": false
+    },
+    "confirmReplenishmentOrder": {
+      "method": "POST",
+      "endpoint": "/awd/2024-05-09/replenishmentOrders/{orderId}/confirmation",
+      "params": [
+        {
+          "name": "orderId",
+          "in": "path",
+          "description": "ID of the replenishment order to be confirmed.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "hasBody": false
     }
   },
   "aplusContent": {
@@ -29392,7 +33862,7 @@ export const generatedOperationMap = {
         {
           "name": "marketplaceId",
           "in": "query",
-          "description": "The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+          "description": "The identifier for the Amazon store where the A+ Content is published.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -29400,7 +33870,7 @@ export const generatedOperationMap = {
         {
           "name": "pageToken",
           "in": "query",
-          "description": "A token that you use to fetch a specific page when there are multiple pages of results.",
+          "description": "A page token from the <code>nextPageToken</code> response element returned by your previous call to this operation. <code>nextPageToken</code> is returned when the results of a call exceed the page size. To get the next page of results, call the operation and include <code>pageToken</code> as the only parameter. Specifying <code>pageToken</code> with any other parameter will cause the request to fail. When no <code>nextPageToken</code> value is returned there are no more pages to return. A <code>pageToken</code> value is not usable across different operations.",
           "required": false,
           "type": "string",
           "isArray": false
@@ -29415,7 +33885,7 @@ export const generatedOperationMap = {
         {
           "name": "marketplaceId",
           "in": "query",
-          "description": "The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+          "description": "The identifier for the Amazon store where the A+ Content is published.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -29439,7 +33909,7 @@ export const generatedOperationMap = {
         {
           "name": "contentReferenceKey",
           "in": "path",
-          "description": "The unique reference key for the A+ Content document. A content reference key cannot form a permalink and might change in the future. A content reference key is not guaranteed to match any A+ Content identifier.",
+          "description": "The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ Content identifier.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -29447,7 +33917,7 @@ export const generatedOperationMap = {
         {
           "name": "marketplaceId",
           "in": "query",
-          "description": "The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+          "description": "The identifier for the Amazon store where the A+ Content is published.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -29474,7 +33944,7 @@ export const generatedOperationMap = {
         {
           "name": "contentReferenceKey",
           "in": "path",
-          "description": "The unique reference key for the A+ Content document. A content reference key cannot form a permalink and might change in the future. A content reference key is not guaranteed to match any A+ Content identifier.",
+          "description": "The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ Content identifier.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -29482,7 +33952,7 @@ export const generatedOperationMap = {
         {
           "name": "marketplaceId",
           "in": "query",
-          "description": "The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+          "description": "The identifier for the Amazon store where the A+ Content is published.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -29506,7 +33976,7 @@ export const generatedOperationMap = {
         {
           "name": "contentReferenceKey",
           "in": "path",
-          "description": "The unique reference key for the A+ Content document. A content reference key cannot form a permalink and might change in the future. A content reference key is not guaranteed to match any A+ Content identifier.",
+          "description": "The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ Content identifier.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -29514,7 +33984,7 @@ export const generatedOperationMap = {
         {
           "name": "marketplaceId",
           "in": "query",
-          "description": "The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+          "description": "The identifier for the Amazon store where the A+ Content is published.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -29522,7 +33992,7 @@ export const generatedOperationMap = {
         {
           "name": "includedDataSet",
           "in": "query",
-          "description": "The set of A+ Content data types to include in the response. If you don't include this parameter, the operation returns the related ASINs without metadata.",
+          "description": "The set of A+ Content data types to include in the response. If you do not include this parameter, the operation returns the related ASINs without metadata.",
           "required": false,
           "type": "string",
           "isArray": true,
@@ -29541,7 +34011,7 @@ export const generatedOperationMap = {
         {
           "name": "pageToken",
           "in": "query",
-          "description": "A token that you use to fetch a specific page when there are multiple pages of results.",
+          "description": "A page token from the <code>nextPageToken</code> response element returned by your previous call to this operation. <code>nextPageToken</code> is returned when the results of a call exceed the page size. To get the next page of results, call the operation and include <code>pageToken</code> as the only parameter. Specifying <code>pageToken</code> with any other parameter will cause the request to fail. When no <code>nextPageToken</code> value is returned there are no more pages to return. A <code>pageToken</code> value is not usable across different operations.",
           "required": false,
           "type": "string",
           "isArray": false
@@ -29556,7 +34026,7 @@ export const generatedOperationMap = {
         {
           "name": "contentReferenceKey",
           "in": "path",
-          "description": "The unique reference key for the A+ Content document. A content reference key cannot form a permalink and might change in the future. A content reference key is not guaranteed to match any A+ content identifier.",
+          "description": "The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ Content identifier.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -29564,7 +34034,7 @@ export const generatedOperationMap = {
         {
           "name": "marketplaceId",
           "in": "query",
-          "description": "The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+          "description": "The identifier for the Amazon store where the A+ Content is published.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -29572,7 +34042,7 @@ export const generatedOperationMap = {
         {
           "name": "postContentDocumentAsinRelationsRequest",
           "in": "body",
-          "description": "The request details for the content document ASIN relations.",
+          "description": "The content document ASIN relations request details.",
           "required": true,
           "type": "string",
           "isArray": false,
@@ -29588,7 +34058,7 @@ export const generatedOperationMap = {
         {
           "name": "marketplaceId",
           "in": "query",
-          "description": "The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+          "description": "The identifier for the Amazon store where the A+ Content is published.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -29620,7 +34090,7 @@ export const generatedOperationMap = {
         {
           "name": "marketplaceId",
           "in": "query",
-          "description": "The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+          "description": "The identifier for the Amazon store where the A+ Content is published.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -29628,7 +34098,7 @@ export const generatedOperationMap = {
         {
           "name": "asin",
           "in": "query",
-          "description": "The Amazon Standard Identification Number (ASIN) is the unique identifier of a product within a marketplace.",
+          "description": "The Amazon Standard Identification Number (ASIN).",
           "required": true,
           "type": "string",
           "isArray": false
@@ -29636,7 +34106,7 @@ export const generatedOperationMap = {
         {
           "name": "pageToken",
           "in": "query",
-          "description": "A token that you use to fetch a specific page when there are multiple pages of results.",
+          "description": "A page token from the <code>nextPageToken</code> response element returned by your previous call to this operation. <code>nextPageToken</code> is returned when the results of a call exceed the page size. To get the next page of results, call the operation and include <code>pageToken</code> as the only parameter. Specifying <code>pageToken</code> with any other parameter will cause the request to fail. When no <code>nextPageToken</code> value is returned there are no more pages to return. A <code>pageToken</code> value is not usable across different operations.",
           "required": false,
           "type": "string",
           "isArray": false
@@ -29651,7 +34121,7 @@ export const generatedOperationMap = {
         {
           "name": "contentReferenceKey",
           "in": "path",
-          "description": "The unique reference key for the A+ Content document. A content reference key cannot form a permalink and might change in the future. A content reference key is not guaranteed to match any A+ content identifier.",
+          "description": "The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ Content identifier.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -29659,7 +34129,7 @@ export const generatedOperationMap = {
         {
           "name": "marketplaceId",
           "in": "query",
-          "description": "The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+          "description": "The identifier for the Amazon store where the A+ Content is published.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -29674,7 +34144,7 @@ export const generatedOperationMap = {
         {
           "name": "contentReferenceKey",
           "in": "path",
-          "description": "The unique reference key for the A+ Content document. A content reference key cannot form a permalink and might change in the future. A content reference key is not guaranteed to match any A+ content identifier.",
+          "description": "The unique reference key for the A+ Content document. A content reference key cannot form a permalink and may change in the future. A content reference key is not guaranteed to match any A+ Content identifier.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -29682,13 +34152,84 @@ export const generatedOperationMap = {
         {
           "name": "marketplaceId",
           "in": "query",
-          "description": "The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+          "description": "The identifier for the Amazon store where the A+ Content is published.",
           "required": true,
           "type": "string",
           "isArray": false
         }
       ],
       "hasBody": false
+    },
+    "createMedia": {
+      "method": "POST",
+      "endpoint": "/aplus/2020-11-01/media",
+      "params": [
+        {
+          "name": "createMediaRequest",
+          "in": "body",
+          "description": "The media creation request details.",
+          "required": true,
+          "type": "string",
+          "isArray": false,
+          "schemaSummary": "CreateMediaRequest { mediaType: MediaType \"VIDEO\" | \"IMAGE\", uploadDestinationId?: string, mediaId?: string, title?: string, descriptions?: DescriptionList Description[], relatedMedia?: RelatedMediaInputList RelatedMediaInput[] }"
+        }
+      ],
+      "hasBody": true
+    },
+    "getMedia": {
+      "method": "GET",
+      "endpoint": "/aplus/2020-11-01/media/{mediaId}",
+      "params": [
+        {
+          "name": "mediaId",
+          "in": "path",
+          "description": "The unique identifier for the media asset.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "associatedMediaId",
+          "in": "query",
+          "description": "When provided, returns only the specific association. When omitted, returns all associated media.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "hasBody": false
+    },
+    "updateMedia": {
+      "method": "PATCH",
+      "endpoint": "/aplus/2020-11-01/media/{mediaId}",
+      "params": [
+        {
+          "name": "mediaId",
+          "in": "path",
+          "description": "The unique identifier for the media asset to update.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "associatedMediaId",
+          "in": "query",
+          "description": "When provided, identifies the specific video-image pairing for title updates. Required when updating a pairing title.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "updateMediaRequest",
+          "in": "body",
+          "description": "The media update request details.",
+          "required": true,
+          "type": "string",
+          "isArray": false,
+          "schemaSummary": "UpdateMediaRequest { title?: string, descriptions?: DescriptionList Description[] }"
+        }
+      ],
+      "hasBody": true
     }
   },
   "applicationIntegrations": {
@@ -30433,7 +34974,7 @@ export const generatedOperationMap = {
         {
           "name": "body",
           "in": "body",
-          "description": "The request body that specifies invoice, program and marketplace values.",
+          "description": "The request body that specifies invoice, program and <code>marketplaceId</code> values.",
           "required": true,
           "type": "string",
           "isArray": false,
@@ -30463,9 +35004,17 @@ export const generatedOperationMap = {
           "isArray": false
         },
         {
+          "name": "invoiceId",
+          "in": "query",
+          "description": "The invoice access key (NF-e access key for Brazilian invoices). Use this to retrieve the status of a specific invoice.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
           "name": "marketplaceId",
           "in": "query",
-          "description": "The marketplace identifier.",
+          "description": "The Amazon store identifier.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -30600,6 +35149,22 @@ export const generatedOperationMap = {
           "type": "string",
           "isArray": false,
           "schemaSummary": "BatchInventoryRequest { requests?: BatchInventoryRequestList InventoryRequest[] }"
+        }
+      ],
+      "hasBody": true
+    },
+    "createSandboxLocation": {
+      "method": "POST",
+      "endpoint": "/externalFulfillment/2026-07-30/location",
+      "params": [
+        {
+          "name": "body",
+          "in": "body",
+          "description": "The request body for creating a sandbox location.",
+          "required": true,
+          "type": "string",
+          "isArray": false,
+          "schemaSummary": "CreateSandboxLocationRequest { merchantIds: string[], marketplaceId: MarketplaceId string, channels?: \"FBA\" | \"MFN\"[], locationName: string }"
         }
       ],
       "hasBody": true
@@ -30777,7 +35342,7 @@ export const generatedOperationMap = {
         {
           "name": "status",
           "in": "query",
-          "description": "The status of shipment you want to include in the response. To retrieve all new shipments, set this value to <code>ACCEPTED</code>.",
+          "description": "The status of shipment you want to include in the response. To retrieve all new shipments, set this value to <code>CREATED</code> or <code>ACCEPTED</code>.",
           "required": true,
           "type": "string",
           "isArray": false,
@@ -30831,6 +35396,22 @@ export const generatedOperationMap = {
       ],
       "hasBody": false
     },
+    "createSandboxShipment": {
+      "method": "POST",
+      "endpoint": "/externalFulfillment/2024-09-11/shipments",
+      "params": [
+        {
+          "name": "body",
+          "in": "body",
+          "description": "The request body for creating a sandbox shipment.",
+          "required": true,
+          "type": "string",
+          "isArray": false,
+          "schemaSummary": "CreateSandboxShipmentRequest { locationId: string, marketplaceId: MarketplaceId string, marketplaceChannel: \"FBA\" | \"MFN\", shippingType: \"SELF\" | \"MARKETPLACE\" | \"THIRD_PARTY_CARRIER\", orderType?: \"HAZMAT\" | \"GIFT_WRAP\" | \"GIFT_MESSAGE\" | \"MPS\" | \"SERIAL\" | \"CROSS_BORDER\" | \"REPLACEMENT\" | \"EXCHANGE\" | \"PHARMA_NON_PRESCRIPTION\" | \"PHARMA_PRESCRIPTION\"[], lineItemCount?: \"SINGLE\" | \"MULTIPLE\", quantityCount?: \"SINGLE\" | \"MULTIPLE\" }"
+        }
+      ],
+      "hasBody": true
+    },
     "getShipment": {
       "method": "GET",
       "endpoint": "/externalFulfillment/2024-09-11/shipments/{shipmentId}",
@@ -30878,6 +35459,30 @@ export const generatedOperationMap = {
           "type": "string",
           "isArray": false,
           "schemaSummary": "ShipmentAcknowledgementRequest { referenceId?: string, lineItems: LineItemWithReason { lineItem: object, reason?: string }[] }"
+        }
+      ],
+      "hasBody": true
+    },
+    "updateSandboxShipment": {
+      "method": "PATCH",
+      "endpoint": "/externalFulfillment/2024-09-11/shipments/{shipmentId}",
+      "params": [
+        {
+          "name": "shipmentId",
+          "in": "path",
+          "description": "The unique identifier of the shipment to update.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "body",
+          "in": "body",
+          "description": "The request body for updating a sandbox shipment.",
+          "required": true,
+          "type": "string",
+          "isArray": false,
+          "schemaSummary": "UpdateSandboxShipmentRequest { updateType: \"SHIPMENT_STATUS_CHANGE\" | \"INVOICE_AVAILABILITY_CHANGE\" | \"TRANSPORT_CAPACITY_CHANGE\", updates?: SandboxShipmentUpdates { status?: \"SHIPPED\" | \"DELIVERED\" | \"CANCELLED\", subStatus?: \"OUT_FOR_DELIVERY\", timestamp?: string } }"
         }
       ],
       "hasBody": true
@@ -30933,7 +35538,7 @@ export const generatedOperationMap = {
           "required": true,
           "type": "string",
           "isArray": false,
-          "schemaSummary": "Package { id: string, dimensions: PackageDimensions { length: Dimension, width: Dimension, height: Dimension }, weight: Weight { value: Decimal string, weightUnit: \"G\" | \"KG\" }, hazmatLabels?: string[], packageLineItems: PackageLineItems PackageLineItem[], status?: \"CREATED\" | \"PICKUP_SLOT_RETRIEVED\" | \"INVOICE_GENERATED\" | \"SHIPLABEL_GENERATED\" | \"SHIPPED\" | \"DELIVERED\" | \"CANCELLED\", packageHandlingRequirements?: \"NORMAL\" | \"FRAGILE\" }"
+          "schemaSummary": "Package { id: string, dimensions: PackageDimensions { length: Dimension, width: Dimension, height: Dimension }, weight: Weight { value: Decimal string, weightUnit: \"G\" | \"KG\" | \"LB\" | \"OZ\" }, hazmatLabels?: string[], packageLineItems: PackageLineItems PackageLineItem[], status?: \"CREATED\" | \"PICKUP_SLOT_RETRIEVED\" | \"INVOICE_GENERATED\" | \"SHIPLABEL_GENERATED\" | \"SHIPPED\" | \"DELIVERED\" | \"CANCELLED\", packageHandlingRequirements?: \"NORMAL\" | \"FRAGILE\" }"
         }
       ],
       "hasBody": true
@@ -30961,7 +35566,7 @@ export const generatedOperationMap = {
         {
           "name": "status",
           "in": "query",
-          "description": "<strong>DEPRECATED</strong>. Do not use. Package status is defined in the body parameter.",
+          "description": "<strong>This field is only used for the Seller Flex program</strong>. For the Self Delivery program, package statuses are defined in the body parameter.",
           "required": false,
           "type": "string",
           "isArray": false,
@@ -31394,12 +35999,173 @@ export const generatedOperationMap = {
           "required": true,
           "type": "string",
           "isArray": false
+        },
+        {
+          "name": "enableContentEncodingUrlHeader",
+          "in": "query",
+          "description": "When <code>true</code>, the Content-Encoding header on the returned URL is set to <code>gzip</code> instead of the default <code>identity</code> when <code>compressionAlgorithm</code> is <code>GZIP</code>. This allows automatic decompression by HTTP clients.",
+          "required": false,
+          "type": "boolean",
+          "isArray": false
+        }
+      ],
+      "hasBody": false
+    }
+  },
+  "financeRemittance": {
+    "getRemittanceHeaders": {
+      "method": "GET",
+      "endpoint": "/finances/remittances/2026-03-17/remittances",
+      "params": [
+        {
+          "name": "marketplaceId",
+          "in": "query",
+          "description": "The <code>marketplaceId</code> is a globally unique identifier used to specify which Amazon store a request is targeting. For more information, refer to <a href=\"https://developer-docs.amazon/sp-api/docs/store-identifiers\" target=\"_blank\" rel=\"noopener noreferrer\">Store Identifiers</a>.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "startDate",
+          "in": "query",
+          "description": "The earliest payment date for remittances to include in the response. Dates are in ISO 8601 date-time format. The default is 30 days prior to the time of the request. The minimum start date is one year ago from the current date.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "endDate",
+          "in": "query",
+          "description": "The latest payment date for remittances to include in the response. Dates are in ISO 8601 date-time format. The default is the current date-time. The maximum date range between <code>startDate</code> and <code>endDate</code> is 90 days.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "nextToken",
+          "in": "query",
+          "description": "A token to fetch the next page of results. Use the value returned in the previous response.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "hasBody": false
+    },
+    "getRemittance": {
+      "method": "GET",
+      "endpoint": "/finances/remittances/2026-03-17/remittances/{uniquePaymentId}",
+      "params": [
+        {
+          "name": "uniquePaymentId",
+          "in": "path",
+          "description": "The unique identifier for the payment.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "marketplaceId",
+          "in": "query",
+          "description": "The <code>marketplaceId</code> is a globally unique identifier used to specify which Amazon store a request is targeting. For more information, refer to <a href=\"https://developer-docs.amazon/sp-api/docs/store-identifiers\" target=\"_blank\" rel=\"noopener noreferrer\">Store Identifiers</a>.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "nextTokenForLineItems",
+          "in": "query",
+          "description": "A token to fetch the next page of results. Use the value returned in the previous response.",
+          "required": false,
+          "type": "string",
+          "isArray": false
         }
       ],
       "hasBody": false
     }
   },
   "finances": {
+    "getInvoiceHeaders": {
+      "method": "GET",
+      "endpoint": "/finances/invoices/2026-06-25/invoices",
+      "params": [
+        {
+          "name": "nextToken",
+          "in": "query",
+          "description": "The response includes <code>nextToken</code> when the number of invoices exceeds the default page size value (100). To get the next page of results, call the operation with this token and include the same arguments as the call that produced the token. To get a complete list, call this operation until <code>nextToken</code> is <code>null</code>. Note that this operation can return empty pages.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "marketplaceId",
+          "in": "query",
+          "description": "The marketplace ID of the marketplace from which you want to retrieve invoice headers. The marketplace ID is a globally unique identifier used to specify which Amazon marketplace a request is targeting. For more information, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "fromIssueDate",
+          "in": "query",
+          "description": "Retrieve invoice headers issued after this date. The range between <code>fromIssueDate</code> and <code>toIssueDate</code> must not exceed 90 days. Either provide both dates or leave both empty. If you do not provide these dates, <code>fromIssueDate</code> defaults to 90 days before the date of the request. In <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> date-time format.",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "format": "date-time"
+        },
+        {
+          "name": "toIssueDate",
+          "in": "query",
+          "description": "Retrieve invoice headers issued before this date. The range between <code>fromIssueDate</code> and <code>toIssueDate</code> must not exceed 90 days. Either provide both dates or leave both empty. If you do not provide these dates, <code>toIssueDate</code> defaults to the date of the request. In <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> date-time format.",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "format": "date-time"
+        },
+        {
+          "name": "invoicesModifiedAfter",
+          "in": "query",
+          "description": "Retrieve invoices that were modified after this date-time. In <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> date-time format.",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "format": "date-time"
+        }
+      ],
+      "hasBody": false
+    },
+    "getInvoice": {
+      "method": "GET",
+      "endpoint": "/finances/invoices/2026-06-25/invoices/{invoiceIdentifier}",
+      "params": [
+        {
+          "name": "marketplaceId",
+          "in": "query",
+          "description": "The marketplace ID of the marketplace of the invoice. The marketplace ID is a globally unique identifier used to specify an Amazon marketplace. For more information, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "invoiceIdentifier",
+          "in": "path",
+          "description": "The unique identifier for an invoice. This field is also returned as part of the <code>InvoiceHeader</code> element in the response. For AP-Inventory invoices the identifier is formatted as <code>InvoiceNumber~PayeeCode</code>.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "nextTokenForLineItems",
+          "in": "query",
+          "description": "The response includes <code>nextTokenForLineItems</code> when the number of line items exceeds the default page size (600). To get the next page of line items, call the operation with this token, including the same request parameters as the call that generated the token.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "hasBody": false
+    },
     "listFinancialEventGroups": {
       "method": "GET",
       "endpoint": "/finances/v0/financialEventGroups",
@@ -31566,48 +36332,7 @@ export const generatedOperationMap = {
       ],
       "hasBody": false
     },
-    "listTransactions_v0": {
-      "method": "GET",
-      "endpoint": "/finances/v0/transactions",
-      "params": [
-        {
-          "name": "PostedAfter",
-          "in": "query",
-          "description": "The response includes financial events posted after (or on) this date. This date must be in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> date-time format. The date-time must be more than two minutes before the time of the request.",
-          "required": true,
-          "type": "string",
-          "isArray": false,
-          "format": "date-time"
-        },
-        {
-          "name": "PostedBefore",
-          "in": "query",
-          "description": "The response includes financial events posted before (but not on) this date. This date must be in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> date-time format.",
-          "required": false,
-          "type": "string",
-          "isArray": false,
-          "format": "date-time"
-        },
-        {
-          "name": "MarketplaceId",
-          "in": "query",
-          "description": "The ID of the marketplace from which you want to retrieve transactions.",
-          "required": true,
-          "type": "string",
-          "isArray": false
-        },
-        {
-          "name": "NextToken",
-          "in": "query",
-          "description": "The response includes <code>nextToken</code> when the number of results exceeds the specified <code>pageSize</code> value. To get the next page of results, call the operation with this token and include the same arguments as the call that produced the token. To get a complete list, call this operation until <code>nextToken</code> is null. Note that this operation can return empty pages.",
-          "required": false,
-          "type": "string",
-          "isArray": false
-        }
-      ],
-      "hasBody": false
-    },
-    "listTransactions_2024_06_19": {
+    "listTransactions": {
       "method": "GET",
       "endpoint": "/finances/2024-06-19/transactions",
       "params": [
@@ -31632,7 +36357,7 @@ export const generatedOperationMap = {
         {
           "name": "marketplaceId",
           "in": "query",
-          "description": "The identifier of the marketplace from which you want to retrieve transactions. The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+          "description": "The identifier of the marketplace from which you want to retrieve transactions. The marketplace ID is the globally unique identifier of a marketplace. To find the ID for a marketplace, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
           "required": false,
           "type": "string",
           "isArray": false
@@ -31672,6 +36397,176 @@ export const generatedOperationMap = {
       ],
       "hasBody": false
     },
+    "listBalances": {
+      "method": "GET",
+      "endpoint": "/finances/2024-06-19/balances",
+      "params": [
+        {
+          "name": "marketplaceIds",
+          "in": "query",
+          "description": "The marketplaces from which to retrieve balances. If omitted, balances from all applicable marketplaces may be returned. To find the marketplace ID for a region, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+          "required": false,
+          "type": "string",
+          "isArray": true
+        },
+        {
+          "name": "balanceType",
+          "in": "query",
+          "description": "The type of balance to include in the response. If omitted, all balance types may be included in the response.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "accountType",
+          "in": "query",
+          "description": "The type of account to include in the response.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "asOfDate",
+          "in": "query",
+          "description": "The date from which you want to retrieve balances. If provided, the response includes historical balances at the specified date. The value must be in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> date format. If omitted, the point in time balance is provided.",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "format": "date"
+        },
+        {
+          "name": "nextToken",
+          "in": "query",
+          "description": "A token that you use to retrieve subsequent pages of results. When there are more than 500 results available, the response will include a <code>nextToken</code> value. To get the next page of results, call the operation with this token and include the same arguments as the call that produced the token. Repeat this process until the <code>nextToken</code> value is null to retrieve all results.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "hasBody": false
+    },
+    "listSummary": {
+      "method": "GET",
+      "endpoint": "/finances/2024-06-19/summary",
+      "params": [
+        {
+          "name": "marketplaceIds",
+          "in": "query",
+          "description": "The marketplaces from which to retrieve summaries. If omitted, summaries from all applicable marketplaces may be returned. To find the marketplace ID for a region, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+          "required": false,
+          "type": "string",
+          "isArray": true
+        },
+        {
+          "name": "accountType",
+          "in": "query",
+          "description": "The type of account to include in the response.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "relatedIdentifierName",
+          "in": "query",
+          "description": "The name of the <code>relatedIdentifier</code>. The only possible value is <code>SETTLEMENT_ID</code>, the settlement ID associated with the summary.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "relatedIdentifierValue",
+          "in": "query",
+          "description": "The value of the <code>relatedIdentifier</code>.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "periodStart",
+          "in": "query",
+          "description": "The start of the period for which to retrieve summaries. When provided, the response will only include summaries with transactions that occurred on or after the specified date. The value must be formatted in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> date format.",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "format": "date"
+        },
+        {
+          "name": "periodEnd",
+          "in": "query",
+          "description": "The end of the period for which to retrieve summaries. When provided, the response will only include summaries with transactions that occurred on or before the specified date. The value must be formatted in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> date format.",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "format": "date"
+        },
+        {
+          "name": "nextToken",
+          "in": "query",
+          "description": "A token that you use to retrieve subsequent pages of results. When there are more results available, the response will include a <code>nextToken</code> value. To get the next page of results, call the operation with this token and include the same arguments as the call that produced the token. Repeat this process until the <code>nextToken</code> value is null to retrieve all results.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "hasBody": false
+    },
+    "listPayouts": {
+      "method": "GET",
+      "endpoint": "/finances/transfers/2024-06-01/payouts",
+      "params": [
+        {
+          "name": "marketplaceIds",
+          "in": "query",
+          "description": "The Amazon stores from which to retrieve payouts. The Amazon store ID is a globally unique identifier assigned to each Amazon store. If omitted, the response includes payouts from all applicable stores. To find the Amazon store ID for your region, refer to <a href=\"https://developer-docs.amazon/sp-api/docs/store-identifiers\" target=\"_blank\" rel=\"noopener noreferrer\">Store Identifiers</a>.",
+          "required": false,
+          "type": "string",
+          "isArray": true
+        },
+        {
+          "name": "createdAfter",
+          "in": "query",
+          "description": "The response only includes payouts created on or after this date-time. The value must be formatted in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> date-time format. If omitted, no start date filter is applied.",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "format": "date-time"
+        },
+        {
+          "name": "createdBefore",
+          "in": "query",
+          "description": "The response only includes payouts created before this date-time. The value must be formatted in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> date-time format. If omitted, no end date filter is applied.",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "format": "date-time"
+        },
+        {
+          "name": "payoutId",
+          "in": "query",
+          "description": "The response only includes the payout matching the specified identifier.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "accountType",
+          "in": "query",
+          "description": "The response only includes payouts associated with the specified account type.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "nextToken",
+          "in": "query",
+          "description": "The response includes <code>nextToken</code> when the number of results exceeds the page size. To get the next page of results, call the operation with this token and include the same arguments as the call that produced the token. To get a complete list, call this operation until <code>nextToken</code> is null. Note that this operation can return empty pages.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "hasBody": false
+    },
     "initiatePayout": {
       "method": "POST",
       "endpoint": "/finances/transfers/2024-06-01/payouts",
@@ -31695,7 +36590,7 @@ export const generatedOperationMap = {
         {
           "name": "marketplaceId",
           "in": "query",
-          "description": "The identifier of the marketplace from which you want to retrieve payment methods. For the list of possible marketplace identifiers, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
+          "description": "The identifier of the Amazon store from which you want to retrieve payment methods. For the list of store identifiers, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Store Identifiers</a>.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -31712,6 +36607,37 @@ export const generatedOperationMap = {
             "CARD",
             "SELLER_WALLET"
           ]
+        }
+      ],
+      "hasBody": false
+    },
+    "listExpectedPayouts": {
+      "method": "GET",
+      "endpoint": "/finances/transfers/2024-06-01/payouts/expected",
+      "params": [
+        {
+          "name": "marketplaceIds",
+          "in": "query",
+          "description": "The Amazon stores from which to retrieve payouts. The Amazon store ID is a globally unique identifier assigned to each Amazon store. If omitted, the response includes payouts from all applicable stores. To find the Amazon store ID for your region, refer to <a href=\"https://developer-docs.amazon/sp-api/docs/store-identifiers\" target=\"_blank\" rel=\"noopener noreferrer\">Store Identifiers</a>.",
+          "required": false,
+          "type": "string",
+          "isArray": true
+        },
+        {
+          "name": "accountType",
+          "in": "query",
+          "description": "The response only includes the accounts of the specified account type.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "nextToken",
+          "in": "query",
+          "description": "The response includes <code>nextToken</code> when the number of results exceeds the specified page size. To get the next page of results, call the operation with this token and include the same arguments as the call that produced the token. To get a complete list, call this operation until <code>nextToken</code> is null. Note that this operation can return empty pages.",
+          "required": false,
+          "type": "string",
+          "isArray": false
         }
       ],
       "hasBody": false
@@ -33642,6 +38568,212 @@ export const generatedOperationMap = {
         }
       ],
       "hasBody": false
+    },
+    "getOrderPreview": {
+      "method": "POST",
+      "endpoint": "/fulfillment/outbound/2026-07-04/previews",
+      "params": [
+        {
+          "name": "body",
+          "in": "body",
+          "description": "The request body schema for the <code>getOrderPreview</code> operation.",
+          "required": true,
+          "type": "string",
+          "isArray": false,
+          "schemaSummary": "GetOrderPreviewRequest { channel?: string, fulfillmentConfiguration?: PreviewFulfillmentConfiguration { serviceLevel?: PreviewServiceLevel, services?: PreviewServices }, origin?: OrderOrigin { countryCode: CountryCode string }, destination: PreviewDestination { deliveryAddress: Address }, lineItems: PreviewLineItem { product: object, amount: object }[], excludeEstimatedFees?: boolean, includePaymentOnDelivery?: boolean }"
+        }
+      ],
+      "hasBody": true
+    },
+    "getOffers": {
+      "method": "POST",
+      "endpoint": "/fulfillment/outbound/2026-07-04/offers",
+      "params": [
+        {
+          "name": "body",
+          "in": "body",
+          "description": "The request body schema for the <code>getOffers</code> operation.",
+          "required": true,
+          "type": "string",
+          "isArray": false,
+          "schemaSummary": "GetOffersRequest { fulfillmentConfiguration?: OfferFulfillmentConfiguration { serviceLevel?: PreviewServiceLevel }, origin: OrderOrigin { countryCode: CountryCode string }, destination?: OfferDestination { deliveryAddress?: VariablePrecisionAddress, ipAddress?: IpAddress string }, items: OfferItem { productIdentifier?: object }[] }"
+        }
+      ],
+      "hasBody": true
+    },
+    "cancelOrder": {
+      "method": "PUT",
+      "endpoint": "/fulfillment/outbound/2026-07-04/orders/{orderId}/cancel",
+      "params": [
+        {
+          "name": "orderId",
+          "in": "path",
+          "description": "The ID of the order that you want to cancel.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "hasBody": false
+    },
+    "updateOrderStatus": {
+      "method": "PUT",
+      "endpoint": "/fulfillment/outbound/2026-07-04/orders/{orderId}/status",
+      "params": [
+        {
+          "name": "orderId",
+          "in": "path",
+          "description": "The ID of the order that you want to update.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "body",
+          "in": "body",
+          "description": "The new status of the fulfillment order.",
+          "required": true,
+          "type": "string",
+          "isArray": false,
+          "schemaSummary": "UpdateOrderStatusRequest { status: OrderStatus string }"
+        }
+      ],
+      "hasBody": true
+    },
+    "updatePackage": {
+      "method": "PUT",
+      "endpoint": "/fulfillment/outbound/2026-07-04/orders/{orderId}/packages/{packageId}",
+      "params": [
+        {
+          "name": "orderId",
+          "in": "path",
+          "description": "The ID of the order that contains the package that you want to update.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "packageId",
+          "in": "path",
+          "description": "The ID of the package that you want to update.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "body",
+          "in": "body",
+          "description": "The new package information.",
+          "required": true,
+          "type": "string",
+          "isArray": false,
+          "schemaSummary": "UpdatePackageRequest { status: ShipmentPackageStatus string, deliveryTime?: Timestamp string, tracking?: Tracking { carrier?: CarrierTracking, amazon?: AmazonTracking, dropOffLocation?: OrderDropOffLocation, proofOfDelivery?: ProofOfDelivery } }"
+        }
+      ],
+      "hasBody": true
+    },
+    "getOrder": {
+      "method": "GET",
+      "endpoint": "/fulfillment/outbound/2026-07-04/orders/{orderId}",
+      "params": [
+        {
+          "name": "orderId",
+          "in": "path",
+          "description": "The ID of the order you want to retrieve.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "shipments",
+          "in": "query",
+          "description": "Whether to include shipment data in the response. Included by default.",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "enumValues": [
+            "INCLUDE",
+            "EXCLUDE"
+          ]
+        }
+      ],
+      "hasBody": false
+    },
+    "updateOrder": {
+      "method": "PUT",
+      "endpoint": "/fulfillment/outbound/2026-07-04/orders/{orderId}",
+      "params": [
+        {
+          "name": "orderId",
+          "in": "path",
+          "description": "The ID of the order that you want to update and/or request shipment of.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "body",
+          "in": "body",
+          "description": "The request body schema for the <code>updateOrder</code> operation.",
+          "required": true,
+          "type": "string",
+          "isArray": false,
+          "schemaSummary": "UpdateOrderRequest { fulfillmentConfiguration?: UpdateOrderFulfillmentConfiguration { action?: OrderFulfillmentAction string } }"
+        }
+      ],
+      "hasBody": true
+    },
+    "listOrders": {
+      "method": "GET",
+      "endpoint": "/fulfillment/outbound/2026-07-04/orders",
+      "params": [
+        {
+          "name": "updatedAfter",
+          "in": "query",
+          "description": "The response includes orders updated after this time. Must be in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> format.",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "format": "date-time"
+        },
+        {
+          "name": "pageToken",
+          "in": "query",
+          "description": "A token that you use to retrieve the next page of results. The response includes <code>pageToken</code> when the number of results exceeds the page size. To get the next page of results, call the operation with this token and include the same arguments as the call that produced the token. To get a complete list, call this operation until <code>pageToken</code> is <code>null</code>.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "shipments",
+          "in": "query",
+          "description": "Whether to include shipment data in the response. Included by default.",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "enumValues": [
+            "INCLUDE",
+            "EXCLUDE"
+          ]
+        }
+      ],
+      "hasBody": false
+    },
+    "createOrder": {
+      "method": "POST",
+      "endpoint": "/fulfillment/outbound/2026-07-04/orders",
+      "params": [
+        {
+          "name": "body",
+          "in": "body",
+          "description": "The request body schema for the <code>createOrder</code> operation.",
+          "required": true,
+          "type": "string",
+          "isArray": false,
+          "schemaSummary": "CreateOrderRequest { orderId: string, channel?: string, fulfillmentConfiguration?: OrderFulfillmentConfiguration { serviceLevel?: ServiceLevel, action?: OrderFulfillmentAction string, policy?: OrderFulfillmentPolicy string, services?: OrderServices }, origin?: OrderOrigin { countryCode: CountryCode string }, destination: OrderDestination { deliveryAddress: Address, deliveryNotes?: string, dropOffLocation?: OrderDropOffLocation }, lineItems: CreateOrderLineItem { lineItemId: string, product: object, amount: object, fulfillmentConfiguration?: object }[], paymentInformation?: PaymentInformation { payments?: object[] } }"
+        }
+      ],
+      "hasBody": true
     }
   },
   "invoices": {
@@ -33654,6 +38786,14 @@ export const generatedOperationMap = {
           "in": "query",
           "description": "The marketplace identifier.",
           "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "warehouseCode",
+          "in": "query",
+          "description": "The Warehouse code included in the invoice issued on behalf of the vendor. Check the warehouse code under your WarehouseSettings in VendorCentral.",
+          "required": false,
           "type": "string",
           "isArray": false
         }
@@ -33669,6 +38809,14 @@ export const generatedOperationMap = {
           "in": "path",
           "description": "The export document identifier.",
           "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "warehouseCode",
+          "in": "query",
+          "description": "The Warehouse code included in the invoice issued on behalf of the vendor. Check the warehouse code under your WarehouseSettings in VendorCentral.",
+          "required": false,
           "type": "string",
           "isArray": false
         }
@@ -33734,6 +38882,14 @@ export const generatedOperationMap = {
             "DONE",
             "ERROR"
           ]
+        },
+        {
+          "name": "warehouseCode",
+          "in": "query",
+          "description": "The Warehouse code included in the invoice issued on behalf of the vendor. Check the warehouse code under your WarehouseSettings in VendorCentral.",
+          "required": false,
+          "type": "string",
+          "isArray": false
         }
       ],
       "hasBody": false
@@ -33749,7 +38905,7 @@ export const generatedOperationMap = {
           "required": true,
           "type": "string",
           "isArray": false,
-          "schemaSummary": "ExportInvoicesRequest { dateEnd?: string, dateStart?: string, externalInvoiceId?: string, fileFormat?: FileFormat \"XML\", invoiceType?: string, marketplaceId: string, series?: string, statuses?: string[], transactionIdentifier?: TransactionIdentifier { name?: string, id?: string }, transactionType?: string }"
+          "schemaSummary": "ExportInvoicesRequest { dateEnd?: string, dateStart?: string, externalInvoiceId?: string, fileFormat?: FileFormat \"XML\", invoiceType?: string, marketplaceId: string, series?: string, statuses?: string[], transactionIdentifier?: TransactionIdentifier { name?: string, id?: string }, transactionType?: string, warehouseCode?: string }"
         }
       ],
       "hasBody": true
@@ -33763,6 +38919,132 @@ export const generatedOperationMap = {
           "in": "path",
           "description": "The unique identifier for the export.",
           "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "warehouseCode",
+          "in": "query",
+          "description": "The Warehouse code included in the invoice issued on behalf of the vendor. Check the warehouse code under your WarehouseSettings in VendorCentral.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "hasBody": false
+    },
+    "getGovernmentInvoiceStatus": {
+      "method": "GET",
+      "endpoint": "/tax/invoices/2024-06-19/governmentInvoiceRequests",
+      "params": [
+        {
+          "name": "marketplaceId",
+          "in": "query",
+          "description": "The marketplace of the invoice request.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "transactionType",
+          "in": "query",
+          "description": "The marketplace-specific classification of the transaction type that originated the invoice. Check <code>transactionType</code> options using the <code>getInvoicesAttributes</code> operation.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "shipmentId",
+          "in": "query",
+          "description": "The unique shipment identifier for which to get an invoice.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "invoiceType",
+          "in": "query",
+          "description": "The marketplace-specific classification of the invoice type. Check <code>invoiceType</code> options using the <code>getInvoicesAttributes</code> operation.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "inboundPlanId",
+          "in": "query",
+          "description": "The unique inbound plan identifier in which the shipment is contained and for which the invoice will be created.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "hasBody": false
+    },
+    "createGovernmentInvoice": {
+      "method": "POST",
+      "endpoint": "/tax/invoices/2024-06-19/governmentInvoiceRequests",
+      "params": [
+        {
+          "name": "body",
+          "in": "body",
+          "description": "Information required to create the government invoice.",
+          "required": true,
+          "type": "string",
+          "isArray": false,
+          "schemaSummary": "GovernmentInvoiceRequest { contexts?: CarrierDetailsContext { name?: string, address?: string, contextType?: string, federalTaxId?: string, regionCode?: string, regionTaxId?: string, vehicleLicensePlate?: string, vehicleRegistrationRegionCode?: string }[], inboundPlanId?: string, invoiceType: string, marketplaceId: string, shipmentId: string, transactionType: string }"
+        }
+      ],
+      "hasBody": true
+    },
+    "getGovernmentInvoiceDocument": {
+      "method": "GET",
+      "endpoint": "/tax/invoices/2024-06-19/governmentInvoiceRequests/{shipmentId}",
+      "params": [
+        {
+          "name": "marketplaceId",
+          "in": "query",
+          "description": "The marketplace of the invoice.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "transactionType",
+          "in": "query",
+          "description": "The marketplace-specific classification of the transaction type that originated the invoice. Check <code>transactionType</code> options using the <code>getInvoicesAttributes</code> operation.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "shipmentId",
+          "in": "path",
+          "description": "The unique shipment identifier for which to get an invoice.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "invoiceType",
+          "in": "query",
+          "description": "The marketplace-specific classification of the invoice type. Check <code>invoiceType</code> options using the <code>getInvoicesAttributes</code> operation.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "inboundPlanId",
+          "in": "query",
+          "description": "The unique inbound plan identifier in which the shipment is contained and for which the invoice will be created.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "fileFormat",
+          "in": "query",
+          "description": "The file format of the invoice. The default is XML.",
+          "required": false,
           "type": "string",
           "isArray": false
         }
@@ -33893,6 +39175,14 @@ export const generatedOperationMap = {
           "enumValues": [
             "START_DATE_TIME"
           ]
+        },
+        {
+          "name": "warehouseCode",
+          "in": "query",
+          "description": "The Warehouse code included in the invoice issued on behalf of the vendor. Check the warehouse code under your WarehouseSettings in VendorCentral.",
+          "required": false,
+          "type": "string",
+          "isArray": false
         }
       ],
       "hasBody": false
@@ -33914,6 +39204,14 @@ export const generatedOperationMap = {
           "in": "path",
           "description": "The invoice identifier.",
           "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "warehouseCode",
+          "in": "query",
+          "description": "The Warehouse code included in the invoice issued on behalf of the vendor. Check the warehouse code under your WarehouseSettings in VendorCentral.",
+          "required": false,
           "type": "string",
           "isArray": false
         }
@@ -33985,7 +39283,7 @@ export const generatedOperationMap = {
         {
           "name": "sku",
           "in": "path",
-          "description": "A selling partner provided identifier for an Amazon listing.",
+          "description": "A selling partner-provided identifier for an Amazon listing.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -33993,7 +39291,7 @@ export const generatedOperationMap = {
         {
           "name": "marketplaceIds",
           "in": "query",
-          "description": "A comma-delimited list of Amazon marketplace identifiers for the request.",
+          "description": "A comma-delimited list of Amazon store identifiers for the request.",
           "required": true,
           "type": "string",
           "isArray": true
@@ -34013,7 +39311,7 @@ export const generatedOperationMap = {
         {
           "name": "mode",
           "in": "query",
-          "description": "The mode of operation for the request.",
+          "description": "Describes the mode of operation for the request.",
           "required": false,
           "type": "string",
           "isArray": false,
@@ -34024,7 +39322,7 @@ export const generatedOperationMap = {
         {
           "name": "issueLocale",
           "in": "query",
-          "description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: <code>en_US</code>, <code>fr_CA</code>, <code>fr_FR</code>. Localized messages default to <code>en_US</code> when a localization is not available in the specified locale.",
+          "description": "A locale for localization of issues. When not provided, the default language code of the first Amazon store is used. Examples: <code>en_US</code>, <code>fr_CA</code>, <code>fr_FR</code>. Localized messages default to <code>en_US</code> when localization is not available for the specified locale.",
           "required": false,
           "type": "string",
           "isArray": false
@@ -34104,7 +39402,7 @@ export const generatedOperationMap = {
         {
           "name": "sku",
           "in": "path",
-          "description": "A selling partner provided identifier for an Amazon listing.",
+          "description": "A selling partner-provided identifier for an Amazon listing.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -34112,7 +39410,7 @@ export const generatedOperationMap = {
         {
           "name": "marketplaceIds",
           "in": "query",
-          "description": "A comma-delimited list of Amazon marketplace identifiers for the request.",
+          "description": "A comma-delimited list of Amazon store identifiers for the request.",
           "required": true,
           "type": "string",
           "isArray": true
@@ -34132,7 +39430,7 @@ export const generatedOperationMap = {
         {
           "name": "mode",
           "in": "query",
-          "description": "The mode of operation for the request.",
+          "description": "Describes the mode of operation for the request.",
           "required": false,
           "type": "string",
           "isArray": false,
@@ -34143,7 +39441,7 @@ export const generatedOperationMap = {
         {
           "name": "issueLocale",
           "in": "query",
-          "description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: <code>en_US</code>, <code>fr_CA</code>, <code>fr_FR</code>. Localized messages default to <code>en_US</code> when a localization is not available in the specified locale.",
+          "description": "A locale for localization of issues. When not provided, the default language code of the first Amazon store is used. Examples: <code>en_US</code>, <code>fr_CA</code>, <code>fr_FR</code>. Localized messages default to <code>en_US</code> when localization is not available for the specified locale.",
           "required": false,
           "type": "string",
           "isArray": false
@@ -34214,7 +39512,7 @@ export const generatedOperationMap = {
         {
           "name": "sku",
           "in": "path",
-          "description": "A selling partner provided identifier for an Amazon listing.",
+          "description": "A selling partner-provided identifier for an Amazon listing.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -34222,7 +39520,7 @@ export const generatedOperationMap = {
         {
           "name": "marketplaceIds",
           "in": "query",
-          "description": "A comma-delimited list of Amazon marketplace identifiers for the request.",
+          "description": "A comma-delimited list of Amazon store identifiers for the request.",
           "required": true,
           "type": "string",
           "isArray": true
@@ -34230,7 +39528,7 @@ export const generatedOperationMap = {
         {
           "name": "issueLocale",
           "in": "query",
-          "description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: <code>en_US</code>, <code>fr_CA</code>, <code>fr_FR</code>. Localized messages default to <code>en_US</code> when a localization is not available in the specified locale.",
+          "description": "A locale for localization of issues. When not provided, the default language code of the first Amazon store is used. Examples: <code>en_US</code>, <code>fr_CA</code>, <code>fr_FR</code>. Localized messages default to <code>en_US</code> when localization is not available for the specified locale.",
           "required": false,
           "type": "string",
           "isArray": false
@@ -34253,7 +39551,7 @@ export const generatedOperationMap = {
         {
           "name": "sku",
           "in": "path",
-          "description": "A selling partner provided identifier for an Amazon listing.",
+          "description": "A selling partner-provided identifier for an Amazon listing.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -34261,7 +39559,7 @@ export const generatedOperationMap = {
         {
           "name": "marketplaceIds",
           "in": "query",
-          "description": "A comma-delimited list of Amazon marketplace identifiers for the request.",
+          "description": "A comma-delimited list of Amazon store identifiers for the request.",
           "required": true,
           "type": "string",
           "isArray": true
@@ -34269,7 +39567,7 @@ export const generatedOperationMap = {
         {
           "name": "issueLocale",
           "in": "query",
-          "description": "A locale for localization of issues. When not provided, the default language code of the first marketplace is used. Examples: <code>en_US</code>, <code>fr_CA</code>, <code>fr_FR</code>. Localized messages default to <code>en_US</code> when a localization is not available in the specified locale.",
+          "description": "A locale for localization of issues. When not provided, the default language code of the first Amazon store is used. Examples: <code>en_US</code>, <code>fr_CA</code>, <code>fr_FR</code>. Localized messages default to <code>en_US</code> when localization is not available for the specified locale.",
           "required": false,
           "type": "string",
           "isArray": false
@@ -34310,7 +39608,7 @@ export const generatedOperationMap = {
         {
           "name": "marketplaceIds",
           "in": "query",
-          "description": "A comma-delimited list of Amazon marketplace identifiers for the request.",
+          "description": "A comma-delimited list of Amazon store identifiers for the request.",
           "required": true,
           "type": "string",
           "isArray": true
@@ -34318,7 +39616,7 @@ export const generatedOperationMap = {
         {
           "name": "issueLocale",
           "in": "query",
-          "description": "A locale that is used to localize issues. When not provided, the default language code of the first marketplace is used. Examples: &quot;en_US&quot;, &quot;fr_CA&quot;, &quot;fr_FR&quot;. When a localization is not available in the specified locale, localized messages default to &quot;en_US&quot;.",
+          "description": "A locale that is used to localize issues. When not provided, the default language code of the first Amazon store is used. Examples: &quot;en_US&quot;, &quot;fr_CA&quot;, &quot;fr_FR&quot;. When a localization is not available in the specified locale, localized messages default to &quot;en_US&quot;.",
           "required": false,
           "type": "string",
           "isArray": false
@@ -34326,7 +39624,7 @@ export const generatedOperationMap = {
         {
           "name": "includedData",
           "in": "query",
-          "description": "A comma-delimited list of datasets that you want to include in the response. Default: <code>summaries</code>.",
+          "description": "A comma-delimited list of data sets that you want to include in the response. Default: <code>summaries</code>.",
           "required": false,
           "type": "string",
           "isArray": true,
@@ -34557,6 +39855,14 @@ export const generatedOperationMap = {
           "name": "reasonLocale",
           "in": "query",
           "description": "A locale for reason text localization. When not provided, the default language code of the first marketplace is used. Examples: &quot;en_US&quot;, &quot;fr_CA&quot;, &quot;fr_FR&quot;. Localized messages default to &quot;en_US&quot; when a localization is not available in the specified locale.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "productType",
+          "in": "query",
+          "description": "The product type of the item. When provided with the brand name, the API evaluates GTIN exemption restrictions in addition to brand restrictions for the specified product type.",
           "required": false,
           "type": "string",
           "isArray": false
@@ -34829,38 +40135,6 @@ export const generatedOperationMap = {
       ],
       "hasBody": true
     },
-    "CreateAmazonMotors": {
-      "method": "POST",
-      "endpoint": "/messaging/v1/orders/{amazonOrderId}/messages/amazonMotors",
-      "params": [
-        {
-          "name": "amazonOrderId",
-          "in": "path",
-          "description": "An Amazon order identifier. This identifies the order for which a message is sent.",
-          "required": true,
-          "type": "string",
-          "isArray": false
-        },
-        {
-          "name": "marketplaceIds",
-          "in": "query",
-          "description": "A marketplace identifier. This identifies the marketplace in which the order was placed. You can only specify one marketplace.",
-          "required": true,
-          "type": "string",
-          "isArray": true
-        },
-        {
-          "name": "body",
-          "in": "body",
-          "description": "This contains the message body for a message.",
-          "required": true,
-          "type": "string",
-          "isArray": false,
-          "schemaSummary": "CreateAmazonMotorsRequest { attachments?: Attachment { uploadDestinationId: string, fileName: string }[] }"
-        }
-      ],
-      "hasBody": true
-    },
     "CreateWarranty": {
       "method": "POST",
       "endpoint": "/messaging/v1/orders/{amazonOrderId}/messages/warranty",
@@ -35014,10 +40288,57 @@ export const generatedOperationMap = {
     }
   },
   "notifications": {
+    "getSubscriptions": {
+      "method": "GET",
+      "endpoint": "/notifications/v1/subscriptions",
+      "params": [
+        {
+          "name": "notificationTypes",
+          "in": "query",
+          "description": "A list of notification types to retrieve subscriptions for. Currently limited to a single notification type per request.",
+          "required": true,
+          "type": "string",
+          "isArray": true
+        },
+        {
+          "name": "payloadVersion",
+          "in": "query",
+          "description": "The version of the payload object to be used in the notification.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "pageSize",
+          "in": "query",
+          "description": "The maximum number of subscriptions to return per page. Minimum value is 30. Maximum value is 100. Default is 30.",
+          "required": false,
+          "type": "integer",
+          "isArray": false
+        },
+        {
+          "name": "nextToken",
+          "in": "query",
+          "description": "A token to retrieve the next page of results. If this field is not empty in a response, pass its value in the next request to retrieve the next page.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "hasBody": false
+    },
     "getSubscription": {
       "method": "GET",
       "endpoint": "/notifications/v1/subscriptions/{notificationType}",
       "params": [
+        {
+          "name": "notificationType",
+          "in": "path",
+          "description": "The type of notification.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
         {
           "name": "payloadVersion",
           "in": "query",
@@ -35036,11 +40357,19 @@ export const generatedOperationMap = {
         {
           "name": "body",
           "in": "body",
-          "description": "",
+          "description": "The request schema for the <code>createSubscription</code> operation.",
           "required": true,
           "type": "string",
           "isArray": false,
-          "schemaSummary": "CreateSubscriptionRequest { payloadVersion: string, destinationId: string, processingDirective?: ProcessingDirective { eventFilter?: EventFilter } }"
+          "schemaSummary": "CreateSubscriptionRequest { payloadVersion: string, destinationId: string, processingDirective?: ProcessingDirective { eventFilter?: EventFilter, filterExpression?: string } }"
+        },
+        {
+          "name": "notificationType",
+          "in": "path",
+          "description": "The type of notification.",
+          "required": true,
+          "type": "string",
+          "isArray": false
         }
       ],
       "hasBody": true
@@ -35053,6 +40382,14 @@ export const generatedOperationMap = {
           "name": "subscriptionId",
           "in": "path",
           "description": "The identifier for the subscription that you want to get.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "notificationType",
+          "in": "path",
+          "description": "The type of notification.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -35071,9 +40408,41 @@ export const generatedOperationMap = {
           "required": true,
           "type": "string",
           "isArray": false
+        },
+        {
+          "name": "notificationType",
+          "in": "path",
+          "description": "The type of notification.",
+          "required": true,
+          "type": "string",
+          "isArray": false
         }
       ],
       "hasBody": false
+    },
+    "sendTestNotification": {
+      "method": "POST",
+      "endpoint": "/notifications/v1/subscriptions/{notificationType}/testNotification",
+      "params": [
+        {
+          "name": "body",
+          "in": "body",
+          "description": "The request schema for the <code>sendTestNotification</code> operation.",
+          "required": true,
+          "type": "string",
+          "isArray": false,
+          "schemaSummary": "SendTestNotificationRequest { destinationId?: string, testNotification?: TestNotification { payloadVersion: string, testScenario?: string } }"
+        },
+        {
+          "name": "notificationType",
+          "in": "path",
+          "description": "The type of notification.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "hasBody": true
     },
     "getDestinations": {
       "method": "GET",
@@ -35088,7 +40457,7 @@ export const generatedOperationMap = {
         {
           "name": "body",
           "in": "body",
-          "description": "",
+          "description": "The request schema for the <code>createDestination</code> operation.",
           "required": true,
           "type": "string",
           "isArray": false,
@@ -35208,7 +40577,7 @@ export const generatedOperationMap = {
         {
           "name": "SellerOrderId",
           "in": "query",
-          "description": "An order identifier that is specified by the seller. Used to select only the orders that match the order identifier. If <code>SellerOrderId</code> is specified, then <code>FulfillmentChannels</code>, <code>OrderStatuses</code>, <code>PaymentMethod</code>, <code>LastUpdatedAfter</code>, LastUpdatedBefore, and <code>BuyerEmail</code> cannot be specified.",
+          "description": "An order identifier that is specified by the seller. Used to select only the orders that match the order identifier. If <code>SellerOrderId</code> is specified, then <code>FulfillmentChannels</code>, <code>OrderStatuses</code>, <code>PaymentMethod</code>, <code>LastUpdatedAfter</code>, <code>LastUpdatedBefore</code>, and <code>BuyerEmail</code> cannot be specified.",
           "required": false,
           "type": "string",
           "isArray": false
@@ -35280,7 +40649,7 @@ export const generatedOperationMap = {
         {
           "name": "EarliestDeliveryDateBefore",
           "in": "query",
-          "description": "Use this date to select orders with a earliest delivery date before (or at) a specified time. The date must be in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> format.",
+          "description": "Use this date to select orders with an earliest delivery date before (or at) a specified time. The date must be in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> format.",
           "required": false,
           "type": "string",
           "isArray": false
@@ -35288,7 +40657,7 @@ export const generatedOperationMap = {
         {
           "name": "EarliestDeliveryDateAfter",
           "in": "query",
-          "description": "Use this date to select orders with a earliest delivery date after (or at) a specified time. The date must be in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> format.",
+          "description": "Use this date to select orders with an earliest delivery date after (or at) a specified time. The date must be in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> format.",
           "required": false,
           "type": "string",
           "isArray": false
@@ -35312,7 +40681,7 @@ export const generatedOperationMap = {
       ],
       "hasBody": false
     },
-    "getOrder": {
+    "getOrder_v0": {
       "method": "GET",
       "endpoint": "/orders/v0/orders/{orderId}",
       "params": [
@@ -35323,6 +40692,42 @@ export const generatedOperationMap = {
           "required": true,
           "type": "string",
           "isArray": false
+        }
+      ],
+      "hasBody": false
+    },
+    "getOrder_2026_01_01": {
+      "method": "GET",
+      "endpoint": "/orders/2026-01-01/orders/{orderId}",
+      "params": [
+        {
+          "name": "orderId",
+          "in": "path",
+          "description": "An Amazon-defined order identifier.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "includedData",
+          "in": "query",
+          "description": "A list of datasets to include in the response.",
+          "required": false,
+          "type": "string",
+          "isArray": true,
+          "enumValues": [
+            "BUYER",
+            "RECIPIENT",
+            "PROCEEDS",
+            "EXPENSE",
+            "PROMOTION",
+            "CANCELLATION",
+            "FULFILLMENT",
+            "PACKAGES",
+            "TAX",
+            "PAYMENT",
+            "FULFILLMENT_ORDERS"
+          ]
         }
       ],
       "hasBody": false
@@ -35489,6 +40894,123 @@ export const generatedOperationMap = {
         }
       ],
       "hasBody": true
+    },
+    "searchOrders": {
+      "method": "GET",
+      "endpoint": "/orders/2026-01-01/orders",
+      "params": [
+        {
+          "name": "createdAfter",
+          "in": "query",
+          "description": "The response includes orders created at or after this time. The date must be in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> format.",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "format": "date-time"
+        },
+        {
+          "name": "createdBefore",
+          "in": "query",
+          "description": "The response includes orders created at or before this time. The date must be in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> format.",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "format": "date-time"
+        },
+        {
+          "name": "lastUpdatedAfter",
+          "in": "query",
+          "description": "The response includes orders updated at or after this time. An update is any change made by Amazon or the seller, including changes to order status. The date must be in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> format.",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "format": "date-time"
+        },
+        {
+          "name": "lastUpdatedBefore",
+          "in": "query",
+          "description": "The response includes orders updated at or before this time. An update is any change made by Amazon or the seller, including changes to order status. The date must be in <a href=\"https://developer-docs.amazon.com/sp-api/docs/iso-8601\" target=\"_blank\" rel=\"noopener noreferrer\">ISO 8601</a> format.",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "format": "date-time"
+        },
+        {
+          "name": "fulfillmentStatuses",
+          "in": "query",
+          "description": "A list of <code>FulfillmentStatus</code> values you can use to filter the results.",
+          "required": false,
+          "type": "string",
+          "isArray": true,
+          "enumValues": [
+            "PENDING_AVAILABILITY",
+            "PENDING",
+            "UNSHIPPED",
+            "PARTIALLY_SHIPPED",
+            "SHIPPED",
+            "CANCELLED",
+            "UNFULFILLABLE"
+          ]
+        },
+        {
+          "name": "marketplaceIds",
+          "in": "query",
+          "description": "The response includes orders that were placed in marketplaces you include in this list.",
+          "required": false,
+          "type": "string",
+          "isArray": true
+        },
+        {
+          "name": "fulfilledBy",
+          "in": "query",
+          "description": "The response includes orders that are fulfilled by the parties that you include in this list.",
+          "required": false,
+          "type": "string",
+          "isArray": true,
+          "enumValues": [
+            "MERCHANT",
+            "AMAZON"
+          ]
+        },
+        {
+          "name": "maxResultsPerPage",
+          "in": "query",
+          "description": "The maximum number of orders that can be returned per page. The value must be between 1 and 100. <strong>Default:</strong> 100.",
+          "required": false,
+          "type": "integer",
+          "isArray": false
+        },
+        {
+          "name": "paginationToken",
+          "in": "query",
+          "description": "Pagination occurs when a request produces a response that exceeds the <code>maxResultsPerPage</code>. This means that the response is divided into individual pages. To retrieve the next page, you must pass the <code>nextToken</code> value as the <code>paginationToken</code> query parameter in the next request. You will not receive a <code>nextToken</code> value on the last page.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "includedData",
+          "in": "query",
+          "description": "A list of datasets to include in the response.",
+          "required": false,
+          "type": "string",
+          "isArray": true,
+          "enumValues": [
+            "BUYER",
+            "RECIPIENT",
+            "PROCEEDS",
+            "EXPENSE",
+            "PROMOTION",
+            "CANCELLATION",
+            "FULFILLMENT",
+            "PACKAGES",
+            "TAX",
+            "PAYMENT",
+            "FULFILLMENT_ORDERS"
+          ]
+        }
+      ],
+      "hasBody": false
     }
   },
   "productFees": {
@@ -35872,7 +41394,7 @@ export const generatedOperationMap = {
         {
           "name": "itemName",
           "in": "query",
-          "description": "The title of the ASIN to get the product type recommendation. <strong>Note:</strong> Cannot be used with <code>keywords</code>.",
+          "description": "Title of ASIN to get product type recommendation. <strong>Note:</strong> Cannot be used with <code>keywords</code>.",
           "required": false,
           "type": "string",
           "isArray": false
@@ -35880,7 +41402,7 @@ export const generatedOperationMap = {
         {
           "name": "locale",
           "in": "query",
-          "description": "The locale for the display names in the response. Defaults to the primary locale of the marketplace.",
+          "description": "Locale for display names in response. Defaults to primary locale of the marketplace.",
           "required": false,
           "type": "string",
           "isArray": false
@@ -35888,7 +41410,7 @@ export const generatedOperationMap = {
         {
           "name": "searchLocale",
           "in": "query",
-          "description": "The locale used for the <code>keywords</code> and <code>itemName</code> parameters. Defaults to the primary locale of the marketplace.",
+          "description": "Language used for <code>keywords</code> or <code>itemName</code> parameters. Defaults to primary locale of the marketplace.",
           "required": false,
           "type": "string",
           "isArray": false
@@ -35927,7 +41449,7 @@ export const generatedOperationMap = {
         {
           "name": "productTypeVersion",
           "in": "query",
-          "description": "The version of the Amazon product type to retrieve. Defaults to &quot;LATEST&quot;,. Prerelease versions of product type definitions may be retrieved with &quot;RELEASE_CANDIDATE&quot;. If no prerelease version is currently available, the &quot;LATEST&quot; live version will be provided.",
+          "description": "The version of the Amazon product type to retrieve. Defaults to &quot;LATEST&quot;. Prerelease versions of product type definitions may be retrieved with &quot;RELEASE_CANDIDATE&quot;. If no prerelease version is currently available, the &quot;LATEST&quot; live version will be provided.",
           "required": false,
           "type": "string",
           "isArray": false
@@ -36004,6 +41526,290 @@ export const generatedOperationMap = {
             "zh_CN",
             "zh_TW"
           ]
+        },
+        {
+          "name": "parentageLevel",
+          "in": "query",
+          "description": "The parentage level of the listing to retrieve a schema for. When provided, the schema is simplified by resolving all conditional logic related to the specified parentage level, resulting in a smaller schema with fewer conditions.",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "enumValues": [
+            "NONE",
+            "CHILD",
+            "PARENT"
+          ]
+        }
+      ],
+      "hasBody": false
+    }
+  },
+  "promotions": {
+    "searchPromotions": {
+      "method": "GET",
+      "endpoint": "/promotions/2025-12-01/promotions",
+      "params": [
+        {
+          "name": "marketplaceIds",
+          "in": "query",
+          "description": "The Amazon stores from which to retrieve promotions. Refer to <a href=\"https://developer-docs.amazon/sp-api/docs/store-identifiers\" target=\"_blank\" rel=\"noopener noreferrer\">Store Identifiers</a> for a list of Amazon store values.",
+          "required": true,
+          "type": "string",
+          "isArray": true
+        },
+        {
+          "name": "locale",
+          "in": "query",
+          "description": "The locale from which to retrieve promotions. Formatted as an ISO 639 language code, followed by an underscore, followed by an ISO 3166-1 alpha-2 country code.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "statuses",
+          "in": "query",
+          "description": "The statuses of promotions to retrieve, formatted as a comma-delimited list.",
+          "required": false,
+          "type": "string",
+          "isArray": true,
+          "enumValues": [
+            "PROCESSING",
+            "UPCOMING",
+            "RUNNING",
+            "EXPIRED",
+            "FAILED",
+            "CANCELLING",
+            "CANCELLED"
+          ]
+        },
+        {
+          "name": "asins",
+          "in": "query",
+          "description": "The ASINs to which promotions apply, formatted as a comma-delimited list.",
+          "required": false,
+          "type": "string",
+          "isArray": true
+        },
+        {
+          "name": "skus",
+          "in": "query",
+          "description": "The SKUs to which promotions apply, formatted as a comma-delimited list.",
+          "required": false,
+          "type": "string",
+          "isArray": true
+        },
+        {
+          "name": "promotionTypes",
+          "in": "query",
+          "description": "The promotion types to which promotions apply, formatted as a comma-delimited list.",
+          "required": false,
+          "type": "string",
+          "isArray": true,
+          "enumValues": [
+            "BASKET_BUILDING",
+            "DEAL",
+            "PRICE_DISCOUNT",
+            "COUPON"
+          ]
+        },
+        {
+          "name": "startDateBefore",
+          "in": "query",
+          "description": "Promotions that start before this date are returned. Formatted in ISO 8601 format, including the timezone. For example: <code>1970-01-01T00:00:00-07:00</code>.",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "format": "date-time"
+        },
+        {
+          "name": "startDateAfter",
+          "in": "query",
+          "description": "Promotions that start after this date are returned. Formatted in ISO 8601 format, including the timezone. For example: <code>1970-01-01T00:00:00-07:00</code>.",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "format": "date-time"
+        },
+        {
+          "name": "endDateBefore",
+          "in": "query",
+          "description": "Promotions that end before this date are returned. Formatted in ISO 8601 format, including the timezone. For example: <code>1970-01-01T00:00:00-07:00</code>.",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "format": "date-time"
+        },
+        {
+          "name": "endDateAfter",
+          "in": "query",
+          "description": "Promotions that end after this date are returned. Formatted in ISO 8601 format, including the timezone. For example: <code>1970-01-01T00:00:00-07:00</code>.",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "format": "date-time"
+        },
+        {
+          "name": "updateDateAfter",
+          "in": "query",
+          "description": "Filter promotions that were last modified after this timestamp. Zoned Datetime in ISO 8601 format (e.g., 1970-01-01T00:00:00-07:00).",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "format": "date-time"
+        },
+        {
+          "name": "updateDateBefore",
+          "in": "query",
+          "description": "Filter promotions that were last modified before this timestamp. Zoned Datetime in ISO 8601 format (e.g., 1970-01-01T00:00:00-07:00).",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "format": "date-time"
+        },
+        {
+          "name": "paginationToken",
+          "in": "query",
+          "description": "A token that you use to retrieve the next page of results. The response includes <code>paginationToken</code> when the number of results exceeds the specified <code>limit</code> value. To get the next page of results, call the operation with this token and include the same arguments as the call that produced the token. To get a complete list, call this operation until <code>paginationToken</code> is null. Note that this operation can return empty pages.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "revision",
+          "in": "query",
+          "description": "Specifies which promotion revision or revisions to match against when filtering. This controls which promotions are included in search results, not the shape of the response. The response always returns the published revision in the main body, with <code>latestRevision</code> included when the latest revision diverges.",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "enumValues": [
+            "LATEST",
+            "PUBLISHED",
+            "ANY"
+          ]
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "description": "The maximum number of response results per page.",
+          "required": false,
+          "type": "integer",
+          "isArray": false,
+          "format": "int64"
+        },
+        {
+          "name": "includedData",
+          "in": "query",
+          "description": "A comma-delimited list of datasets to include in the response.",
+          "required": false,
+          "type": "string",
+          "isArray": true,
+          "enumValues": [
+            "ISSUES",
+            "CUSTOMER_SEGMENTS"
+          ]
+        }
+      ],
+      "hasBody": false
+    },
+    "getPromotion": {
+      "method": "GET",
+      "endpoint": "/promotions/2025-12-01/promotions/{promotionId}",
+      "params": [
+        {
+          "name": "promotionId",
+          "in": "path",
+          "description": "The ID of the promotion.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "includedData",
+          "in": "query",
+          "description": "A comma-delimited list of datasets to include in the response.",
+          "required": false,
+          "type": "string",
+          "isArray": true,
+          "enumValues": [
+            "ISSUES",
+            "SELECTION",
+            "CUSTOMER_SEGMENTS"
+          ]
+        },
+        {
+          "name": "locale",
+          "in": "query",
+          "description": "The locale of the promotion. Formatted as an ISO 639 language code, followed by an underscore, followed by an ISO 3166-1 alpha-2 country code.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "hasBody": false
+    },
+    "getSelection": {
+      "method": "GET",
+      "endpoint": "/promotions/2025-12-01/promotions/{promotionId}/selections/{selectionId}",
+      "params": [
+        {
+          "name": "promotionId",
+          "in": "path",
+          "description": "The ID of the promotion.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "selectionId",
+          "in": "path",
+          "description": "The ID of the selection.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "revisionId",
+          "in": "query",
+          "description": "The revision identifier for the selection. Use the <code>revisionId</code> from the <code>getPromotion</code> response. A promotion may have multiple selection revisions when an update is in progress. Passing the correct <code>revisionId</code> ensures you retrieve the expected data.",
+          "required": true,
+          "type": "integer",
+          "isArray": false
+        },
+        {
+          "name": "locale",
+          "in": "query",
+          "description": "The locale of the promotion. Formatted as an ISO 639 language code, followed by an underscore, followed by an ISO 3166-1 alpha-2 country code.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "paginationToken",
+          "in": "query",
+          "description": "A token that you use to retrieve the next page of results. The response includes <code>paginationToken</code> when the number of results exceeds the specified <code>limit</code> value. To get the next page of results, call the operation with this token and include the same arguments as the call that produced the token. To get a complete list, call this operation until <code>paginationToken</code> is null. Note that this operation can return empty pages.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "description": "The maximum number of response results per page.",
+          "required": false,
+          "type": "integer",
+          "isArray": false,
+          "format": "int64"
+        },
+        {
+          "name": "includedData",
+          "in": "query",
+          "description": "A comma-delimited list of datasets to include in the response.",
+          "required": false,
+          "type": "string",
+          "isArray": true,
+          "enumValues": [
+            "ISSUES"
+          ]
         }
       ],
       "hasBody": false
@@ -36021,7 +41827,7 @@ export const generatedOperationMap = {
           "required": false,
           "type": "string",
           "isArray": false,
-          "schemaSummary": "GetSellingPartnerMetricsRequest { aggregationFrequency?: AggregationFrequency \"WEEK\" | \"MONTH\" | \"QUARTER\" | \"YEAR\", timeInterval: TimeInterval { startDate: string, endDate: string }, metrics?: Metric \"SHIPPED_SUBSCRIPTION_UNITS\" | \"TOTAL_SUBSCRIPTIONS_REVENUE\" | \"ACTIVE_SUBSCRIPTIONS\" | \"NOT_DELIVERED_DUE_TO_OOS\" | \"SUBSCRIBER_NON_SUBSCRIBER_AVERAGE_REVENUE\" | \"LOST_REVENUE_DUE_TO_OOS\" | \"SUBSCRIBER_NON_SUBSCRIBER_AVERAGE_REORDERS\" | \"COUPONS_REVENUE_PENETRATION\" | \"REVENUE_BY_DELIVERIES\" | \"SUBSCRIBER_RETENTION\" | \"REVENUE_PENETRATION_BY_SELLER_FUNDING\" | \"SHARE_OF_COUPON_SUBSCRIPTIONS\" | \"SUBSCRIBER_LIFETIME_VALUE_BY_CUSTOMER_SEGMENT\" | \"SIGNUP_CONVERSION_BY_SELLER_FUNDING\"[], timePeriodType: TimePeriodType \"PERFORMANCE\" | \"FORECAST\", marketplaceId: MarketplaceId string, programTypes: ProgramTypes ProgramType string[] }"
+          "schemaSummary": "GetSellingPartnerMetricsRequest { aggregationFrequency?: AggregationFrequency \"DAY\" | \"WEEK\" | \"MONTH\" | \"QUARTER\" | \"YEAR\", timeInterval: TimeInterval { startDate: string, endDate: string }, metrics?: Metric \"SHIPPED_SUBSCRIPTION_UNITS\" | \"TOTAL_SUBSCRIPTIONS_REVENUE\" | \"ACTIVE_SUBSCRIPTIONS\" | \"NOT_DELIVERED_DUE_TO_OOS\" | \"SUBSCRIBER_NON_SUBSCRIBER_AVERAGE_REVENUE\" | \"LOST_REVENUE_DUE_TO_OOS\" | \"SUBSCRIBER_NON_SUBSCRIBER_AVERAGE_REORDERS\" | \"COUPONS_REVENUE_PENETRATION\" | \"REVENUE_BY_DELIVERIES\" | \"SUBSCRIBER_RETENTION\" | \"REVENUE_PENETRATION_BY_SELLER_FUNDING\" | \"SHARE_OF_COUPON_SUBSCRIPTIONS\" | \"SUBSCRIBER_LIFETIME_VALUE_BY_CUSTOMER_SEGMENT\" | \"SIGNUP_CONVERSION_BY_SELLER_FUNDING\" | \"REVENUE_PENETRATION\"[], filters?: GetSellingPartnerMetricsRequestFilters { asins?: string[], skus?: string[], fulfillmentChannelTypes?: object[], brandNames?: string[], productGroups?: string[] }, timePeriodType: TimePeriodType \"PERFORMANCE\" | \"FORECAST\", marketplaceId: MarketplaceId string, programTypes: ProgramTypes ProgramType string[] }"
         }
       ],
       "hasBody": true
@@ -36037,7 +41843,7 @@ export const generatedOperationMap = {
           "required": false,
           "type": "string",
           "isArray": false,
-          "schemaSummary": "ListOfferMetricsRequest { pagination: ListOfferMetricsRequestPagination { limit: integer, offset: integer }, sort?: ListOfferMetricsRequestSort { order: SortOrder string, key: ListOfferMetricsSortKey string }, filters: ListOfferMetricsRequestFilters { aggregationFrequency?: AggregationFrequency string, timeInterval: TimeInterval, timePeriodType: TimePeriodType string, marketplaceId: MarketplaceId string, programTypes: ProgramTypes array, asins?: string[] } }"
+          "schemaSummary": "ListOfferMetricsRequest { pagination: ListOfferMetricsRequestPagination { limit: integer, offset: integer }, sort?: ListOfferMetricsRequestSort { order: SortOrder string, key: ListOfferMetricsSortKey string }, filters: ListOfferMetricsRequestFilters { aggregationFrequency?: AggregationFrequency string, timeInterval: TimeInterval, timePeriodType: TimePeriodType string, marketplaceId: MarketplaceId string, programTypes: ProgramTypes array, asins?: string[], skus?: string[], fulfillmentChannelTypes?: object[], brandNames?: string[], productGroups?: string[] } }"
         }
       ],
       "hasBody": true
@@ -36053,7 +41859,7 @@ export const generatedOperationMap = {
           "required": false,
           "type": "string",
           "isArray": false,
-          "schemaSummary": "ListOffersRequest { pagination: ListOffersRequestPagination { limit: integer, offset: integer }, filters: ListOffersRequestFilters { marketplaceId: MarketplaceId string, skus?: string[], asins?: string[], eligibilities?: object[], preferences?: Preference, promotions?: Promotion, programTypes: ProgramTypes array }, sort?: ListOffersRequestSort { order: SortOrder string, key: ListOffersSortKey string } }"
+          "schemaSummary": "ListOffersRequest { pagination: ListOffersRequestPagination { limit: integer, offset: integer }, filters: ListOffersRequestFilters { marketplaceId: MarketplaceId string, skus?: string[], asins?: string[], eligibilities?: object[], preferences?: Preference, promotions?: Promotion, programTypes: ProgramTypes array, deliveriesConditions?: string[] }, sort?: ListOffersRequestSort { order: SortOrder string, key: ListOffersSortKey string } }"
         }
       ],
       "hasBody": true
@@ -36250,6 +42056,14 @@ export const generatedOperationMap = {
           "required": true,
           "type": "string",
           "isArray": false
+        },
+        {
+          "name": "enableContentEncodingUrlHeader",
+          "in": "query",
+          "description": "When <code>true</code>, the Content-Encoding header on the returned URL is set to <code>gzip</code> instead of the default <code>identity</code> when <code>compressionAlgorithm</code> is <code>GZIP</code>. This allows automatic decompression by HTTP clients.",
+          "required": false,
+          "type": "boolean",
+          "isArray": false
         }
       ],
       "hasBody": false
@@ -36372,7 +42186,7 @@ export const generatedOperationMap = {
         {
           "name": "marketplaceId",
           "in": "query",
-          "description": "A marketplace identifier. Specifies the marketplace for which items are returned.",
+          "description": "The marketplace for which items are returned. The marketplace ID is the globally unique identifier of a marketplace. To find the ID for your marketplace, refer to <a href=\"https://developer-docs.amazon.com/sp-api/docs/marketplace-ids\" target=\"_blank\" rel=\"noopener noreferrer\">Marketplace IDs</a>.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -36387,7 +42201,7 @@ export const generatedOperationMap = {
         {
           "name": "accountId",
           "in": "path",
-          "description": "ID of the Amazon SW account",
+          "description": "The ID of the Amazon Seller Wallet account.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -36410,7 +42224,7 @@ export const generatedOperationMap = {
         {
           "name": "accountId",
           "in": "path",
-          "description": "ID of the Amazon SW account",
+          "description": "The ID of the Amazon Seller Wallet account.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -36433,7 +42247,7 @@ export const generatedOperationMap = {
         {
           "name": "sourceCountryCode",
           "in": "query",
-          "description": "Represents 2 character country code of source transaction account in ISO 3166 standard format.",
+          "description": "Country code of the source transaction account in ISO 3166 format.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -36441,7 +42255,7 @@ export const generatedOperationMap = {
         {
           "name": "sourceCurrencyCode",
           "in": "query",
-          "description": "Represents 3 letter currency code in ISO 4217 standard format of the source transaction country.",
+          "description": "Currency code of the source transaction country in ISO 4217 format.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -36449,7 +42263,7 @@ export const generatedOperationMap = {
         {
           "name": "destinationCountryCode",
           "in": "query",
-          "description": "Represents 2 character country code of destination transaction account in ISO 3166 standard format.",
+          "description": "Country code of the destination transaction account in ISO 3166 format.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -36457,7 +42271,7 @@ export const generatedOperationMap = {
         {
           "name": "destinationCurrencyCode",
           "in": "query",
-          "description": "Represents 3 letter currency code in ISO 4217 standard format of the destination transaction country.",
+          "description": "Currency code of the destination transaction country in ISO 4217 format.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -36465,7 +42279,7 @@ export const generatedOperationMap = {
         {
           "name": "baseAmount",
           "in": "query",
-          "description": "Represents the base transaction amount without any markup fees, rates that will be used to get the transfer preview.",
+          "description": "The base transaction amount without any markup fees.",
           "required": true,
           "type": "number",
           "isArray": false
@@ -36488,7 +42302,7 @@ export const generatedOperationMap = {
         {
           "name": "accountId",
           "in": "query",
-          "description": "ID of the Amazon SW account",
+          "description": "The ID of the Amazon Seller Wallet account.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -36496,7 +42310,7 @@ export const generatedOperationMap = {
         {
           "name": "nextPageToken",
           "in": "query",
-          "description": "Pagination token to retrieve a specific page of results.",
+          "description": "A token that you use to retrieve the next page of results. The response includes <code>nextPageToken</code> when the number of results exceeds 100. To get the next page of results, call the operation with this token and include the same arguments as the call that produced the token. To get a complete list, call this operation until <code>nextPageToken</code> is null. Note that this operation can return empty pages.",
           "required": false,
           "type": "string",
           "isArray": false
@@ -36519,7 +42333,7 @@ export const generatedOperationMap = {
         {
           "name": "body",
           "in": "body",
-          "description": "Defines the actual payload of the request",
+          "description": "The payload of the request",
           "required": true,
           "type": "string",
           "isArray": false,
@@ -36543,7 +42357,7 @@ export const generatedOperationMap = {
         {
           "name": "transactionId",
           "in": "path",
-          "description": "ID of the Amazon SW transaction",
+          "description": "The ID of the Amazon Seller Wallet transaction.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -36566,7 +42380,7 @@ export const generatedOperationMap = {
         {
           "name": "accountId",
           "in": "query",
-          "description": "ID of the Amazon SW account",
+          "description": "The ID of the Amazon Seller Wallet account.",
           "required": true,
           "type": "string",
           "isArray": false
@@ -36582,7 +42396,7 @@ export const generatedOperationMap = {
         {
           "name": "nextPageToken",
           "in": "query",
-          "description": "Pagination token to retrieve a specific page of results.",
+          "description": "A token that you use to retrieve the next page of results. The response includes <code>nextPageToken</code> when the number of results exceeds the specified <code>pageSize</code> value. To get the next page of results, call the operation with this token and include the same arguments as the call that produced the token. To get a complete list, call this operation until <code>nextPageToken</code> is null. Note that this operation can return empty pages.",
           "required": false,
           "type": "string",
           "isArray": false
@@ -36597,7 +42411,7 @@ export const generatedOperationMap = {
         {
           "name": "body",
           "in": "body",
-          "description": "Defines the actual payload of the request",
+          "description": "The payload of the request.",
           "required": true,
           "type": "string",
           "isArray": false,
@@ -36621,7 +42435,7 @@ export const generatedOperationMap = {
         {
           "name": "body",
           "in": "body",
-          "description": "Defines the actual payload of the scheduled transfer request that is to be updated.",
+          "description": "The payload of the scheduled transfer request that is to be updated.",
           "required": true,
           "type": "string",
           "isArray": false,
@@ -36761,6 +42575,22 @@ export const generatedOperationMap = {
           "name": "serviceOrderIds",
           "in": "query",
           "description": "List of service order ids for the query you want to perform.Max values supported 20.",
+          "required": false,
+          "type": "string",
+          "isArray": true
+        },
+        {
+          "name": "productOrderIds",
+          "in": "query",
+          "description": "A list of up to 20 associated product order IDs. You can use these IDs to query service jobs.",
+          "required": false,
+          "type": "string",
+          "isArray": true
+        },
+        {
+          "name": "trackingIds",
+          "in": "query",
+          "description": "A list of up to 20 associated product tracking IDs. You can use these IDs to query service jobs.",
           "required": false,
           "type": "string",
           "isArray": true
@@ -36984,7 +42814,7 @@ export const generatedOperationMap = {
         {
           "name": "body",
           "in": "body",
-          "description": "",
+          "description": "Input containing the resource details to be assigned to the appointment.",
           "required": true,
           "type": "string",
           "isArray": false,
@@ -38069,6 +43899,83 @@ export const generatedOperationMap = {
       "hasBody": true
     }
   },
+  "support": {
+    "listCases": {
+      "method": "POST",
+      "endpoint": "/support/2025-02-01/cases",
+      "params": [
+        {
+          "name": "body",
+          "in": "body",
+          "description": "The request body for the listCases operation.",
+          "required": true,
+          "type": "string",
+          "isArray": false,
+          "schemaSummary": "ListCasesRequest { marketplaceId?: string, caseFilters?: CaseFilters { caseStatuses?: string[], createdDate?: DateFilter, lastOutboundDate?: DateFilter, resolvedDate?: DateFilter, primaryEmails?: string[], ccEmails?: string[], subjectKeywords?: string }, sortField?: \"CASE_ID\" | \"STATUS\" | \"SUBJECT\" | \"PRIMARY_EMAIL\" | \"CREATION_DATE\" | \"LAST_OUTBOUND_DATE\" | \"RESOLUTION_DATE\", sortOrder?: \"ASC\" | \"DESC\", maxResults?: integer, nextToken?: string }"
+        }
+      ],
+      "hasBody": true
+    },
+    "getCase": {
+      "method": "GET",
+      "endpoint": "/support/2025-02-01/cases/{caseId}",
+      "params": [
+        {
+          "name": "caseId",
+          "in": "path",
+          "description": "The case identifier.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "hasBody": false
+    },
+    "listContacts": {
+      "method": "GET",
+      "endpoint": "/support/2025-02-01/cases/{caseId}/contacts",
+      "params": [
+        {
+          "name": "caseId",
+          "in": "path",
+          "description": "The case identifier.",
+          "required": true,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "maxResults",
+          "in": "query",
+          "description": "The maximum number of results to include in the response.",
+          "required": false,
+          "type": "integer",
+          "isArray": false,
+          "format": "int32"
+        },
+        {
+          "name": "nextToken",
+          "in": "query",
+          "description": "A token to retrieve the next page of results. The response includes <code>nextToken</code> when the number of results exceeds the specified <code>maxResults</code> value. To get the next page of results, call the operation with this token and include the same arguments as the call that produced the token. To get a complete list, call this operation until <code>nextToken</code> is null. Note that this operation can return empty pages.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "sortOrder",
+          "in": "query",
+          "description": "Sort the returned contacts by <code>createdDate</code> in either ascending or descending order.",
+          "required": false,
+          "type": "string",
+          "isArray": false,
+          "enumValues": [
+            "ASC",
+            "DESC"
+          ]
+        }
+      ],
+      "hasBody": false
+    }
+  },
   "tokens": {
     "createRestrictedDataToken": {
       "method": "POST",
@@ -38085,6 +43992,79 @@ export const generatedOperationMap = {
         }
       ],
       "hasBody": true
+    }
+  },
+  "tracking": {
+    "getShipmentTracking": {
+      "method": "GET",
+      "endpoint": "/tracking/2026-01-30/shipments/track",
+      "params": [
+        {
+          "name": "id",
+          "in": "query",
+          "description": "The unique tracking request identifier.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "acsin",
+          "in": "query",
+          "description": "The Air Cargo Shipment Identification Number.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "aftn",
+          "in": "query",
+          "description": "The Amazon Fulfillment Tracking Number.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "containerNumber",
+          "in": "query",
+          "description": "The container number provided by the Logistics Service Provider.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "houseBillOfLadingNumber",
+          "in": "query",
+          "description": "The House Bill of Lading (HBL) number.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "proNumber",
+          "in": "query",
+          "description": "The PRO number assigned by the freight carrier",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "carrierTracking.trackingNumber",
+          "in": "query",
+          "description": "The tracking number assigned by the carrier.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        },
+        {
+          "name": "carrierTracking.carrierCode",
+          "in": "query",
+          "description": "The carrier code associated with the carrier tracking number.",
+          "required": false,
+          "type": "string",
+          "isArray": false
+        }
+      ],
+      "hasBody": false
     }
   },
   "uploads": {
@@ -38119,7 +44099,7 @@ export const generatedOperationMap = {
         {
           "name": "contentType",
           "in": "query",
-          "description": "The content type of the file you upload.",
+          "description": "The content type of the file you upload. This parameter is required for A+ content.",
           "required": false,
           "type": "string",
           "isArray": false
@@ -38445,7 +44425,7 @@ export const generatedOperationMap = {
           "required": true,
           "type": "string",
           "isArray": false,
-          "schemaSummary": "SubmitInvoiceRequest { invoices?: InvoiceDetail { invoiceNumber: string, invoiceDate: string, referenceNumber?: string, remitToParty: object, shipFromParty: object, billToParty?: object, shipToCountryCode?: string, paymentTermsCode?: string, invoiceTotal: object, taxTotals?: array, additionalDetails?: array, chargeDetails?: array, items: array }[] }"
+          "schemaSummary": "SubmitInvoiceRequest { invoices?: InvoiceDetail { invoiceNumber: string, invoiceDate: string, taxPointDate?: string, deliveryDate?: string, referenceNumber?: string, remitToParty: object, shipFromParty: object, billToParty?: object, billFromParty?: object, vatGroupParty?: object, taxRepresentativeParty?: object, shipToParty?: object, shipToCountryCode?: string, paymentTermsCode?: string, invoiceTotal: object, invoiceBaseAmount?: object, exchangeRate?: object, taxTotals?: array, additionalDetails?: array, chargeDetails?: array, allowanceDetails?: array, items: array }[] }"
         }
       ],
       "hasBody": true
@@ -39122,7 +45102,7 @@ export const generatedOperationMap = {
           "required": true,
           "type": "string",
           "isArray": false,
-          "schemaSummary": "SubmitInvoicesRequest { invoices?: Invoice { invoiceType: string, id: string, referenceNumber?: string, date: object, remitToParty: object, shipToParty?: object, shipFromParty?: object, billToParty?: object, paymentTerms?: object, invoiceTotal: object, taxDetails?: array, additionalDetails?: array, chargeDetails?: array, allowanceDetails?: array, items?: array }[] }"
+          "schemaSummary": "SubmitInvoicesRequest { invoices?: Invoice { invoiceType: string, id: string, referenceNumber?: string, date: object, remitToParty: object, shipToParty?: object, shipFromParty?: object, billToParty?: object, billFromParty?: object, vatGroupParty?: object, taxRepresentativeParty?: object, paymentTerms?: object, invoiceTotal: object, invoiceBaseAmount?: object, taxPointDate?: object, taxDetails?: array, additionalDetails?: array, chargeDetails?: array, allowanceDetails?: array, items?: array }[] }"
         }
       ],
       "hasBody": true
@@ -39431,22 +45411,6 @@ export const generatedOperationMap = {
           "type": "string",
           "isArray": false,
           "schemaSummary": "SubmitShipmentConfirmationsRequest { shipmentConfirmations?: ShipmentConfirmation { shipmentIdentifier: string, shipmentConfirmationType: string, shipmentType?: string, shipmentStructure?: string, transportationDetails?: object, amazonReferenceNumber?: string, shipmentConfirmationDate: string, shippedDate?: string, estimatedDeliveryDate?: string, sellingParty: object, shipFromParty: object, shipToParty: object, shipmentMeasurements?: object, importDetails?: object, shippedItems: array, cartons?: array, pallets?: array }[] }"
-        }
-      ],
-      "hasBody": true
-    },
-    "SubmitShipmentConfirmation": {
-      "method": "POST",
-      "endpoint": "/vendor/shipping/v1/shipmentConfirmation",
-      "params": [
-        {
-          "name": "body",
-          "in": "body",
-          "description": "A request to submit shipment confirmation.",
-          "required": true,
-          "type": "string",
-          "isArray": false,
-          "schemaSummary": "SubmitShipmentConfirmationRequest { shipmentConfirmation: ShipmentConfirmation { shipmentIdentifier: string, shipmentConfirmationType: \"Original\" | \"Replace\", shipmentType?: \"TruckLoad\" | \"LessThanTruckLoad\" | \"SmallParcel\", shipmentStructure?: \"PalletizedAssortmentCase\" | \"LooseAssortmentCase\" | \"PalletOfItems\" | \"PalletizedStandardCase\" | \"LooseStandardCase\" | \"MasterPallet\" | \"MasterCase\", transportationDetails?: TransportationDetailsForShipmentConfirmation, amazonReferenceNumber?: string, shipmentConfirmationDate: string, shippedDate?: string, estimatedDeliveryDate?: string, sellingParty: PartyIdentification, shipFromParty: PartyIdentification, shipToParty: PartyIdentification, shipmentMeasurements?: ShipmentMeasurements, importDetails?: ImportDetails, shippedItems: object[], cartons?: object[], pallets?: object[] } }"
         }
       ],
       "hasBody": true
